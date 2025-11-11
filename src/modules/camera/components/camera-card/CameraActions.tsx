@@ -1,27 +1,33 @@
-import { Pencil, Trash2, Eye } from "lucide-react";
+import { Button } from "@/core/components/ui/button";
+import { Download, SquarePen, Trash2, Eye } from "lucide-react";
 
 interface CameraActionsProps {
   onEdit?: () => void;
   onDelete?: () => void;
+  onDownload?: () => void;
   onView?: () => void;
 }
 
 export default function CameraActions({
   onEdit,
   onDelete,
+  onDownload,
   onView,
 }: CameraActionsProps) {
   return (
-    <div className="flex justify-between mt-3 border-t pt-2 text-gray-500">
-      <button onClick={onView} className="hover:text-blue-600" title="View">
+    <div className="grid grid-cols-4 gap-2 pt-2">
+      <Button variant={"outline"} title="View" onClick={onView}>
         <Eye size={16} />
-      </button>
-      <button onClick={onEdit} className="hover:text-green-600" title="Edit">
-        <Pencil size={16} />
-      </button>
-      <button onClick={onDelete} className="hover:text-rose-600" title="Delete">
+      </Button>
+      <Button variant={"outline"} title="Edit" onClick={onEdit}>
+        <SquarePen size={16} />
+      </Button>
+      <Button variant={"outline"} title="Download" onClick={onDownload}>
+        <Download size={16} />
+      </Button>
+      <Button variant={"outline"} title="Delete" onClick={onDelete}>
         <Trash2 size={16} />
-      </button>
+      </Button>
     </div>
   );
 }

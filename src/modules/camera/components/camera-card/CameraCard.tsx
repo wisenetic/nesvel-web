@@ -48,7 +48,7 @@ export default function CameraCard({
           lastSeen={camera.lastSeen}
         />
       </CardContent>
-      <CardFooter>
+      <CardFooter className="block">
         <CameraActions
           onEdit={() => onEdit?.(camera.id)}
           onDelete={() => onDelete?.(camera.id)}
