@@ -1,0 +1,59 @@
+import { useTable } from "@refinedev/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
+import React from "react";
+
+import { DeleteButton } from "@/core/components/shared/buttons/delete";
+import { EditButton } from "@/core/components/shared/buttons/edit";
+import { ShowButton } from "@/core/components/shared/buttons/show";
+import { DataTable } from "@/core/components/shared/data-table/data-table";
+import { ListView } from "@/core/components/shared/views/list-view";
+
+type Category = {
+  id: string;
+  title: string;
+};
+
+export const CategoryList = () => {
+  const columns = React.useMemo(() => {
+    const columnHelper = createColumnHelper<Category>();
+
+    return [
+      columnHelper.accessor("id", {
+        id: "id",
+        header: "ID",
+        enableSorting: false,
+      }),
+      columnHelper.accessor("title", {
+        id: "title",
+        header: "Title",
+        enableSorting: true,
+      }),
+      columnHelper.display({
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => (
+          <div className="flex gap-2">
+            <EditButton recordItemId={row.original.id} size="sm" />
+            <ShowButton recordItemId={row.original.id} size="sm" />
+            <DeleteButton recordItemId={row.original.id} size="sm" />
+          </div>
+        ),
+        enableSorting: false,
+        size: 290,
+      }),
+    ];
+  }, []);
+
+  const table = useTable({
+    columns,
+    refineCoreProps: {
+      syncWithLocation: true,
+    },
+  });
+
+  return (
+    <ListView>
+      <DataTable table={table} />
+    </ListView>
+  );
+};
