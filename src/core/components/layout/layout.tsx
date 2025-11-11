@@ -13,7 +13,7 @@ export function Layout({ children }: PropsWithChildren) {
         <Sidebar />
         <SidebarInset>
           <Header />
-          <main className="flex-1 p-10">{children}</main>
+          <main className="flex-1 p-6 md:p-10">{children}</main>
           {/* <main
             className={cn(
               "@container/main",

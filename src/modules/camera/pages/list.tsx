@@ -1,44 +1,52 @@
-import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { useList, HttpError } from "@refinedev/core";
 
+import { CameraGrid } from "@/modules/camera/components/camera-grid";
+import { CameraStatusSummary } from "@/modules/camera/components/camera-status-summary";
+import { ICamera } from "@/modules/camera/types";
 import { Button } from "@/core/components/ui/button";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/core/components/ui/card";
 import { Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { PageHeader } from "@/core/components/shared/page-header";
+import CameraToolbar from "../components/camera-toolbar/CameraToolbar";
 
-export const CameraList = () => {
+export default function CameraListPage() {
+  const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
   const { t } = useTranslation();
+
+  const { result, query } = useList<ICamera, HttpError>({
+    resource: "cameras",
+  });
+
+  if (query.isLoading) return <div>Loading...</div>;
+
+  const cameras = result.data ?? [];
+
+  const stats = {
+    total: cameras.length,
+    online: cameras.filter((c) => c.status === "online").length,
+    offline: cameras.filter((c) => c.status === "offline").length,
+    recording: cameras.filter((c) => c.isRecording).length,
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            {t("camera.list_title")}
-          </h1>
-          <p className="text-muted-foreground mt-1">
-            {t("camera.list_description")}
-          </p>
-        </div>
-        <Button size="lg">
-          <Plus /> {t("camera.add_button")}
-        </Button>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-4">
-        {[1, 2, 3, 4].map((card: any) => (
-          <Card>
-            <CardContent>
-              <div className="flex items-center justify-between"></div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <PageHeader
+        title={t("camera.list_title")}
+        description={t("camera.list_description")}
+        rightSlot={
+          <Button size="lg">
+            <Plus /> {t("camera.add_button")}
+          </Button>
+        }
+      ></PageHeader>
+      <CameraToolbar
+        viewMode={viewMode}
+        onViewChange={setViewMode}
+        onSelectAll={() => console.log("Select All clicked")}
+      />
+      <CameraStatusSummary stats={stats} />
+      <CameraGrid cameras={cameras} />
     </div>
   );
-};
+}
