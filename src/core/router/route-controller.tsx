@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useLocation, useNavigate, matchPath } from "react-router";
-import { appModules } from "@/core/modules";
 
-import { Sheet, SheetContent } from "@/core/components/ui/sheet";
 import { Dialog, DialogContent } from "@/core/components/ui/dialog";
+import { Sheet, SheetContent } from "@/core/components/ui/sheet";
+import { appModules } from "@/core/modules";
 
 export const RouteController = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const hasBackground = !!location.state?.background;
-  if (!hasBackground) return null; // 🚀 KEY FIX: prevent drawer on direct navigation
-
-  const [isOpen, setIsOpen] = useState(true);
-  const [pendingNavigate, setPendingNavigate] = useState(false);
-
-  useEffect(() => {
-    if (!isOpen && pendingNavigate) {
-      const timer = setTimeout(() => navigate(-1), 200);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen, pendingNavigate, navigate]);
 
   for (const mod of appModules) {
     const resource = mod.resource;
@@ -29,8 +16,8 @@ export const RouteController = () => {
     const routeDefs = {
       list: resource.list,
       show: resource.show,
-      edit: resource.edit,
       create: resource.create,
+      edit: resource.edit,
     };
 
     for (const key in routeDefs) {
@@ -44,14 +31,11 @@ export const RouteController = () => {
 
       if (view === "drawer") {
         return (
-          <Sheet
-            open={isOpen}
-            onOpenChange={(open) => {
-              setIsOpen(open);
-              if (!open) setPendingNavigate(true);
-            }}
-          >
-            <SheetContent side="right" className="w-[600px] p-0">
+          <Sheet open onOpenChange={() => navigate(-1)}>
+            <SheetContent
+              side="right"
+              className="w-[600px] p-0 overflow-y-auto"
+            >
               {mod.routes}
             </SheetContent>
           </Sheet>
@@ -60,14 +44,8 @@ export const RouteController = () => {
 
       if (view === "modal") {
         return (
-          <Dialog
-            open={isOpen}
-            onOpenChange={(open) => {
-              setIsOpen(open);
-              if (!open) setPendingNavigate(true);
-            }}
-          >
-            <DialogContent className="p-0 max-w-3xl">
+          <Dialog open onOpenChange={() => navigate(-1)}>
+            <DialogContent className="p-0 max-w-3xl w-full overflow-y-auto">
               {mod.routes}
             </DialogContent>
           </Dialog>
