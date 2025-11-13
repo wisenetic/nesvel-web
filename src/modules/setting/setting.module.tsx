@@ -1,5 +1,5 @@
-import { Settings } from "lucide-react";
 import type { AppModule } from "@/core/types/app-module.type";
+
 import { SettingRoutes } from "./setting.routes";
 
 const SettingResource = {
@@ -8,7 +8,7 @@ const SettingResource = {
   edit: "/settings/edit/:id", // optional edit page
   meta: {
     label: "Settings",
-    icon: <Settings size={18} />, // lucide-react system config icon
+    icon: "settings", // lucide-react system config icon
   },
 };
 

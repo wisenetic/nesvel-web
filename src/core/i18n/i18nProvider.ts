@@ -1,5 +1,4 @@
 import type { I18nProvider } from "@refinedev/core";
-
 import i18n from "./i18n";
 
 export const i18nProvider: I18nProvider = {

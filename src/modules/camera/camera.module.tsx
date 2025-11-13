@@ -1,23 +1,27 @@
 import type { AppModule } from "@/core/types/app-module.type";
-import { Video } from "lucide-react";
+
 import { CameraRoutes } from "./camera.routes";
 
-const CameraResource = {
-  name: "cameras",
-  list: "/cameras",
-  create: "/cameras/create",
-  edit: "/cameras/edit/:id",
-  show: "/cameras/show/:id",
-  meta: {
-    labelKey: "camera.title",
-    icon: <Video size={18} />,
+const cameraModule: AppModule = {
+  resource: {
+    name: "cameras",
+    list: "/cameras",
+    show: "/cameras/show/:id",
+    create: "/cameras/create",
+    edit: "/cameras/edit/:id",
+    meta: {
+      labelKey: "camera.title",
+      icon: "video",
+    },
+  },
+  routes: <CameraRoutes />,
+  priority: 20,
+  presentation: {
+    list: "page",
+    show: "drawer",
+    edit: "modal",
+    create: "page",
   },
 };
 
-const CameraModule: AppModule = {
-  resource: CameraResource,
-  routes: <CameraRoutes />,
-  priority: 20,
-};
-
-export default CameraModule;
+export default cameraModule;

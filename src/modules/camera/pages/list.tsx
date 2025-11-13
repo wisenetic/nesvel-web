@@ -169,7 +169,6 @@ export default function CameraListPage() {
               selected={selectedIds.includes(camera.id)}
               onSelect={toggleSelect}
               mode={mode}
-              onModeChange={setMode}
               onFullscreen={(id) => console.log("fullscreen", id)}
               onSnapshot={(id) => console.log("snapshot", id)}
             />

@@ -4,14 +4,14 @@ type CameraMetricsProps = {
   latency: string;
 };
 
-import { useTranslation } from "@refinedev/core";
+import { useTranslate } from "@refinedev/core";
 
 export default function CameraMetrics({
   fps,
   bitrate,
   latency,
 }: CameraMetricsProps) {
-  const { translate } = useTranslation();
+  const translate = useTranslate();
   return (
     <div className="grid grid-cols-3 gap-2 p-3 bg-muted rounded-lg">
       <div className="text-center">

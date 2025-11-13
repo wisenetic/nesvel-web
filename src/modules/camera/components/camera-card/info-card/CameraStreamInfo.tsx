@@ -1,19 +1,19 @@
-import { useTranslation } from "@refinedev/core";
+import { useTranslate } from "@refinedev/core";
 
 import { cn } from "@/core/lib/utils";
 
 type CameraStreamInfoProps = {
-  rtspUrl: string;
+  streamUrl: string;
   isRecording: boolean;
   lastSeen: string;
 };
 
 export default function CameraStreamInfo({
-  rtspUrl,
+  streamUrl,
   isRecording,
   lastSeen,
 }: CameraStreamInfoProps) {
-  const { translate } = useTranslation();
+  const translate = useTranslate();
   return (
     <>
       <div
@@ -47,7 +47,7 @@ export default function CameraStreamInfo({
           {translate("camera.stream.rtsp_label")}
         </p>
         <p className="font-mono text-xs break-all bg-muted p-2 rounded">
-          {rtspUrl}
+          {streamUrl}
         </p>
       </div>
       <p className="text-xs text-muted-foreground">{lastSeen}</p>

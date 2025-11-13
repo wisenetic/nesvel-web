@@ -4,7 +4,7 @@ import LivePlayer from "@/core/components/shared/LivePlayer";
 import { Badge } from "@/core/components/ui/badge";
 import { Button } from "@/core/components/ui/button";
 import { Checkbox } from "@/core/components/ui/checkbox";
-import { useTranslation } from "@refinedev/core";
+import { useTranslate } from "@refinedev/core";
 
 import { type ICamera } from "@/modules/camera/types";
 
@@ -23,13 +23,13 @@ export function LiveCard({
   onFullscreen,
   onSnapshot,
 }: LiveCardProps) {
-  const { translate } = useTranslation();
+  const translate = useTranslate();
   return (
     <div className="group relative aspect-video overflow-hidden rounded-md border bg-muted/20">
       {/* Simulated video area */}
       {/* Player area */}
       <div className="absolute inset-0">
-        <LivePlayer src={camera.rtspUrl} />
+        <LivePlayer src={camera.streamUrl} />
       </div>
 
       {/* Top-left checkbox */}

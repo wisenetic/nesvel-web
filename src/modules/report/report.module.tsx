@@ -1,6 +1,5 @@
-import { FileText } from "lucide-react";
-
 import type { AppModule } from "@/core/types/app-module.type";
+
 import { ReportRoutes } from "./report.routes";
 
 const ReportResource = {
@@ -11,7 +10,7 @@ const ReportResource = {
   show: "/reports/show/:id", // details page route
   meta: {
     label: "Reports", // sidebar label
-    icon: <FileText size={18} />, // lucide-react icon for reports
+    icon: "file-text", // lucide-react icon for reports
   },
 };
 

@@ -1,6 +1,5 @@
-import { Users } from "lucide-react";
-
 import type { AppModule } from "@/core/types/app-module.type";
+
 import { EmployeeRoutes } from "./employee.routes";
 
 const EmployeeResource = {
@@ -11,7 +10,7 @@ const EmployeeResource = {
   show: "/employees/show/:id", // detail page
   meta: {
     label: "Employees", // sidebar/menu label
-    icon: <Users size={18} />, // lucide-react icon
+    icon: "users", // lucide-react icon
   },
 };
 

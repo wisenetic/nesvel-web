@@ -1,6 +1,5 @@
-import { Workflow } from "lucide-react";
-
 import type { AppModule } from "@/core/types/app-module.type";
+
 import { RuleRoutes } from "./rule.routes";
 
 const ReportResource = {
@@ -11,7 +10,7 @@ const ReportResource = {
   show: "/rules/show/:id", // details route
   meta: {
     label: "Rules",
-    icon: <Workflow size={18} />, // lucide-react icon (automation/settings)
+    icon: "workflow", // lucide-react icon (automation/settings)
   },
 };
 

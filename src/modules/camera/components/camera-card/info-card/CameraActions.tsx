@@ -1,8 +1,7 @@
+import { useTranslate } from "@refinedev/core";
 import { Download, SquarePen, Trash2, Eye } from "lucide-react";
 
 import { Button } from "@/core/components/ui/button";
-import { useTranslation } from "@refinedev/core";
-
 type CameraActionsProps = {
   onEdit?: () => void;
   onDelete?: () => void;
@@ -16,7 +15,7 @@ export default function CameraActions({
   onDownload,
   onView,
 }: CameraActionsProps) {
-  const { translate } = useTranslation();
+  const translate = useTranslate();
   return (
     <div className="grid grid-cols-4 gap-2 pt-2">
       <Button

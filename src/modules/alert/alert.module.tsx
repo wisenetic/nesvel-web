@@ -1,5 +1,5 @@
-import { Bell } from "lucide-react";
 import type { AppModule } from "@/core/types/app-module.type";
+
 import { AlertRoutes } from "./alert.routes";
 
 const AlertResource = {
@@ -10,7 +10,7 @@ const AlertResource = {
   show: "/alerts/show/:id", // detail route
   meta: {
     label: "Alerts",
-    icon: <Bell size={18} />, // lucide-react icon for alerts
+    icon: "bell", // lucide-react icon for alerts
   },
 };
 

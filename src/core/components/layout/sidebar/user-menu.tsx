@@ -1,6 +1,11 @@
 "use client";
 
 import {
+  useActiveAuthProvider,
+  useLogout,
+  useGetIdentity,
+} from "@refinedev/core";
+import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
@@ -10,17 +15,10 @@ import {
 } from "lucide-react";
 
 import {
-  useActiveAuthProvider,
-  useLogout,
-  useGetIdentity,
-} from "@refinedev/core";
-
-import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/core/components/ui/avatar";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,16 +28,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/core/components/ui/dropdown-menu";
-
-import { Skeleton } from "@/core/components/ui/skeleton";
-
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/core/components/ui/sidebar";
-
+import { Skeleton } from "@/core/components/ui/skeleton";
 import { cn } from "@/core/lib/utils";
 
 type User = {

@@ -1,28 +1,27 @@
 import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
+import detector from "i18next-browser-languagedetector";
+import Backend from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
-import { appConfig } from "@/core/config/app.config";
 
 import { resources } from "./index";
 
-const savedLang = localStorage.getItem("lang") || "en";
+const savedLang = localStorage.getItem("lang") ?? "en";
 
-// ✅ Immediately set dir before React renders
-const dir = i18n.dir(savedLang);
-document.documentElement.setAttribute("dir", dir);
-document.documentElement.lang = savedLang;
-
-i18n
-  .use(LanguageDetector)
+void i18n
+  .use(Backend)
+  .use(detector)
   .use(initReactI18next)
   .init({
+    supportedLngs: ["en", "ar"],
     resources,
     lng: savedLang,
-    fallbackLng: appConfig.defaultLanguage,
+    fallbackLng: "en",
     interpolation: { escapeValue: false },
+    react: { useSuspense: false },
   });
 
 i18n.on("languageChanged", (lang) => {
+  console.log(">>>>>>>lang>>>>>>>", lang);
   localStorage.setItem("lang", lang);
   document.documentElement.lang = lang;
   document.documentElement.dir = ["ar", "he", "fa", "ur"].includes(lang)

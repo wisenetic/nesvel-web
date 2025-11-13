@@ -3,17 +3,20 @@ export type CameraStatus = "online" | "offline" | "error" | "recording";
 /**
  * Represents a single camera entity
  */
+
 export type ICamera = {
   id: string;
   name: string;
   location?: string;
   status: CameraStatus;
-  fps: number;
-  bitrate: string;
-  latency: string;
-  rtspUrl: string;
-  lastSeen: string;
-  isRecording: boolean;
+  fps?: number;
+  bitrate?: string;
+  latency?: string;
+  streamUrl: string; // replace streamUrl
+  streamType?: "hls" | "rtsp" | "mjpeg" | "mp4" | "webrtc";
+  lastSeen?: string; // ISO
+  isRecording?: boolean;
+  metadata?: Record<string, any>;
 };
 
 /**

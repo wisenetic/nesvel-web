@@ -1,5 +1,5 @@
-import { TriangleAlert } from "lucide-react";
 import type { AppModule } from "@/core/types/app-module.type";
+
 import { DetectionRoutes } from "./detection.routes";
 
 const DetectionResource = {
@@ -10,7 +10,7 @@ const DetectionResource = {
   show: "/detections/show/:id", // details route
   meta: {
     label: "Detections",
-    icon: <TriangleAlert size={18} />, // lucide-react “AI vision” icon
+    icon: "triangle-alert", // lucide-react “AI vision” icon
   },
 };
 

@@ -4,19 +4,19 @@ import type {
   FeatureFlags,
 } from "@/core/types/app-config.types";
 
-export interface EnvConfig {
+export type EnvConfig = {
   apiBaseUrl: string;
   wsBaseUrl?: string;
   environment: "mock" | "dev" | "staging" | "production";
-}
+};
 
-export interface AppConfig {
+export type AppConfig = {
   brand: BrandConfig;
   features: FeatureFlags;
   env: EnvConfig;
   defaultLanguage: string;
   supportedLanguages: LanguageOption[];
-}
+};
 
 export const appConfig: AppConfig = {
   brand: {

@@ -1,33 +1,35 @@
 import type { AppModule } from "@/core/types/app-module.type";
 
 /**
- * Auto-imports all @.module.tsx files from `src/modules/@/`
- * Each must export an `AppModule` (default export recommended)
+ * Auto-import module definition files (*.module.tsx)
  */
 const moduleFiles = import.meta.glob<AppModule>("@/modules/*/*.module.tsx", {
   eager: true,
 });
 
 /**
- * Extract all modules into an array
+ * Convert module exports to array
  */
 const loadedModules: AppModule[] = Object.values(moduleFiles).map((mod: any) =>
   mod.default ? mod.default : Object.values(mod)[0],
 );
 
 /**
- * Filter out hidden modules and sort by priority
+ * Filter + Sort
  */
 export const appModules: AppModule[] = loadedModules
   .filter((m) => !m.hidden)
   .sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99));
 
 /**
- * Optional: Grouped modules (for sidebar sections)
+ * Optional grouping
  */
-export const groupedModules = appModules.reduce((acc, module) => {
-  const groupName = module.group || "General";
-  if (!acc[groupName]) acc[groupName] = [];
-  acc[groupName].push(module);
-  return acc;
-}, {} as Record<string, AppModule[]>);
+export const groupedModules = appModules.reduce(
+  (acc, module) => {
+    const groupName = module.group || "General";
+    if (!acc[groupName]) acc[groupName] = [];
+    acc[groupName].push(module);
+    return acc;
+  },
+  {} as Record<string, AppModule[]>,
+);

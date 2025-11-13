@@ -1,5 +1,5 @@
 import type { AppModule } from "@/core/types/app-module.type";
-import { LayoutDashboard } from "lucide-react";
+
 import { DashboardRoutes } from "./dashboard.routes";
 
 const DashboardResource = {
@@ -7,7 +7,7 @@ const DashboardResource = {
   list: "/",
   meta: {
     label: "Dashboard",
-    icon: <LayoutDashboard size={18} />,
+    icon: "layout-dashboard",
   },
 };
 

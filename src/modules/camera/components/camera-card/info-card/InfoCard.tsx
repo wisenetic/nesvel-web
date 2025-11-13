@@ -5,6 +5,7 @@ import {
   CardHeader,
 } from "@/core/components/ui/card";
 import { type ICamera } from "@/modules/camera/types";
+import { useNavigate, useLocation } from "react-router";
 
 import CameraActions from "./CameraActions";
 import CameraHeader from "./CameraHeader";
@@ -22,6 +23,9 @@ export function InfoCard({
   onFullscreen,
   onSnapshot,
 }: CameraCardProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
     <Card>
       <CardHeader>
@@ -40,7 +44,7 @@ export function InfoCard({
           latency={camera.latency}
         />
         <CameraStreamInfo
-          rtspUrl={camera.rtspUrl}
+          streamUrl={camera.streamUrl}
           isRecording={camera.isRecording}
           lastSeen={camera.lastSeen}
         />
@@ -49,7 +53,11 @@ export function InfoCard({
         <CameraActions
           onEdit={() => onEdit?.(camera.id)}
           onDelete={() => onDelete?.(camera.id)}
-          onView={() => console.log("View camera", camera.id)}
+          onView={() =>
+            navigate(`/cameras/show/${camera.id}`, {
+              state: { background: location }, // optional but recommended
+            })
+          }
         />
       </CardFooter>
     </Card>

@@ -1,5 +1,5 @@
-import { Activity } from "lucide-react";
 import type { AppModule } from "@/core/types/app-module.type";
+
 import { MetricRoutes } from "./metric.routes";
 
 const MetricResource = {
@@ -10,7 +10,7 @@ const MetricResource = {
   show: "/metrics/show/:id", // detail page
   meta: {
     label: "Metrics", // sidebar label
-    icon: <Activity size={18} />, // lucide-react chart icon
+    icon: "activity", // lucide-react chart icon
   },
 };
 

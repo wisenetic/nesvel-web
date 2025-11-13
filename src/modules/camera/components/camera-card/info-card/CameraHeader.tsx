@@ -1,9 +1,9 @@
+import { useTranslate } from "@refinedev/core";
 import { Video } from "lucide-react";
 
 import { Badge } from "@/core/components/ui/badge";
 import { CardAction, CardTitle } from "@/core/components/ui/card";
 import { Checkbox } from "@/core/components/ui/checkbox";
-import { useTranslation } from "@refinedev/core";
 import { type CameraStatus } from "@/modules/camera/types";
 
 type CameraHeaderProps = {
@@ -29,7 +29,7 @@ export default function CameraHeader({
   selected = false,
   onToggleSelect,
 }: CameraHeaderProps) {
-  const { translate } = useTranslation();
+  const translate = useTranslate();
   return (
     <>
       <CardTitle>

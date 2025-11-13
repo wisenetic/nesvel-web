@@ -5,7 +5,6 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/core/components/ui/sidebar";
-
 import { cn } from "@/core/lib/utils";
 
 export const SidebarHeader = () => {

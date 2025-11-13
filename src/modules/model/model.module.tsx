@@ -1,6 +1,5 @@
-import { Box } from "lucide-react";
-
 import type { AppModule } from "@/core/types/app-module.type";
+
 import { ModelRoutes } from "./model.routes";
 
 const MetricResource = {
@@ -11,7 +10,7 @@ const MetricResource = {
   show: "/models/show/:id", // details route
   meta: {
     label: "Models", // sidebar label
-    icon: <Box size={18} />, // lucide-react icon (AI/ML brain)
+    icon: "box", // lucide-react icon (AI/ML brain)
   },
 };
 
