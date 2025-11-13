@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ListIcon } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@refinedev/core";
 import {
   Sidebar as ShadcnSidebar,
   SidebarContent as ShadcnSidebarContent,
@@ -41,7 +41,7 @@ export const Sidebar = () => {
   const { open } = useShadcnSidebar();
   const Link = useLink();
   const { menuItems, selectedKey } = useMenu();
-  const { t } = useTranslation();
+  const { translate } = useTranslation();
   return (
     <ShadcnSidebar collapsible="icon">
       {/* --- Header --- */}
@@ -75,7 +75,7 @@ export const Sidebar = () => {
                         />
                         {open && (
                           <span className="truncate">
-                            {t(getDisplayName(item))}
+                            {translate(getDisplayName(item))}
                           </span>
                         )}
                       </Link>

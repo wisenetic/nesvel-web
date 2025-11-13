@@ -1,18 +1,18 @@
 import { Video } from "lucide-react";
 
 import { Badge } from "@/core/components/ui/badge";
-import {
-  CardAction,
-  CardDescription,
-  CardTitle,
-} from "@/core/components/ui/card";
-import { CameraStatus } from "@/modules/camera/types";
+import { CardAction, CardTitle } from "@/core/components/ui/card";
+import { Checkbox } from "@/core/components/ui/checkbox";
+import { useTranslation } from "@refinedev/core";
+import { type CameraStatus } from "@/modules/camera/types";
 
-interface CameraHeaderProps {
+type CameraHeaderProps = {
   name: string;
-  location?: string;
   status: CameraStatus;
-}
+  selectable?: boolean;
+  selected?: boolean;
+  onToggleSelect?: (checked: boolean) => void;
+};
 
 const statusColors: Record<CameraStatus, string> = {
   online: "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100",
@@ -24,18 +24,27 @@ const statusColors: Record<CameraStatus, string> = {
 
 export default function CameraHeader({
   name,
-  location,
   status,
+  selectable = true,
+  selected = false,
+  onToggleSelect,
 }: CameraHeaderProps) {
+  const { translate } = useTranslation();
   return (
     <>
       <CardTitle>
         <div className="flex gap-2 items-center">
+          {selectable ? (
+            <Checkbox
+              checked={selected}
+              onCheckedChange={(v) => onToggleSelect?.(Boolean(v))}
+              aria-label={translate("camera.select_camera")}
+            />
+          ) : null}
           <Video />
           {name}
         </div>
       </CardTitle>
-      <CardDescription>{location}</CardDescription>
       <CardAction>
         <Badge className={` rounded-full ${statusColors[status]}`}>
           {status}

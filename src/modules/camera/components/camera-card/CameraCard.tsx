@@ -1,23 +1,19 @@
-import CameraHeader from "./CameraHeader";
-import CameraMetrics from "./CameraMetrics";
-import CameraStreamInfo from "./CameraStreamInfo";
-import CameraActions from "./CameraActions";
-import { ICamera } from "@/modules/camera/types";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/core/components/ui/card";
+import { type ICamera } from "@/modules/camera/types";
 
-export interface CameraCardProps {
+import { InfoCard } from "./info-card";
+import { LiveCard } from "./live-card";
+
+export type CameraCardProps = {
   camera: ICamera;
   selected?: boolean;
   onSelect?: (id: string) => void;
   onEdit?: (id: string) => void;
   onDelete?: (id: string) => void;
   onToggleRecord?: (id: string, isRecording: boolean) => void;
-}
+  mode?: "live" | "info";
+  onFullscreen?: (id: string) => void;
+  onSnapshot?: (id: string) => void;
+};
 
 export default function CameraCard({
   camera,
@@ -26,35 +22,29 @@ export default function CameraCard({
   onEdit,
   onDelete,
   onToggleRecord,
+  mode = "info",
+  onFullscreen,
+  onSnapshot,
 }: CameraCardProps) {
-  return (
-    <Card>
-      <CardHeader>
-        <CameraHeader
-          name={camera.name}
-          location={camera.location}
-          status={camera.status}
-        />
-      </CardHeader>
-      <CardContent className="space-y-3">
-        <CameraMetrics
-          fps={camera.fps}
-          bitrate={camera.bitrate}
-          latency={camera.latency}
-        />
-        <CameraStreamInfo
-          rtspUrl={camera.rtspUrl}
-          isRecording={camera.isRecording}
-          lastSeen={camera.lastSeen}
-        />
-      </CardContent>
-      <CardFooter className="block">
-        <CameraActions
-          onEdit={() => onEdit?.(camera.id)}
-          onDelete={() => onDelete?.(camera.id)}
-          onView={() => console.log("View camera", camera.id)}
-        />
-      </CardFooter>
-    </Card>
+  const isLive = mode === "live";
+  return isLive ? (
+    <LiveCard
+      camera={camera}
+      selected={selected}
+      onSelect={() => onSelect?.(camera.id)}
+      onFullscreen={() => onFullscreen?.(camera.id)}
+      onSnapshot={() => onSnapshot?.(camera.id)}
+    />
+  ) : (
+    <InfoCard
+      camera={camera}
+      selected={selected}
+      onSelect={onSelect}
+      onEdit={onEdit}
+      onDelete={onDelete}
+      onToggleRecord={onToggleRecord}
+      onFullscreen={onFullscreen}
+      onSnapshot={onSnapshot}
+    />
   );
 }

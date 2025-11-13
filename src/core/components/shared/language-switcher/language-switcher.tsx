@@ -1,4 +1,7 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@refinedev/core";
+import { Globe } from "lucide-react";
+
+import { Button } from "@/core/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -7,21 +10,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/core/components/ui/dropdown-menu";
-import { Button } from "@/core/components/ui/button";
-import { Globe } from "lucide-react";
 import { getAppLanguages } from "@/core/config/app.config";
 
 export const LanguageSwitcher = () => {
-  const { i18n } = useTranslation();
+  const { getLocale, changeLocale } = useTranslation();
 
   const languages = getAppLanguages();
 
   const currentLang =
-    languages.find((l) => l.key === i18n.language) || languages[0];
+    languages.find((l) => l.key === getLocale()) ?? languages[0];
 
   const handleChange = (lang: string) => {
-    i18n.changeLanguage(lang);
-    localStorage.setItem("language", lang);
+    changeLocale(lang);
   };
 
   return (
@@ -43,9 +43,11 @@ export const LanguageSwitcher = () => {
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.key}
-            onClick={() => handleChange(lang.key)}
+            onClick={() => {
+              handleChange(lang.key);
+            }}
             className={
-              i18n.language === lang.key
+              getLocale() === lang.key
                 ? "font-semibold text-primary"
                 : "text-foreground"
             }

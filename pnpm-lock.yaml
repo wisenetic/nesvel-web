@@ -140,6 +140,9 @@ importers:
       embla-carousel-react:
         specifier: ^8.6.0
         version: 8.6.0(react@19.1.0)
+      hls.js:
+        specifier: ^1.6.14
+        version: 1.6.14
       i18next:
         specifier: ^25.6.1
         version: 25.6.1(typescript@5.9.3)
@@ -3325,6 +3328,9 @@ packages:
 
   headers-polyfill@4.0.3:
     resolution: {integrity: sha512-IScLbePpkvO846sIwOtOTDjutRMWdXdJmXdMvk6gCBHxFO8d+QKOQedyZSxFTTFYRSmlgSTDtXqqq4pcenBXLQ==}
+
+  hls.js@1.6.14:
+    resolution: {integrity: sha512-CSpT2aXsv71HST8C5ETeVo+6YybqCpHBiYrCRQSn3U5QUZuLTSsvtq/bj+zuvjLVADeKxoebzo16OkH8m1+65Q==}
 
   hosted-git-info@7.0.2:
     resolution: {integrity: sha512-puUZAUKT5m8Zzvs72XWy3HtvVbTWljRE66cP60bxJzAqf2DgICo7lYTY2IHUmLnNpjYvw5bvmoHvPc0QO2a62w==}
@@ -8705,6 +8711,8 @@ snapshots:
       function-bind: 1.1.2
 
   headers-polyfill@4.0.3: {}
+
+  hls.js@1.6.14: {}
 
   hosted-git-info@7.0.2:
     dependencies:
