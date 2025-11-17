@@ -1,3 +1,1 @@
-import CameraToolbar from "./CameraToolbar";
-
-export { CameraToolbar };
+export { default } from "./CameraToolbar";

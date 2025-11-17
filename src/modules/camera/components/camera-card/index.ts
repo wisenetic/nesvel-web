@@ -1,1 +1,1 @@
-export { default as CameraCard } from "./CameraCard";
+export { default } from "./CameraCard";

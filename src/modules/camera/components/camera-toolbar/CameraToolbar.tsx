@@ -1,3 +1,4 @@
+import { useTranslation } from "@refinedev/core";
 import { List, Grid, Filter, Folder } from "lucide-react";
 
 import { Button } from "@/core/components/ui/button";
@@ -9,39 +10,40 @@ import {
   SelectContent,
   SelectItem,
 } from "@/core/components/ui/select";
-import { useTranslation } from "@refinedev/core";
 
 type Option = { value: string; label: string };
 
 type CameraToolbarProps = {
   mode: "live" | "info";
-  onModeChange: (m: "live" | "info") => void;
-  onSelectAll?: () => void;
   statusOptions: Option[];
   locationOptions: Option[];
   statusValue: string;
   locationValue: string;
-  onStatusChange: (value: string) => void;
-  onLocationChange: (value: string) => void;
   totalCount: number;
   selectedCount: number;
+  onModeChange: (m: "live" | "info") => void;
+  onSelectAll?: () => void;
+
+  onStatusChange: (value: string) => void;
+  onLocationChange: (value: string) => void;
+
   gridSize: "2x2" | "3x3" | "4x4";
   onGridSizeChange: (size: "2x2" | "3x3" | "4x4") => void;
 };
 
 export default function CameraToolbar({
   mode,
-  onModeChange,
-  onSelectAll,
   statusOptions,
   locationOptions,
   statusValue,
   locationValue,
-  onStatusChange,
-  onLocationChange,
   totalCount,
   selectedCount,
   gridSize,
+  onModeChange,
+  onSelectAll,
+  onStatusChange,
+  onLocationChange,
   onGridSizeChange,
 }: CameraToolbarProps) {
   const { translate } = useTranslation();
@@ -115,7 +117,7 @@ export default function CameraToolbar({
         <Select
           value={gridSize}
           onValueChange={(v) => {
-            onGridSizeChange(v as any);
+            onGridSizeChange(v as CameraToolbarProps["gridSize"]);
           }}
         >
           <SelectTrigger className="w-[88px]">
@@ -137,7 +139,9 @@ export default function CameraToolbar({
             variant={mode === "info" ? "secondary" : "outline"}
             size="sm"
             className="flex items-center gap-1"
-            onClick={() => onModeChange("info")}
+            onClick={() => {
+              onModeChange("info");
+            }}
           >
             <List size={16} />
             <span className="hidden sm:inline">
@@ -148,7 +152,9 @@ export default function CameraToolbar({
             variant={mode === "live" ? "secondary" : "outline"}
             size="sm"
             className="flex items-center gap-1"
-            onClick={() => onModeChange("live")}
+            onClick={() => {
+              onModeChange("live");
+            }}
           >
             <Grid size={16} />
             <span className="hidden sm:inline">

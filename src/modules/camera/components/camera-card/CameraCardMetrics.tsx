@@ -1,12 +1,12 @@
-type CameraMetricsProps = {
-  fps: number;
-  bitrate: string;
-  latency: string;
-};
-
 import { useTranslate } from "@refinedev/core";
 
-export default function CameraMetrics({
+type CameraMetricsProps = {
+  fps?: string;
+  bitrate?: string;
+  latency?: string;
+};
+
+export default function CameraCardMetrics({
   fps,
   bitrate,
   latency,

@@ -2,17 +2,17 @@ import { useTranslate } from "@refinedev/core";
 
 import { cn } from "@/core/lib/utils";
 
-type CameraStreamInfoProps = {
+type CameraCardStreamInfoProps = {
   streamUrl: string;
-  isRecording: boolean;
-  lastSeen: string;
+  isRecording?: boolean;
+  lastSeen?: string;
 };
 
-export default function CameraStreamInfo({
+export default function CameraCardStreamInfo({
   streamUrl,
   isRecording,
   lastSeen,
-}: CameraStreamInfoProps) {
+}: CameraCardStreamInfoProps) {
   const translate = useTranslate();
   return (
     <>

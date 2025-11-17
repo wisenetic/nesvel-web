@@ -2,18 +2,17 @@ import { useTranslate } from "@refinedev/core";
 import { Download, SquarePen, Trash2, Eye } from "lucide-react";
 
 import { Button } from "@/core/components/ui/button";
+
 type CameraActionsProps = {
-  onEdit?: () => void;
-  onDelete?: () => void;
-  onDownload?: () => void;
   onView?: () => void;
+  onEdit?: () => void;
+  onSnapshot?: () => void;
 };
 
 export default function CameraActions({
-  onEdit,
-  onDelete,
-  onDownload,
   onView,
+  onEdit,
+  onSnapshot,
 }: CameraActionsProps) {
   const translate = useTranslate();
   return (
@@ -35,14 +34,14 @@ export default function CameraActions({
       <Button
         variant={"outline"}
         title={translate("camera.actions.download")}
-        onClick={onDownload}
+        onClick={onSnapshot}
       >
         <Download size={16} />
       </Button>
       <Button
         variant={"outline"}
         title={translate("camera.actions.delete")}
-        onClick={onDelete}
+        onClick={onSnapshot}
       >
         <Trash2 size={16} />
       </Button>

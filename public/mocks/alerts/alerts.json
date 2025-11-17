@@ -1,0 +1,68 @@
+[
+  {
+    "id": "1",
+    "name": "test",
+    "detectionType": "fire",
+    "minConfidence": 70,
+    "emailEnabled": false,
+    "webhookEnabled": true,
+    "webhookUrl": "rtsp://admin:password@192.168.1.100:554/stream1",
+    "enabled": true,
+    "severity": "warning"
+  },
+  {
+    "id": "2",
+    "name": "Critical Fire Detection",
+    "detectionType": "fire",
+    "minConfidence": 85,
+    "emailEnabled": true,
+    "webhookEnabled": true,
+    "webhookUrl": "https://example.com/webhooks/fire-critical",
+    "enabled": true,
+    "severity": "critical"
+  },
+  {
+    "id": "3",
+    "name": "Smoke Detection Alert",
+    "detectionType": "smoke",
+    "minConfidence": 75,
+    "emailEnabled": true,
+    "webhookEnabled": true,
+    "webhookUrl": "https://example.com/webhooks/smoke",
+    "enabled": true,
+    "severity": "warning"
+  },
+  {
+    "id": "4",
+    "name": "Person Detection",
+    "detectionType": "person",
+    "minConfidence": 80,
+    "emailEnabled": true,
+    "webhookEnabled": false,
+    "webhookUrl": "",
+    "enabled": false,
+    "severity": "info"
+  },
+  {
+    "id": "5",
+    "name": "zszdsadsasd",
+    "detectionType": "fire",
+    "minConfidence": 70,
+    "emailEnabled": false,
+    "webhookEnabled": false,
+    "webhookUrl": "",
+    "enabled": true,
+    "severity": "warning"
+  },
+  {
+    "id": "6",
+    "name": "test (no notifications)",
+    "detectionType": "fire",
+    "minConfidence": 70,
+    "emailEnabled": false,
+    "webhookEnabled": false,
+    "webhookUrl": "",
+    "enabled": true,
+    "severity": "warning"
+  }
+]

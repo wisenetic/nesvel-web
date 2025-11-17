@@ -9,20 +9,20 @@ export type ICamera = {
   name: string;
   location?: string;
   status: CameraStatus;
-  fps?: number;
+  fps?: string;
   bitrate?: string;
   latency?: string;
   streamUrl: string; // replace streamUrl
   streamType?: "hls" | "rtsp" | "mjpeg" | "mp4" | "webrtc";
   lastSeen?: string; // ISO
   isRecording?: boolean;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 };
 
 /**
  * Used in the CameraStatusSummary component
  */
-export type ICameraStatusSummaryStats = {
+export type ICameraStatusStats = {
   total: number;
   online: number;
   offline: number;

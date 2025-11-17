@@ -18,9 +18,19 @@ const cameraModule: AppModule = {
   priority: 20,
   presentation: {
     list: "page",
-    show: "drawer",
-    edit: "modal",
-    create: "page",
+    show: {
+      view: "drawer",
+      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]!  p-6", // full control
+      side: "right",
+    },
+    create: {
+      view: "modal",
+      className: "max-w-2xl p-0 bg-white rounded-xl",
+    },
+    edit: {
+      view: "modal",
+      className: "max-w-2xl p-0 bg-white rounded-xl",
+    },
   },
 };
 

@@ -6,7 +6,7 @@ import { CardAction, CardTitle } from "@/core/components/ui/card";
 import { Checkbox } from "@/core/components/ui/checkbox";
 import { type CameraStatus } from "@/modules/camera/types";
 
-type CameraHeaderProps = {
+type CameraCardHeaderProps = {
   name: string;
   status: CameraStatus;
   selectable?: boolean;
@@ -22,13 +22,13 @@ const statusColors: Record<CameraStatus, string> = {
     "bg-violet-100 text-violet-800 dark:bg-violet-800 dark:text-violet-100",
 };
 
-export default function CameraHeader({
+export default function CameraCardHeader({
   name,
   status,
   selectable = true,
   selected = false,
   onToggleSelect,
-}: CameraHeaderProps) {
+}: CameraCardHeaderProps) {
   const translate = useTranslate();
   return (
     <>
