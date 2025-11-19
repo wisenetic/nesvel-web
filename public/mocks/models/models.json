@@ -1,0 +1,174 @@
+[
+  {
+    "id": "m1",
+    "name": "Fire Detection Model v2",
+    "description": "Advanced fire detection with 98% accuracy",
+    "emoji": "🔥",
+    "status": "active",
+    "category": "safety",
+    "accuracy": 98,
+    "pricePerMonth": 49.99,
+    "latencyMs": 85,
+    "fps": 30,
+    "gpu": "NVIDIA Jetson Nano or higher",
+    "memory": "2GB RAM",
+    "minResolution": "720p",
+    "minFps": 15,
+    "features": [
+      "Real-time fire detection (<100ms latency)",
+      "98% accuracy with low false positive rate",
+      "Works in various lighting conditions",
+      "Detects both flames and smoke",
+      "Edge-optimized for NVIDIA Jetson",
+      "Supports multiple camera feeds"
+    ]
+  },
+  {
+    "id": "m2",
+    "name": "Smoke Detection Pro",
+    "description": "Early smoke detection for fire prevention",
+    "emoji": "💨",
+    "status": "active",
+    "category": "safety",
+    "accuracy": 95,
+    "pricePerMonth": 39.99,
+    "latencyMs": 90,
+    "fps": 25,
+    "gpu": "NVIDIA Jetson Xavier or higher",
+    "memory": "4GB RAM",
+    "minResolution": "720p",
+    "minFps": 15,
+    "features": [
+      "Early-stage smoke pattern detection",
+      "Optimized for indoor environments",
+      "Low false alarm rate",
+      "Supports thermal and RGB cameras"
+    ]
+  },
+  {
+    "id": "m3",
+    "name": "AI Motion Detection",
+    "description": "Intelligent motion detection with person tracking",
+    "emoji": "🏃‍♂️",
+    "status": "active",
+    "category": "analytics",
+    "accuracy": 92,
+    "pricePerMonth": 29.99,
+    "latencyMs": 60,
+    "fps": 30,
+    "gpu": "NVIDIA Jetson Nano or higher",
+    "memory": "2GB RAM",
+    "minResolution": "480p",
+    "minFps": 15,
+    "features": [
+      "Person and motion tracking",
+      "Configurable sensitivity zones",
+      "Supports crowded environments"
+    ]
+  },
+  {
+    "id": "m4",
+    "name": "Crowd Detection & Counting",
+    "description": "Real-time crowd density and people counting",
+    "emoji": "👪",
+    "status": "active",
+    "category": "analytics",
+    "accuracy": 94,
+    "pricePerMonth": 79.99,
+    "latencyMs": 120,
+    "fps": 20,
+    "gpu": "NVIDIA Jetson Xavier or higher",
+    "memory": "4GB RAM",
+    "minResolution": "720p",
+    "minFps": 15,
+    "features": [
+      "Accurate people counting",
+      "Heatmap-based crowd visualization",
+      "Supports large open spaces"
+    ]
+  },
+  {
+    "id": "m5",
+    "name": "Vehicle Detection & Classification",
+    "description": "Detect and classify vehicles by type",
+    "emoji": "🚗",
+    "status": "active",
+    "category": "security",
+    "accuracy": 96,
+    "pricePerMonth": 59.99,
+    "latencyMs": 110,
+    "fps": 25,
+    "gpu": "NVIDIA Jetson Xavier or higher",
+    "memory": "4GB RAM",
+    "minResolution": "720p",
+    "minFps": 20,
+    "features": [
+      "Detects cars, trucks, buses, and motorcycles",
+      "Lane-agnostic vehicle tracking",
+      "Supports parking lots and roadways"
+    ]
+  },
+  {
+    "id": "m6",
+    "name": "PPE Compliance Detection",
+    "description": "Detect safety equipment compliance",
+    "emoji": "🦺",
+    "status": "active",
+    "category": "healthcare",
+    "accuracy": 93,
+    "pricePerMonth": 69.99,
+    "latencyMs": 130,
+    "fps": 20,
+    "gpu": "NVIDIA Jetson Xavier or higher",
+    "memory": "4GB RAM",
+    "minResolution": "720p",
+    "minFps": 15,
+    "features": [
+      "Detects helmets, vests, and safety gear",
+      "Configurable compliance rules",
+      "Designed for industrial environments"
+    ]
+  },
+  {
+    "id": "m7",
+    "name": "Fall Detection (Elderly Care)",
+    "description": "Detect falls and patient monitoring",
+    "emoji": "🛏️",
+    "status": "active",
+    "category": "healthcare",
+    "accuracy": 96,
+    "pricePerMonth": 99.99,
+    "latencyMs": 70,
+    "fps": 25,
+    "gpu": "NVIDIA Jetson Nano or higher",
+    "memory": "4GB RAM",
+    "minResolution": "720p",
+    "minFps": 20,
+    "features": [
+      "Accurate fall detection",
+      "Privacy-preserving posture analysis",
+      "Alerts for prolonged inactivity"
+    ]
+  },
+  {
+    "id": "m8",
+    "name": "Weapon Detection (Beta)",
+    "description": "Detect firearms and weapons in video feeds",
+    "emoji": "🔫",
+    "status": "beta",
+    "category": "security",
+    "accuracy": 91,
+    "pricePerMonth": 89.99,
+    "latencyMs": 140,
+    "fps": 20,
+    "gpu": "NVIDIA Jetson Xavier or higher",
+    "memory": "4GB RAM",
+    "minResolution": "720p",
+    "minFps": 15,
+    "features": [
+      "Real-time weapon detection",
+      "Designed for controlled access areas",
+      "Beta: best used with human review"
+    ]
+  }
+]

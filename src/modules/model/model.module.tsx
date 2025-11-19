@@ -2,22 +2,31 @@ import type { AppModule } from "@/core/types/app-module.type";
 
 import { ModelRoutes } from "./model.routes";
 
-const MetricResource = {
-  name: "models", // ✅ plural (REST/Refine resource name)
-  list: "/models", // list route
-  create: "/models/create", // create route
-  edit: "/models/edit/:id", // edit route
-  show: "/models/show/:id", // details route
+const ModelResource = {
+  name: "models",
+  list: "/models",
+  // We only implement list + show for now; create/edit reserved for future use
+  create: "/models/create",
+  edit: "/models/edit/:id",
+  show: "/models/show/:id",
   meta: {
-    label: "Models", // sidebar label
-    icon: "box", // lucide-react icon (AI/ML brain)
+    labelKey: "model.title",
+    icon: "box",
   },
 };
 
-const MetricModule: AppModule = {
-  resource: MetricResource,
+const ModelModule: AppModule = {
+  resource: ModelResource,
   routes: <ModelRoutes />,
   priority: 60,
+  presentation: {
+    list: "page",
+    show: {
+      view: "drawer",
+      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6",
+      side: "right",
+    },
+  },
 };
 
-export default MetricModule;
+export default ModelModule;
