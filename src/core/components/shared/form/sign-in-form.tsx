@@ -75,7 +75,7 @@ export const SignInForm = () => {
         )}
       </div>
 
-      <Card className={cn("sm:w-[456px]", "p-12", "mt-6")}>
+      <Card className={cn("md:w-[456px]", "p-12", "mt-6")}>
         <CardHeader className={cn("px-0")}>
           <CardTitle
             className={cn(

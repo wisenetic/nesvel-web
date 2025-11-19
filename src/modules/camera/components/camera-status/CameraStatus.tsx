@@ -1,78 +1,67 @@
 import { useTranslation } from "@refinedev/core";
-import { Video, Wifi, WifiOff, CircleDot } from "lucide-react";
+import { CircleDot, Video, Wifi, WifiOff } from "lucide-react";
 
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/core/components/ui/card";
+import { StatsOverview } from "@/core/components/shared/stats/StatsOverview";
 import { type ICameraStatusStats } from "@/modules/camera/types";
 
 type CameraStatusProps = {
   stats: ICameraStatusStats;
 };
 
-const summaryItems = [
+type SummaryKey = keyof ICameraStatusStats;
+
+const summaryItems: {
+  key: SummaryKey;
+  labelKey: string;
+  icon: React.ComponentType<{ size?: number }>;
+  iconClassName: string;
+}[] = [
   {
     key: "total",
     labelKey: "camera.summary.total",
     icon: Video,
-    light: "bg-gray-100 text-gray-700",
-    dark: "dark:bg-gray-800 dark:text-gray-300",
-    title: "text-gray-700 dark:text-gray-400",
+    iconClassName:
+      "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
   },
   {
     key: "online",
     labelKey: "camera.summary.online",
     icon: Wifi,
-    light: "bg-green-100 text-green-700",
-    dark: "dark:bg-green-900 dark:text-green-300",
-    title: "text-green-700 dark:text-green-400",
+    iconClassName:
+      "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
   },
   {
     key: "offline",
     labelKey: "camera.summary.offline",
     icon: WifiOff,
-    light: "bg-red-100 text-red-700",
-    dark: "dark:bg-red-900 dark:text-red-300",
-    title: "text-red-700 dark:text-red-400",
+    iconClassName:
+      "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300",
   },
   {
     key: "recording",
     labelKey: "camera.summary.recording",
     icon: CircleDot,
-    light: "bg-violet-100 text-violet-700",
-    dark: "dark:bg-violet-900 dark:text-violet-300",
-    title: "text-violet-700 dark:text-violet-400",
+    iconClassName:
+      "bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-300",
   },
 ];
 
 export default function CameraStatus({ stats }: CameraStatusProps) {
   const { translate } = useTranslation();
+
+  const items = summaryItems.map(({ key, labelKey, icon: Icon, iconClassName }) => ({
+    label: translate(labelKey),
+    value: stats[key] ?? 0,
+    icon: <Icon size={24} />,
+    iconClassName,
+  }));
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-      {summaryItems.map(({ key, labelKey, icon: Icon, light, dark, title }) => (
-        <Card className="@container/card" key={key}>
-          <CardHeader>
-            <CardDescription>
-              {labelKey ? translate(labelKey) : null}
-            </CardDescription>
-            <CardTitle
-              className={`text-2xl font-semibold tabular-nums md:card:text-3xl ${title}`}
-            >
-              {/* TODO: FIX TYPE Issue */}
-              {stats[key] ?? 0}
-            </CardTitle>
-            <CardAction>
-              <div className={`p-4 rounded-full ${light} ${dark}`}>
-                <Icon size={24} />
-              </div>
-            </CardAction>
-          </CardHeader>
-        </Card>
-      ))}
-    </div>
+    <StatsOverview
+      items={items}
+      className="mb-6"
+      applyToneStyles={false}
+      circleIcon
+    />
   );
 }

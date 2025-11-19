@@ -1,12 +1,16 @@
-import type { ReactNode } from "react";
-import type { UseFormReturn } from "react-hook-form";
-
 import { useTranslation } from "@refinedev/core";
+import { UseFormReturnType } from "@refinedev/react-hook-form";
+import {
+  Flame,
+  Bell,
+  Webhook,
+  Sparkles,
+  PersonStanding,
+  AlarmSmoke,
+} from "lucide-react";
+import type { ReactNode } from "react";
 
 import { Button } from "@/core/components/ui/button";
-import { Input } from "@/core/components/ui/input";
-import { Slider } from "@/core/components/ui/slider";
-import { Switch } from "@/core/components/ui/switch";
 import {
   Form,
   FormControl,
@@ -15,6 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/core/components/ui/form";
+import { Input } from "@/core/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -22,23 +27,45 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/core/components/ui/select";
-import type { AlertRule, DetectionType } from "@/modules/alert/types";
+import { Slider } from "@/core/components/ui/slider";
+import { Switch } from "@/core/components/ui/switch";
+import type { DetectionType } from "@/modules/alert/types";
 
-export type AlertRuleFormValues = Partial<AlertRule>;
+import type { AlertRuleFormValues } from "../../schema/alert-rule.schema";
 
 export type AlertRuleFormProps = {
-  form: UseFormReturn<AlertRuleFormValues>;
+  form: UseFormReturnType<any, any, AlertRuleFormValues>;
   mode: "create" | "edit";
   onSubmit: (values: AlertRuleFormValues) => void;
   onCancel: () => void;
   footerSlot?: ReactNode;
 };
 
-const detectionTypeOptions: { value: DetectionType; i18nKey: string }[] = [
-  { value: "fire", i18nKey: "alert.detectionType.fire" },
-  { value: "smoke", i18nKey: "alert.detectionType.smoke" },
-  { value: "person", i18nKey: "alert.detectionType.person" },
-  { value: "custom", i18nKey: "alert.detectionType.custom" },
+const detectionTypeOptions: {
+  value: DetectionType;
+  label: string;
+  icon: ReactNode;
+}[] = [
+  {
+    value: "fire",
+    label: "alert.detectionType.fire",
+    icon: <Flame className="h-4 w-4" />,
+  },
+  {
+    value: "smoke",
+    label: "alert.detectionType.smoke",
+    icon: <AlarmSmoke className="h-4 w-4" />,
+  },
+  {
+    value: "person",
+    label: "alert.detectionType.person",
+    icon: <PersonStanding className="h-4 w-4" />,
+  },
+  {
+    value: "custom",
+    label: "alert.detectionType.custom",
+    icon: <Sparkles className="h-4 w-4" />,
+  },
 ];
 
 export function AlertRuleForm({
@@ -49,10 +76,6 @@ export function AlertRuleForm({
   footerSlot,
 }: AlertRuleFormProps) {
   const { translate } = useTranslation();
-
-  const handleSubmit = (values: AlertRuleFormValues) => {
-    onSubmit(values);
-  };
 
   const title =
     mode === "create"
@@ -76,14 +99,15 @@ export function AlertRuleForm({
       : translate("alert.edit.submit", "Update Alert Rule");
 
   return (
-    <div className="w-full max-w-xl p-6 space-y-6">
-      <div className="space-y-1">
+    <div className="w-full max-w-2xl p-6 space-y-6">
+      {/* Header */}
+      <div>
         <h2 className="text-xl font-semibold">{title}</h2>
         <p className="text-sm text-muted-foreground">{subtitle}</p>
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Rule name */}
           <FormField
             control={form.control}
@@ -133,7 +157,9 @@ export function AlertRuleForm({
                   <FormControl>
                     <Select
                       value={field.value as DetectionType | undefined}
-                      onValueChange={(val) => field.onChange(val)}
+                      onValueChange={(val) => {
+                        field.onChange(val);
+                      }}
                     >
                       <SelectTrigger>
                         <SelectValue
@@ -146,7 +172,7 @@ export function AlertRuleForm({
                       <SelectContent>
                         {detectionTypeOptions.map((opt) => (
                           <SelectItem key={opt.value} value={opt.value}>
-                            {translate(opt.i18nKey)}
+                            {opt.icon} {translate(opt.label)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -187,7 +213,9 @@ export function AlertRuleForm({
                         max={100}
                         step={1}
                         value={[value]}
-                        onValueChange={(vals) => field.onChange(vals[0])}
+                        onValueChange={(vals) => {
+                          field.onChange(vals[0]);
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -200,7 +228,10 @@ export function AlertRuleForm({
           {/* Notification methods */}
           <div className="space-y-3">
             <h3 className="text-sm font-medium">
-              {translate("alert.sections.notification_methods", "Notification Methods")}
+              {translate(
+                "alert.sections.notification_methods",
+                "Notification Methods",
+              )}
             </h3>
 
             <div className="space-y-3">
@@ -226,7 +257,7 @@ export function AlertRuleForm({
                     </div>
                     <FormControl>
                       <Switch
-                        checked={!!field.value}
+                        checked={field.value}
                         onCheckedChange={field.onChange}
                       />
                     </FormControl>
@@ -257,7 +288,7 @@ export function AlertRuleForm({
                       </div>
                       <FormControl>
                         <Switch
-                          checked={!!field.value}
+                          checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
@@ -277,7 +308,7 @@ export function AlertRuleForm({
                           <FormControl>
                             <Input
                               {...urlField}
-                              value={urlField.value || ""}
+                              value={urlField.value ?? ""}
                               disabled={!field.value}
                               placeholder={translate(
                                 "alert.placeholders.webhook_url",
@@ -317,7 +348,7 @@ export function AlertRuleForm({
                 </div>
                 <FormControl>
                   <Switch
-                    checked={field.value ?? true}
+                    checked={field.value}
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>

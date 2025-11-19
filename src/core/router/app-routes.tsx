@@ -20,7 +20,7 @@ export const AppRoutes = () => {
   return (
     <>
       {/* MAIN ROUTING (background layer) */}
-      <Routes location={background || location}>
+      <Routes location={background ?? location}>
         <Route
           element={
             <Authenticated fallback={<CatchAllNavigate to="/login" />}>

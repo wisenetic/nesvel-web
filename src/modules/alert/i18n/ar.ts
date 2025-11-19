@@ -71,7 +71,8 @@ export default {
     },
     card: {
       subtitle: "قاعدة اكتشاف",
-      min_confidence: "أدنى نسبة ثقة: {{value}}%",
+      // Label only; value is appended in code.
+      min_confidence: "أدنى نسبة ثقة",
     },
     placeholders: {
       name: "تنبيه حريق حرج",

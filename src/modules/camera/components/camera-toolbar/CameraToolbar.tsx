@@ -51,7 +51,7 @@ export default function CameraToolbar({
   const indeterminate = selectedCount > 0 && selectedCount < totalCount;
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-6">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 mb-6">
       {/* Left Side */}
       <div className="flex flex-wrap items-center gap-3">
         {/* Select All */}
@@ -144,7 +144,7 @@ export default function CameraToolbar({
             }}
           >
             <List size={16} />
-            <span className="hidden sm:inline">
+            <span className="hidden md:inline">
               {translate("camera.mode.info")}
             </span>
           </Button>
@@ -157,7 +157,7 @@ export default function CameraToolbar({
             }}
           >
             <Grid size={16} />
-            <span className="hidden sm:inline">
+            <span className="hidden md:inline">
               {translate("camera.mode.live")}
             </span>
           </Button>

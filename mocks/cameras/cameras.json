@@ -9,7 +9,9 @@
     "latency": "42 ms",
     "streamUrl": "https://wowzaec2demo.streamlock.net/live/bigbuckbunny/playlist.m3u8",
     "lastSeen": "2025-11-11T09:30:00Z",
-    "isRecording": true
+    "isRecording": true,
+    "activeRules": 5,
+    "uptime": "99.9%"
   },
   {
     "id": "cam-002",
@@ -21,7 +23,9 @@
     "latency": "55 ms",
     "streamUrl": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
     "lastSeen": "2025-11-11T09:29:20Z",
-    "isRecording": true
+    "isRecording": true,
+    "activeRules": 3,
+    "uptime": "97.5%"
   },
   {
     "id": "cam-003",
@@ -33,7 +37,9 @@
     "latency": "—",
     "streamUrl": "https://test-streams.mux.dev/pts_shift/master.m3u8",
     "lastSeen": "2025-11-10T23:11:10Z",
-    "isRecording": false
+    "isRecording": false,
+    "activeRules": 0,
+    "uptime": "0%"
   },
   {
     "id": "cam-004",
@@ -45,7 +51,9 @@
     "latency": "63 ms",
     "streamUrl": "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8",
     "lastSeen": "2025-11-11T09:27:05Z",
-    "isRecording": true
+    "isRecording": true,
+    "activeRules": 2,
+    "uptime": "98.2%"
   },
   {
     "id": "cam-005",
@@ -57,7 +65,9 @@
     "latency": "—",
     "streamUrl": "https://nbcnews2.akamaized.net/hls/live/2007833/nbcnews2/master.m3u8",
     "lastSeen": "2025-11-11T08:45:00Z",
-    "isRecording": false
+    "isRecording": false,
+    "activeRules": 0,
+    "uptime": "0%"
   },
   {
     "id": "cam-006",
@@ -69,7 +79,9 @@
     "latency": "48 ms",
     "streamUrl": "https://ntv1-akamai.cdn.cnn.com/hls/live/2014075/nasatv-main/playlist.m3u8",
     "lastSeen": "2025-11-11T09:31:33Z",
-    "isRecording": false
+    "isRecording": false,
+    "activeRules": 1,
+    "uptime": "96.4%"
   },
   {
     "id": "cam-007",
@@ -81,7 +93,9 @@
     "latency": "35 ms",
     "streamUrl": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
     "lastSeen": "2025-11-11T09:32:45Z",
-    "isRecording": true
+    "isRecording": true,
+    "activeRules": 4,
+    "uptime": "99.1%"
   },
   {
     "id": "cam-008",
@@ -93,7 +107,9 @@
     "latency": "44 ms",
     "streamUrl": "https://wowzaec2demo.streamlock.net/live/bigbuckbunny/playlist.m3u8",
     "lastSeen": "2025-11-11T09:30:12Z",
-    "isRecording": true
+    "isRecording": true,
+    "activeRules": 2,
+    "uptime": "98.7%"
   },
   {
     "id": "cam-009",
@@ -105,7 +121,9 @@
     "latency": "—",
     "streamUrl": "https://test-streams.mux.dev/pts_shift/master.m3u8",
     "lastSeen": "2025-11-10T20:15:22Z",
-    "isRecording": false
+    "isRecording": false,
+    "activeRules": 0,
+    "uptime": "0%"
   },
   {
     "id": "cam-010",
@@ -117,7 +135,9 @@
     "latency": "57 ms",
     "streamUrl": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
     "lastSeen": "2025-11-11T09:28:18Z",
-    "isRecording": true
+    "isRecording": true,
+    "activeRules": 3,
+    "uptime": "97.9%"
   },
   {
     "id": "cam-011",
@@ -129,6 +149,8 @@
     "latency": "41 ms",
     "streamUrl": "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8",
     "lastSeen": "2025-11-11T09:33:10Z",
-    "isRecording": true
+    "isRecording": true,
+    "activeRules": 3,
+    "uptime": "98.8%"
   }
 ]

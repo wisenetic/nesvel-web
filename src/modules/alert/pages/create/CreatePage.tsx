@@ -1,45 +1,41 @@
-import { useTranslation } from "@refinedev/core";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "@refinedev/react-hook-form";
 import { useNavigate } from "react-router";
 
-import AlertRuleForm, {
+import {
+  alertRuleSchema,
   type AlertRuleFormValues,
-} from "@/modules/alert/components/AlertRuleForm";
-import type { AlertRule } from "@/modules/alert/types";
+} from "@/modules/alert/schema";
+
+import { AlertRuleForm } from "@/modules/alert/components/alert-rule-form";
 
 export default function CreateAlertRulePage() {
   const navigate = useNavigate();
-  const { translate } = useTranslation();
 
-  const {
-    refineCore: { onFinish },
-    ...form
-  } = useForm<AlertRuleFormValues>({
+  const form = useForm<AlertRuleFormValues>({
     refineCoreProps: {
       resource: "alerts",
     },
+    // Cast resolver to any to satisfy react-hook-form + refine typing while
+    // still getting proper runtime validation from zod.
+    resolver: zodResolver(alertRuleSchema) as any,
     defaultValues: {
+      name: "",
       detectionType: "fire",
       minConfidence: 70,
       emailEnabled: false,
       webhookEnabled: false,
+      webhookUrl: "",
       enabled: true,
     },
   });
 
-  const handleSubmit = (values: AlertRuleFormValues) => {
-    const payload: Partial<AlertRule> = {
-      name: values.name ?? "",
-      detectionType: values.detectionType ?? "fire",
-      minConfidence: values.minConfidence ?? 70,
-      emailEnabled: Boolean(values.emailEnabled),
-      webhookEnabled: Boolean(values.webhookEnabled),
-      webhookUrl: values.webhookUrl ?? "",
-      enabled: values.enabled ?? true,
-      severity: values.severity ?? "warning",
-    };
+  const {
+    refineCore: { onFinish },
+  } = form;
 
-    onFinish(payload as any);
+  const handleSubmit = (values: AlertRuleFormValues) => {
+    onFinish(values as any);
   };
 
   return (
@@ -48,7 +44,6 @@ export default function CreateAlertRulePage() {
       mode="create"
       onSubmit={handleSubmit}
       onCancel={() => navigate(-1)}
-      footerSlot={null}
     />
   );
 }

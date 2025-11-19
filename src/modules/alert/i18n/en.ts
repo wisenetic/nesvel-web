@@ -71,7 +71,8 @@ export default {
     },
     card: {
       subtitle: "Detection rule",
-      min_confidence: "Min confidence: {{value}}%",
+      // Label only; the actual numeric value is appended in code.
+      min_confidence: "Min confidence",
     },
     placeholders: {
       name: "Critical Fire Alert",

@@ -25,24 +25,24 @@ export function PageHeader({
   return (
     <div
       className={`
-        flex flex-col sm:flex-row sm:items-center sm:justify-between
-        gap-3 sm:gap-4 mb-6
+        flex flex-col md:flex-row md:items-center md:justify-between
+        gap-3 md:gap-4 mb-6
         ${className}
       `}
     >
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
           {title}
         </h1>
         {description && (
-          <p className="text-muted-foreground mt-1 text-sm sm:text-base">
+          <p className="text-muted-foreground mt-1 text-sm md:text-base">
             {description}
           </p>
         )}
       </div>
 
       {rightSlot && (
-        <div className="flex items-center gap-2 w-full sm:w-auto justify-start sm:justify-end">
+        <div className="flex items-center gap-2 w-full md:w-auto justify-start md:justify-end">
           {rightSlot}
         </div>
       )}

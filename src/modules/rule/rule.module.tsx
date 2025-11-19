@@ -2,22 +2,40 @@ import type { AppModule } from "@/core/types/app-module.type";
 
 import { RuleRoutes } from "./rule.routes";
 
-const ReportResource = {
-  name: "rules", // ✅ plural REST resource name
-  list: "/rules", // list route
-  create: "/rules/create", // create route
-  edit: "/rules/edit/:id", // edit route
-  show: "/rules/show/:id", // details route
+const RuleResource = {
+  name: "rules",
+  list: "/rules",
+  create: "/rules/create",
+  edit: "/rules/edit/:id",
+  show: "/rules/show/:id",
   meta: {
-    label: "Rules",
-    icon: "workflow", // lucide-react icon (automation/settings)
+    labelKey: "rule.title",
+    icon: "workflow",
   },
 };
 
 const RuleModule: AppModule = {
-  resource: ReportResource,
+  resource: RuleResource,
   routes: <RuleRoutes />,
   priority: 70,
+  presentation: {
+    list: "page",
+    show: {
+      view: "drawer",
+      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6",
+      side: "right",
+    },
+    create: {
+      view: "drawer",
+      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6",
+      side: "right",
+    },
+    edit: {
+      view: "drawer",
+      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6",
+      side: "right",
+    },
+  },
 };
 
 export default RuleModule;

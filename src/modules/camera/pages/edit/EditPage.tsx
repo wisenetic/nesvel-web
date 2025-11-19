@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useNavigate } from "react-router";
@@ -12,6 +13,7 @@ import {
   FormMessage,
 } from "@/core/components/ui/form";
 import { Input } from "@/core/components/ui/input";
+import { cameraSchema, type CameraFormValues } from "@/modules/camera/schema";
 import type { ICamera } from "@/modules/camera/types";
 
 export default function CameraEditPage() {
@@ -21,18 +23,19 @@ export default function CameraEditPage() {
   const {
     refineCore: { onFinish, query },
     ...form
-  } = useForm<ICamera>({
+  } = useForm<CameraFormValues>({
     refineCoreProps: {
       resource: "cameras",
     },
+    resolver: zodResolver(cameraSchema) as any,
   });
 
-  const handleSubmit = (values: Partial<ICamera>) => {
+  const handleSubmit = (values: CameraFormValues) => {
     onFinish({
-      name: values.name ?? "",
-      location: values.location,
-      streamUrl: values.streamUrl ?? "",
-    } as any);
+      name: values.name,
+      location: values.location || undefined,
+      streamUrl: values.streamUrl,
+    } as Partial<ICamera> as any);
   };
 
   if (query?.isLoading) {

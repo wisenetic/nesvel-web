@@ -1,10 +1,13 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import { useNavigate } from "react-router";
 
-import AlertRuleForm, {
+import AlertRuleForm from "@/modules/alert/components/alert-rule-form/alert-rule-form";
+import {
+  alertRuleSchema,
   type AlertRuleFormValues,
-} from "@/modules/alert/components/AlertRuleForm";
+} from "@/modules/alert/schema";
 import type { AlertRule } from "@/modules/alert/types";
 
 export default function EditAlertRulePage() {
@@ -18,6 +21,7 @@ export default function EditAlertRulePage() {
     refineCoreProps: {
       resource: "alerts",
     },
+    resolver: zodResolver(alertRuleSchema) as any,
   });
 
   const handleSubmit = (values: AlertRuleFormValues) => {
@@ -29,7 +33,8 @@ export default function EditAlertRulePage() {
       webhookEnabled: Boolean(values.webhookEnabled),
       webhookUrl: values.webhookUrl ?? "",
       enabled: values.enabled ?? true,
-      severity: values.severity ?? "warning",
+      // For now, keep a fixed severity; can be made dynamic later.
+      severity: "warning",
     };
 
     onFinish(payload as any);

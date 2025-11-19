@@ -1,28 +1,16 @@
 export type RoutePresentation = "page" | "drawer" | "modal";
+export type PresentationConfig =
+  | "page"
+  | {
+      view: "drawer" | "modal";
+      className?: string;
+      side?: "left" | "right" | "top" | "bottom";
+    };
 
 export type AppModule = {
-  resource: {
-    name: string;
-
-    list?: string;
-    show?: string;
-    edit?: string;
-    create?: string;
-
-    [key: string]: any;
-  };
-
+  resource: { name: string; [key: string]: unknown };
   routes: React.ReactNode;
-
-  presentation?: {
-    list?: RoutePresentation;
-    show?: RoutePresentation;
-    edit?: RoutePresentation;
-    create?: RoutePresentation;
-
-    [customKey: string]: RoutePresentation | undefined;
-  };
-
+  presentation?: Record<string, PresentationConfig>;
   priority?: number;
   hidden?: boolean;
   group?: string;
