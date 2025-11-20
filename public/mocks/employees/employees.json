@@ -1,0 +1,35 @@
+[
+  {
+    "id": "e1",
+    "fullName": "John Doe",
+    "employeeId": "EMP001",
+    "email": "john@example.com",
+    "phone": "+1234567890",
+    "role": "security_guard",
+    "shift": "morning",
+    "location": "Building A - Main Entrance",
+    "status": "active"
+  },
+  {
+    "id": "e2",
+    "fullName": "Sara Ahmed",
+    "employeeId": "EMP002",
+    "email": "sara.ahmed@example.com",
+    "phone": "+966500000002",
+    "role": "security_guard",
+    "shift": "evening",
+    "location": "Building B - Loading Dock",
+    "status": "on_duty"
+  },
+  {
+    "id": "e3",
+    "fullName": "Omar Khalid",
+    "employeeId": "EMP003",
+    "email": "omar.khalid@example.com",
+    "phone": "+966500000003",
+    "role": "supervisor",
+    "shift": "night",
+    "location": "Control Room",
+    "status": "on_leave"
+  }
+]
