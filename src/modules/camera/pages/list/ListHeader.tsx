@@ -1,8 +1,8 @@
 import { useTranslation } from "@refinedev/core";
 import { Plus, Trash2 } from "lucide-react";
 
-import { PageHeader } from "@/core/components/shared/page-header";
 import { ConfirmDialog } from "@/core/components/shared/confirm-dialog";
+import { PageHeader } from "@/core/components/shared/page-header";
 import { Button } from "@/core/components/ui/button";
 
 type ListHeaderProps = {
@@ -11,7 +11,11 @@ type ListHeaderProps = {
   onDeleteSelected?: () => void;
 };
 
-export function ListHeader({ selectedIds, onAdd, onDeleteSelected }: ListHeaderProps) {
+export function ListHeader({
+  selectedIds,
+  onAdd,
+  onDeleteSelected,
+}: ListHeaderProps) {
   const { translate } = useTranslation();
 
   return (

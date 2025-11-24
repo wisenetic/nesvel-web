@@ -27,7 +27,7 @@ export default function CameraCreatePage() {
     refineCoreProps: {
       resource: "cameras",
     },
-    resolver: zodResolver(cameraSchema) as any,
+    resolver: zodResolver(cameraSchema) as unknown,
     defaultValues: {
       name: "",
       location: "",
@@ -36,11 +36,11 @@ export default function CameraCreatePage() {
   });
 
   const handleSubmit = (values: CameraFormValues) => {
-    onFinish({
+    void onFinish({
       name: values.name,
-      location: values.location || undefined,
+      location: values.location ?? undefined,
       streamUrl: values.streamUrl,
-    } as Partial<ICamera> as any);
+    } as Partial<ICamera>);
   };
 
   return (
@@ -58,10 +58,7 @@ export default function CameraCreatePage() {
       </div>
 
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className="space-y-4"
-        >
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="name"
@@ -79,7 +76,7 @@ export default function CameraCreatePage() {
                 <FormControl>
                   <Input
                     {...field}
-                    value={field.value || ""}
+                    value={field.value ?? ""}
                     placeholder={translate(
                       "camera.create.placeholders.name",
                       "Front Entrance",
@@ -102,7 +99,7 @@ export default function CameraCreatePage() {
                 <FormControl>
                   <Input
                     {...field}
-                    value={field.value || ""}
+                    value={field.value ?? ""}
                     placeholder={translate(
                       "camera.create.placeholders.location",
                       "Building A, Floor 1",
@@ -131,7 +128,7 @@ export default function CameraCreatePage() {
                 <FormControl>
                   <Input
                     {...field}
-                    value={field.value || ""}
+                    value={field.value ?? ""}
                     placeholder={translate(
                       "camera.create.placeholders.streamUrl",
                       "rtsp://admin:password@192.168.1.100:554/stream1",

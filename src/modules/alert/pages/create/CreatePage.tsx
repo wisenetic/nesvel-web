@@ -2,12 +2,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "@refinedev/react-hook-form";
 import { useNavigate } from "react-router";
 
+import { AlertRuleForm } from "@/modules/alert/components/alert-rule-form";
 import {
   alertRuleSchema,
   type AlertRuleFormValues,
 } from "@/modules/alert/schema";
-
-import { AlertRuleForm } from "@/modules/alert/components/alert-rule-form";
 
 export default function CreateAlertRulePage() {
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ export default function CreateAlertRulePage() {
     },
     // Cast resolver to any to satisfy react-hook-form + refine typing while
     // still getting proper runtime validation from zod.
-    resolver: zodResolver(alertRuleSchema) as any,
+    resolver: zodResolver(alertRuleSchema) as unknown,
     defaultValues: {
       name: "",
       detectionType: "fire",
@@ -35,7 +34,7 @@ export default function CreateAlertRulePage() {
   } = form;
 
   const handleSubmit = (values: AlertRuleFormValues) => {
-    onFinish(values as any);
+    void onFinish(values as unknown);
   };
 
   return (

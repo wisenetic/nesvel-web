@@ -1,7 +1,7 @@
-import { useState, useMemo } from "react";
-import { useNavigate, useLocation } from "react-router";
 import { useList, useDeleteMany } from "@refinedev/core";
 import { useTranslation } from "@refinedev/core";
+import { useState, useMemo } from "react";
+import { useNavigate, useLocation } from "react-router";
 
 import CameraStatus from "@/modules/camera/components/camera-status";
 import CameraToolbar from "@/modules/camera/components/camera-toolbar";
@@ -26,7 +26,7 @@ export default function ListPage() {
     resource: "cameras",
   });
 
-  const cameras = useMemo(() => result?.data ?? [], [result]);
+  const cameras = useMemo(() => result.data ?? [], [result]);
 
   // derive status & location filter options
   const statusOptions = useMemo(() => {

@@ -27,15 +27,15 @@ export default function CameraEditPage() {
     refineCoreProps: {
       resource: "cameras",
     },
-    resolver: zodResolver(cameraSchema) as any,
+    resolver: zodResolver(cameraSchema) as unknown,
   });
 
   const handleSubmit = (values: CameraFormValues) => {
-    onFinish({
+    void onFinish({
       name: values.name,
-      location: values.location || undefined,
+      location: values.location ?? undefined,
       streamUrl: values.streamUrl,
-    } as Partial<ICamera> as any);
+    } as Partial<ICamera>);
   };
 
   if (query?.isLoading) {
@@ -61,10 +61,7 @@ export default function CameraEditPage() {
       </div>
 
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className="space-y-4"
-        >
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="name"
@@ -82,7 +79,7 @@ export default function CameraEditPage() {
                 <FormControl>
                   <Input
                     {...field}
-                    value={field.value || ""}
+                    value={field.value ?? ""}
                     placeholder={translate(
                       "camera.edit.placeholders.name",
                       "Front Entrance",
@@ -105,7 +102,7 @@ export default function CameraEditPage() {
                 <FormControl>
                   <Input
                     {...field}
-                    value={field.value || ""}
+                    value={field.value ?? ""}
                     placeholder={translate(
                       "camera.edit.placeholders.location",
                       "Building A, Floor 1",
@@ -134,7 +131,7 @@ export default function CameraEditPage() {
                 <FormControl>
                   <Input
                     {...field}
-                    value={field.value || ""}
+                    value={field.value ?? ""}
                     placeholder={translate(
                       "camera.edit.placeholders.streamUrl",
                       "rtsp://192.168.1.100:554/stream",

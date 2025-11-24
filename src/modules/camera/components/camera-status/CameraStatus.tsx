@@ -34,8 +34,7 @@ const summaryItems: {
     key: "offline",
     labelKey: "camera.summary.offline",
     icon: WifiOff,
-    iconClassName:
-      "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300",
+    iconClassName: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300",
   },
   {
     key: "recording",
@@ -49,12 +48,14 @@ const summaryItems: {
 export default function CameraStatus({ stats }: CameraStatusProps) {
   const { translate } = useTranslation();
 
-  const items = summaryItems.map(({ key, labelKey, icon: Icon, iconClassName }) => ({
-    label: translate(labelKey),
-    value: stats[key] ?? 0,
-    icon: <Icon size={24} />,
-    iconClassName,
-  }));
+  const items = summaryItems.map(
+    ({ key, labelKey, icon: Icon, iconClassName }) => ({
+      label: translate(labelKey),
+      value: stats[key],
+      icon: <Icon size={24} />,
+      iconClassName,
+    }),
+  );
 
   return (
     <StatsOverview

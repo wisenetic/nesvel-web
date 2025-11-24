@@ -1,8 +1,7 @@
+import { useTranslation } from "@refinedev/core";
 import { Video } from "lucide-react";
 
 import { Button } from "@/core/components/ui/button";
-
-import { useTranslation } from "@refinedev/core";
 
 type NoCamerasProps = {
   onAdd?: () => void;

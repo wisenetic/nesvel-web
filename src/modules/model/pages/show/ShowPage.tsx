@@ -1,4 +1,5 @@
 import { useShow, useTranslate } from "@refinedev/core";
+import { Activity, Gauge, Zap } from "lucide-react";
 import { useLocation, useNavigate, useParams } from "react-router";
 
 import { Badge } from "@/core/components/ui/badge";
@@ -6,7 +7,6 @@ import { Button } from "@/core/components/ui/button";
 import { Card } from "@/core/components/ui/card";
 import { Separator } from "@/core/components/ui/separator";
 import type { Model } from "@/modules/model/types";
-import { Activity, Gauge, Zap } from "lucide-react";
 
 export default function ModelShowPage() {
   const { id } = useParams();
@@ -29,12 +29,12 @@ export default function ModelShowPage() {
     );
 
   const handleClose = () => {
-    if (location.state && (location.state as any).background) {
-      navigate(-1);
+    if (location.state?.background) {
+      void navigate(-1);
       return;
     }
 
-    navigate("/models");
+    void navigate("/models");
   };
 
   return (
@@ -42,7 +42,7 @@ export default function ModelShowPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-start gap-3">
-          <div className="flex size-12 items-center justify-center rounded-2xl bg-amber-50 text-3xl md:size-14">
+          <div className="flex size-12 items-center justify-center text-3xl md:size-14">
             <span aria-hidden>{model.emoji}</span>
           </div>
           <div className="space-y-1">
@@ -55,7 +55,7 @@ export default function ModelShowPage() {
         <div className="flex items-center gap-3">
           <Badge
             variant="outline"
-            className="rounded-full bg-blue-600 px-3 py-1 text-xs font-medium text-white shadow"
+            className="rounded-full border px-3 py-1 text-xs font-medium text-foreground/80 dark:text-foreground shadow-sm"
           >
             {t(`model.status.${model.status}` as const, "Active")}
           </Badge>
@@ -69,18 +69,31 @@ export default function ModelShowPage() {
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         <PerformanceCard
           icon={
-            <Activity className="size-5 text-blue-600" aria-hidden="true" />
+            <Activity
+              className="size-5 text-primary dark:text-primary"
+              aria-hidden="true"
+            />
           }
           label={t("model.fields.accuracy", "Accuracy")}
           value={`${model.accuracy}%`}
         />
         <PerformanceCard
-          icon={<Zap className="size-5 text-indigo-600" aria-hidden="true" />}
+          icon={
+            <Zap
+              className="size-5 text-primary/80 dark:text-primary/80"
+              aria-hidden="true"
+            />
+          }
           label={t("model.fields.latency", "Latency")}
           value={`${model.latencyMs}ms`}
         />
         <PerformanceCard
-          icon={<Gauge className="size-5 text-emerald-600" aria-hidden="true" />}
+          icon={
+            <Gauge
+              className="size-5 text-primary/80 dark:text-primary/80"
+              aria-hidden="true"
+            />
+          }
           label={t("model.fields.fps", "FPS")}
           value={`${model.fps}`}
         />
@@ -111,7 +124,7 @@ export default function ModelShowPage() {
                   key={idx}
                   className="flex items-start gap-2 rounded-xl bg-muted/60 px-3 py-2"
                 >
-                  <span className="mt-0.5 text-blue-600">✓</span>
+                  <span className="mt-0.5 text-primary">•</span>
                   <span>{feature}</span>
                 </li>
               ))}
@@ -126,10 +139,7 @@ export default function ModelShowPage() {
               {t("model.show.requirements_title", "System Requirements")}
             </h3>
             <div className="space-y-2 text-sm">
-              <InfoRow
-                label={t("model.fields.gpu", "GPU")}
-                value={model.gpu}
-              />
+              <InfoRow label={t("model.fields.gpu", "GPU")} value={model.gpu} />
               <InfoRow
                 label={t("model.fields.memory", "Memory")}
                 value={model.memory}
@@ -150,7 +160,7 @@ export default function ModelShowPage() {
               {t("model.show.pricing_title", "Pricing")}
             </h3>
             <div className="space-y-1">
-              <div className="text-3xl font-semibold text-blue-600">
+              <div className="text-3xl font-semibold text-foreground">
                 ${""}
                 {model.pricePerMonth.toFixed(2)}
                 <span className="text-sm font-normal text-muted-foreground">
@@ -170,7 +180,7 @@ export default function ModelShowPage() {
 
       <Separator />
 
-      <div className="flex flex-col gap-3 md:flex-row md:justify-between">
+      <div className="flex flex-col gap-3 md:flex-row md:justify-end md:gap-2">
         <Button size="lg" className="w-full md:w-auto">
           {t("model.actions.activate", "Activate Model")}
         </Button>
@@ -196,12 +206,12 @@ const PerformanceCard = ({
   label: string;
   value: string;
 }) => (
-  <Card className="flex items-center gap-3 rounded-2xl border bg-muted/60 px-4 py-3">
-    <div className="flex size-10 items-center justify-center rounded-xl bg-background">
-      {icon}
-    </div>
-    <div className="flex flex-col">
-      <span className="text-xs text-muted-foreground">{label}</span>
+  <Card className="rounded-xl border bg-card px-4 py-3">
+    <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center gap-2">
+        <span className="text-muted-foreground">{icon}</span>
+        <span className="text-xs text-muted-foreground">{label}</span>
+      </div>
       <span className="text-base font-semibold md:text-lg">{value}</span>
     </div>
   </Card>

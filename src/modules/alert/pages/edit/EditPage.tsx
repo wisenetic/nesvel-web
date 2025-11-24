@@ -21,7 +21,7 @@ export default function EditAlertRulePage() {
     refineCoreProps: {
       resource: "alerts",
     },
-    resolver: zodResolver(alertRuleSchema) as any,
+    resolver: zodResolver(alertRuleSchema) as unknown,
   });
 
   const handleSubmit = (values: AlertRuleFormValues) => {
@@ -37,7 +37,7 @@ export default function EditAlertRulePage() {
       severity: "warning",
     };
 
-    onFinish(payload as any);
+    void onFinish(payload as unknown);
   };
 
   if (query?.isLoading) {

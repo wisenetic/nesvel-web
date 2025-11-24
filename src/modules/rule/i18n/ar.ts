@@ -55,6 +55,8 @@ export default {
         "لن تُفعّل القاعدة إلا للكشوفات ذات الثقة ≥ {{value}}٪",
       class_filter_title: "تصفية فئات الأجسام",
       class_filter_description: "تحديد أنواع الأجسام المطلوب اكتشافها",
+      class_filter_allowed: "الفئات المسموح بها",
+      class_filter_detecting: "يتم الاكتشاف لـ: {{classes}}",
     },
     summary: {
       total_rules: "إجمالي القواعد",

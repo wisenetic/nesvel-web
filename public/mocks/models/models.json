@@ -134,7 +134,7 @@
     "name": "Fall Detection (Elderly Care)",
     "description": "Detect falls and patient monitoring",
     "emoji": "🛏️",
-    "status": "active",
+    "status": "inactive",
     "category": "healthcare",
     "accuracy": 96,
     "pricePerMonth": 99.99,

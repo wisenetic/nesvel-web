@@ -1,14 +1,12 @@
-import { useParams, useNavigate, useLocation } from "react-router";
 import { useShow, useTranslate } from "@refinedev/core";
+import { Info } from "lucide-react";
+import { useParams, useNavigate, useLocation } from "react-router";
 
 import { Badge } from "@/core/components/ui/badge";
 import { Button } from "@/core/components/ui/button";
-import { ScrollArea } from "@/core/components/ui/scroll-area";
 import { Card, CardContent, CardHeader } from "@/core/components/ui/card";
 import { Separator } from "@/core/components/ui/separator";
-
 import CameraCardLive from "@/modules/camera/components/camera-card/CameraCardLive";
-import { Info } from "lucide-react";
 
 export default function ShowPage() {
   const { id } = useParams();
@@ -24,9 +22,7 @@ export default function ShowPage() {
   const camera = query.data?.data;
 
   if (query.isLoading)
-    return (
-      <div className="p-10">{t("camera.loading", "Loading...")}</div>
-    );
+    return <div className="p-10">{t("camera.loading", "Loading...")}</div>;
   if (!camera)
     return (
       <div className="p-10">
@@ -36,13 +32,13 @@ export default function ShowPage() {
 
   const handleClose = () => {
     // If opened from a background route (drawer over list), just go back in history
-    if (location.state && (location.state as any).background) {
-      navigate(-1);
+    if (location.state?.background) {
+      void navigate(-1);
       return;
     }
 
     // If opened directly (no background), go back to the cameras list
-    navigate("/cameras");
+    void navigate("/cameras");
   };
 
   return (
@@ -73,8 +69,12 @@ export default function ShowPage() {
             showBadges={true}
             showHoverActions={true}
             showLocation={true}
-            onFullscreen={() => console.log("fullscreen")}
-            onSnapshot={() => console.log("snapshot")}
+            onFullscreen={() => {
+              console.log("fullscreen");
+            }}
+            onSnapshot={() => {
+              console.log("snapshot");
+            }}
           />
         </CardContent>
       </Card>

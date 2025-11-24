@@ -1,13 +1,6 @@
 import { useTranslation } from "@refinedev/core";
-import { UseFormReturnType } from "@refinedev/react-hook-form";
-import {
-  Flame,
-  Bell,
-  Webhook,
-  Sparkles,
-  PersonStanding,
-  AlarmSmoke,
-} from "lucide-react";
+import { type UseFormReturnType } from "@refinedev/react-hook-form";
+import { Flame, Sparkles, PersonStanding, AlarmSmoke } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { Button } from "@/core/components/ui/button";

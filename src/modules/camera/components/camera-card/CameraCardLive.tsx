@@ -1,11 +1,10 @@
+import { useTranslate } from "@refinedev/core";
 import { Camera, Maximize2 } from "lucide-react";
 
 import LivePlayer from "@/core/components/shared/LivePlayer";
 import { Badge } from "@/core/components/ui/badge";
 import { Button } from "@/core/components/ui/button";
 import { Checkbox } from "@/core/components/ui/checkbox";
-import { useTranslate } from "@refinedev/core";
-
 import { type ICamera } from "@/modules/camera/types";
 
 type CameraCardLiveProps = {

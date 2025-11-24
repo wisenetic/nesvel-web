@@ -18,11 +18,11 @@ import {
   ArrowDownUp,
   Camera,
   CheckCircle2,
-  ChevronRight,
   CircleDot,
   Flame,
   Layers3,
   Plus,
+  Workflow,
 } from "lucide-react";
 
 const severityStyles: Record<
@@ -168,6 +168,7 @@ export default function RuleListPage() {
                 {/* Left section: title + description + meta */}
                 <div className="space-y-1">
                   <div className="flex flex-wrap items-center gap-2">
+                    <Workflow className="size-4 text-muted-foreground" />
                     <h3 className="text-base font-semibold md:text-lg">
                       {rule.name}
                     </h3>
@@ -193,40 +194,46 @@ export default function RuleListPage() {
                     </p>
                   )}
 
-                  <div className="mt-2 grid grid-cols-1 gap-2 text-xs text-muted-foreground md:grid-cols-4">
-                    <div className="flex items-center gap-1">
-                      <span className="font-medium">
-                        {translate("rule.fields.camera", "Camera")}:
+                  <div className="mt-3 grid grid-cols-1 gap-4 text-xs md:grid-cols-4 md:text-sm">
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[11px] text-muted-foreground md:text-xs">
+                        {translate("rule.fields.camera", "Camera")}
                       </span>
-                      <span>{rule.cameraName ?? "-"}</span>
+                      <span className="text-xs font-medium md:text-sm">
+                        {rule.cameraName ?? "-"}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="font-medium">
-                        {translate("rule.fields.model", "AI Model")}:
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[11px] text-muted-foreground md:text-xs">
+                        {translate("rule.fields.model", "AI Model")}
                       </span>
-                      <span>{rule.modelName ?? "-"}</span>
+                      <span className="text-xs font-medium md:text-sm">
+                        {rule.modelName ?? "-"}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="font-medium">
-                        {translate("rule.fields.priority", "Priority")}:
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[11px] text-muted-foreground md:text-xs">
+                        {translate("rule.fields.priority", "Priority")}
                       </span>
-                      <span>{rule.priority ?? "-"}</span>
+                      <span className="text-xs font-medium md:text-sm">
+                        {rule.priority ?? "-"}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="font-medium">
-                        {translate("rule.fields.conditions", "Conditions")}:
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[11px] text-muted-foreground md:text-xs">
+                        {translate("rule.fields.conditions", "Conditions")}
                       </span>
-                      <span>
-                        {rule.conditionsCount ?? 0}{" "}
-                        {translate("rule.conditions.active", "active")}
+                      <span className="text-xs font-medium md:text-sm">
+                        {(rule.conditionsCount ?? 0) + " " +
+                          translate("rule.conditions.active", "active")}
                       </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Right section: toggle + actions */}
-                <div className="flex flex-col items-stretch gap-2 self-stretch md:w-48 md:self-center">
-                  <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
+                <div className="flex flex-col items-stretch self-stretch md:w-48 md:self-center">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>
                       {rule.enabled
                         ? translate("rule.status.enabled", "Enabled")
@@ -240,49 +247,41 @@ export default function RuleListPage() {
                     />
                   </div>
 
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full"
-                    onClick={() => handleEdit(rule.id)}
-                  >
-                    {translate("rule.actions.edit", "Edit Rule")}
-                  </Button>
+                  <div className="mt-4 flex flex-col gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full md:w-auto"
+                      onClick={() => handleEdit(rule.id)}
+                    >
+                      {translate("rule.actions.edit", "Edit Rule")}
+                    </Button>
 
-                  <ConfirmDialog
-                    title={translate(
-                      "rule.actions.confirm_delete_title",
-                      "Delete rule",
-                    )}
-                    description={translate(
-                      "rule.actions.confirm_delete_message",
-                      "Are you sure you want to delete this rule?",
-                    )}
-                    confirmLabel={translate("rule.actions.delete", "Delete")}
-                    cancelLabel={translate("buttons.cancel", "Cancel")}
-                    onConfirm={() => handleDelete(rule.id)}
-                    trigger={
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        className="w-full"
-                      >
-                        {translate("rule.actions.delete", "Delete")}
-                      </Button>
-                    }
-                  />
+                    <ConfirmDialog
+                      title={translate(
+                        "rule.actions.confirm_delete_title",
+                        "Delete rule",
+                      )}
+                      description={translate(
+                        "rule.actions.confirm_delete_message",
+                        "Are you sure you want to delete this rule?",
+                      )}
+                      confirmLabel={translate("rule.actions.delete", "Delete")}
+                      cancelLabel={translate("buttons.cancel", "Cancel")}
+                      onConfirm={() => handleDelete(rule.id)}
+                      trigger={
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          className="w-full md:w-auto"
+                        >
+                          {translate("rule.actions.delete", "Delete")}
+                        </Button>
+                      }
+                    />
+                  </div>
                 </div>
               </div>
-
-              {/* Optional bottom row with a subtle arrow to indicate more details */}
-              <button
-                type="button"
-                onClick={() => navigate(`/rules/show/${rule.id}`, { state: { background: location } })}
-                className="mt-1 inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
-              >
-                {translate("rule.actions.view_details", "View details")}
-                <ChevronRight className="size-3" />
-              </button>
             </Card>
           );
         })}
