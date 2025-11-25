@@ -1,12 +1,16 @@
+import React, { Suspense } from "react";
 import { Route, Routes } from "react-router";
 
+const SettingListPage = React.lazy(() => import("./pages/list"));
+
 export const SettingRoutes = () => (
-  <Routes>
-    <Route index element={<div>Setting Routes</div>} />
-    <Route path="create" element={<div>Setting - create</div>} />
-    <Route path="edit/:id" element={<div>Setting - edit</div>} />
-    <Route path="show/:id" element={<div>Setting - show</div>} />
-  </Routes>
+  <Suspense fallback={<div>Loading…</div>}>
+    <Routes>
+      <Route index element={<SettingListPage />} />
+      {/* background routes placeholder */}
+      <Route path="*" element={<div />} />
+    </Routes>
+  </Suspense>
 );
 
 export default SettingRoutes;

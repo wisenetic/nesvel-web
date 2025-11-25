@@ -1,0 +1,61 @@
+[
+  {
+    "id": "default",
+    "themeMode": "light",
+    "language": "en",
+    "notifications": {
+      "browserNotifications": true,
+      "soundAlerts": true,
+      "dailyEmailDigest": true
+    },
+    "dataStorage": {
+      "automaticCleanupEnabled": true,
+      "automaticCleanupDays": 30,
+      "saveDetectionSnapshots": true,
+      "storageUsage": {
+        "detectionRecordsGb": 2.4,
+        "imageSnapshotsGb": 1.8,
+        "totalUsedGb": 4.2,
+        "totalCapacityGb": 60
+      }
+    },
+    "security": {
+      "twoFactorEnabled": true,
+      "autoSessionTimeoutMinutes": 30,
+      "activeSessions": [
+        {
+          "id": "session-1",
+          "device": "Chrome on Windows",
+          "browser": "Chrome",
+          "location": "Riyadh, Saudi Arabia",
+          "lastActive": "Active now",
+          "current": true
+        },
+        {
+          "id": "session-2",
+          "device": "Safari on macOS",
+          "browser": "Safari",
+          "location": "Jeddah, Saudi Arabia",
+          "lastActive": "5 minutes ago",
+          "current": false
+        },
+        {
+          "id": "session-3",
+          "device": "Edge on Windows",
+          "browser": "Edge",
+          "location": "Dubai, UAE",
+          "lastActive": "2 hours ago",
+          "current": false
+        }
+      ]
+    },
+    "system": {
+      "applicationName": "AI Vision System Dashboard",
+      "version": "1.0.0",
+      "buildDate": "2025-10-20",
+      "environment": "Production",
+      "edgePlatform": "NVIDIA Jetson",
+      "cloudProvider": "AWS IoT Core"
+    }
+  }
+]
