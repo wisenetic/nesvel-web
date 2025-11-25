@@ -52,7 +52,7 @@ export default function RuleCreatePage() {
       classFilterEnabled: values.classFilterEnabled,
     };
 
-    onFinish(payload as any);
+    void onFinish(payload as unknown);
   };
 
   return (

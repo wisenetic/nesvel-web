@@ -3,13 +3,13 @@ import type { ReactNode } from "react";
 import { Switch } from "@/core/components/ui/switch";
 import { cn } from "@/core/lib/utils";
 
-interface SettingsToggleItemProps {
+type SettingsToggleItemProps = {
   label: ReactNode;
   description?: ReactNode;
   checked: boolean;
   onCheckedChange: (value: boolean) => void;
   className?: string;
-}
+};
 
 export function SettingsToggleItem({
   label,
@@ -36,7 +36,9 @@ export function SettingsToggleItem({
       </div>
       <Switch
         checked={checked}
-        onCheckedChange={(value) => onCheckedChange(Boolean(value))}
+        onCheckedChange={(value) => {
+          onCheckedChange(value);
+        }}
       />
     </div>
   );

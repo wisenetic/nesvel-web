@@ -3,14 +3,12 @@ import type { AppModule } from "@/core/types/app-module.type";
 import { DetectionRoutes } from "./detection.routes";
 
 const DetectionResource = {
-  name: "detections", // ✅ plural REST resource name
-  list: "/detections", // list route
-  create: "/detections/create", // create route (optional)
-  edit: "/detections/edit/:id", // edit route
-  show: "/detections/show/:id", // details route
+  name: "detections",
+  list: "/detections",
+  show: "/detections/show/:id",
   meta: {
-    label: "Detections",
-    icon: "triangle-alert", // lucide-react “AI vision” icon
+    labelKey: "detection.title",
+    icon: "activity",
   },
 };
 
@@ -18,6 +16,14 @@ const DetectionModule: AppModule = {
   resource: DetectionResource,
   routes: <DetectionRoutes />,
   priority: 30,
+  presentation: {
+    list: "page",
+    show: {
+      view: "drawer",
+      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6",
+      side: "right",
+    },
+  },
 };
 
 export default DetectionModule;

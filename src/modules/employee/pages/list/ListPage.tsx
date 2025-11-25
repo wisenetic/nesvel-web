@@ -10,7 +10,32 @@ import { Button } from "@/core/components/ui/button";
 import { Card } from "@/core/components/ui/card";
 import { Input } from "@/core/components/ui/input";
 import type { Employee } from "@/modules/employee/types";
-import { CheckCircle2, Clock3, Moon, SunMedium, Trash2, User2, Users } from "lucide-react";
+import {
+  CheckCircle2,
+  Clock3,
+  Moon,
+  SunMedium,
+  Trash2,
+  User2,
+  Users,
+} from "lucide-react";
+
+const statusStyles: Record<
+  Employee["status"],
+  {
+    badgeClass: string;
+  }
+> = {
+  active: {
+    badgeClass: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  },
+  on_duty: {
+    badgeClass: "bg-sky-50 text-sky-700 border-sky-200",
+  },
+  on_leave: {
+    badgeClass: "bg-amber-50 text-amber-700 border-amber-200",
+  },
+};
 
 export default function EmployeeListPage() {
   const { translate } = useTranslation();
@@ -103,13 +128,13 @@ export default function EmployeeListPage() {
         ]}
       />
 
-      <div className="flex items-center gap-3 rounded-xl border bg-card px-3 py-2 md:px-4">
+      {/* Simple search input without heavy card border/shadow */}
+      <div className="max-w-sm">
         <Input
           placeholder={translate(
             "employee.search_placeholder",
             "Search employees...",
           )}
-          className="border-0 bg-transparent px-0 focus-visible:ring-0 focus-visible:ring-offset-0"
         />
       </div>
 
@@ -117,94 +142,114 @@ export default function EmployeeListPage() {
         {employees.map((employee) => (
           <Card
             key={employee.id}
-            className="flex flex-col gap-3 rounded-xl border bg-background p-4 md:flex-row md:items-center md:justify-between"
+            className="flex flex-col gap-3 rounded-xl border px-4 py-4 md:px-6"
           >
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <User2 className="size-4 text-muted-foreground" />
-                <span className="text-sm font-semibold md:text-base">
-                  {employee.fullName}
-                </span>
-                <Badge
-                  variant="outline"
-                  className="text-[11px] capitalize md:text-xs"
-                >
-                  {translate(
-                    `employee.status.${employee.status}` as const,
-                    employee.status,
-                  )}
-                </Badge>
-              </div>
-
-              <div className="text-xs text-muted-foreground">
-                <span className="font-medium">
-                  {translate("employee.fields.employee_id", "Employee ID")}: 
-                </span>
-                <span>{employee.employeeId}</span>
-              </div>
-
-              <div className="mt-1 grid grid-cols-1 gap-1 text-xs text-muted-foreground md:grid-cols-2">
-                <div>
-                  <span className="font-medium">
-                    {translate("employee.fields.role", "Role")}:
-                  </span>{" "}
-                  <span>
+            <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+              {/* Left section: primary info + meta */}
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <User2 className="size-4 text-muted-foreground" />
+                  <span className="text-base font-semibold md:text-lg">
+                    {employee.fullName}
+                  </span>
+                  <Badge
+                    variant="outline"
+                    className={`text-[11px] capitalize md:text-xs ${statusStyles[employee.status].badgeClass}`}
+                  >
                     {translate(
-                      `employee.role.${employee.role}` as const,
-                      employee.role,
+                      `employee.status.${employee.status}` as const,
+                      employee.status,
                     )}
-                  </span>
+                  </Badge>
                 </div>
-                <div>
-                  <span className="font-medium">
-                    {translate("employee.fields.phone", "Phone")}:
-                  </span>{" "}
-                  <span>{employee.phone}</span>
-                </div>
-                <div>
-                  <span className="font-medium">
-                    {translate("employee.fields.email", "Email")}:
-                  </span>{" "}
-                  <span>{employee.email}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Clock3 className="size-3" />
-                  <span className="font-medium">
-                    {translate("employee.fields.shift", "Shift")}:
-                  </span>
-                  <span>
-                    {translate(
-                      `employee.shift.${employee.shift}` as const,
-                      employee.shift,
-                    )}
-                  </span>
-                </div>
+
+                {(() => {
+                  const metaItems = [
+                    {
+                      key: "employeeId",
+                      label: translate(
+                        "employee.fields.employee_id",
+                        "Employee ID",
+                      ),
+                      value: employee.employeeId,
+                    },
+                    {
+                      key: "role",
+                      label: translate("employee.fields.role", "Role"),
+                      value: translate(
+                        `employee.role.${employee.role}` as const,
+                        employee.role,
+                      ),
+                    },
+                    {
+                      key: "phone",
+                      label: translate("employee.fields.phone", "Phone"),
+                      value: employee.phone,
+                    },
+                    {
+                      key: "email",
+                      label: translate("employee.fields.email", "Email"),
+                      value: employee.email,
+                    },
+                    {
+                      key: "shift",
+                      label: translate("employee.fields.shift", "Shift"),
+                      value: translate(
+                        `employee.shift.${employee.shift}` as const,
+                        employee.shift,
+                      ),
+                    },
+                    {
+                      key: "location",
+                      label: translate(
+                        "employee.fields.location",
+                        "Location",
+                      ),
+                      value: employee.location,
+                    },
+                  ];
+
+                  return (
+      <div className="mt-1 grid grid-cols-1 gap-3 text-xs md:grid-cols-3 lg:grid-cols-4 md:text-sm">
+                      {metaItems.map((item) => (
+                        <div
+                          key={item.key}
+                          className="flex flex-col gap-0.5"
+                        >
+                          <span className="text-[11px] text-muted-foreground md:text-xs">
+                            {item.label}
+                          </span>
+                          <span className="text-xs font-medium text-foreground md:text-sm">
+                            {item.value}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
               </div>
 
-              <div className="text-xs text-muted-foreground">
-                <span className="font-medium">
-                  {translate("employee.fields.location", "Location")}:
-                </span>{" "}
-                <span>{employee.location}</span>
+              {/* Right section: actions, aligned like Rule page */}
+              <div className="flex flex-col items-stretch self-stretch md:w-48 md:self-center">
+                <div className="mt-4 flex flex-col gap-3 md:mt-0">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full md:w-auto"
+                    onClick={() => handleEdit(employee.id)}
+                  >
+                    {translate("employee.actions.edit", "Edit")}
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="w-full md:w-auto"
+                    onClick={() => handleDelete(employee.id)}
+                  >
+                    {translate("employee.actions.delete", "Delete")}
+                  </Button>
+                </div>
               </div>
-            </div>
-
-            <div className="flex gap-2 md:flex-col md:items-end">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleEdit(employee.id)}
-              >
-                {translate("employee.actions.edit", "Edit")}
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-red-500 hover:text-red-600"
-                onClick={() => handleDelete(employee.id)}
-              >
-                <Trash2 className="size-4" />
-              </Button>
             </div>
           </Card>
         ))}

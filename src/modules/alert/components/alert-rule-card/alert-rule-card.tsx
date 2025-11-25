@@ -118,73 +118,77 @@ export const AlertRuleCard = ({
                 </span>
               )}
             </div>
+
+            {rule.webhookEnabled && rule.webhookUrl && (
+              <div className="mt-2 flex flex-col gap-1 text-xs">
+                <span className="text-xs text-muted-foreground">
+                  {translate("alert.fields.webhook_url", "Webhook URL")}
+                </span>
+                <div
+                  className="inline-flex w-full items-center rounded-md bg-muted px-2 py-1 text-xs font-mono text-foreground/90"
+                  title={rule.webhookUrl}
+                >
+                  <span className="truncate">{rule.webhookUrl}</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="flex items-center gap-2 self-start md:self-center">
-          <span className="text-xs text-muted-foreground">
-            {rule.enabled
-              ? translate("alert.status.enabled", "Enabled")
-              : translate("alert.status.disabled", "Disabled")}
-          </span>
-          <Switch
-            checked={rule.enabled}
-            onCheckedChange={(checked) =>
-              onToggleEnabled(rule, Boolean(checked))
-            }
-          />
-        </div>
-      </div>
+        {/* Right column: status toggle + actions, aligned like Rule page */}
+        <div className="flex flex-col items-stretch self-stretch md:w-48 md:self-center">
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>
+              {rule.enabled
+                ? translate("alert.status.enabled", "Enabled")
+                : translate("alert.status.disabled", "Disabled")}
+            </span>
+            <Switch
+              checked={rule.enabled}
+              onCheckedChange={(checked) =>
+                onToggleEnabled(rule, Boolean(checked))
+              }
+            />
+          </div>
 
-      {rule.webhookEnabled && rule.webhookUrl && (
-        <div className="mt-1 flex flex-col gap-1 text-xs">
-          <span className="text-xs text-muted-foreground">
-            {translate("alert.fields.webhook_url", "Webhook URL")}
-          </span>
-          <span
-            className="font-mono text-[11px] text-foreground/80 truncate"
-            title={rule.webhookUrl}
-          >
-            {rule.webhookUrl}
-          </span>
-        </div>
-      )}
-
-      <div className="mt-3 flex flex-col-reverse gap-2 md:flex-row md:justify-end md:gap-3">
-        <Button
-          variant="outline"
-          size="sm"
-          className="w-full md:w-auto"
-          onClick={() => {
-            onEdit(rule.id);
-          }}
-        >
-          {translate("alert.actions.edit", "Edit")}
-        </Button>
-
-        <ConfirmDialog
-          title={translate(
-            "alert.actions.confirm_delete_title",
-            "Delete alert rule",
-          )}
-          description={translate(
-            "alert.actions.confirm_delete_message",
-            "Are you sure you want to delete this alert rule?",
-          )}
-          confirmLabel={translate("alert.actions.delete", "Delete")}
-          cancelLabel={translate("buttons.cancel", "Cancel")}
-          onConfirm={() => onDelete(rule.id)}
-          trigger={
+          <div className="mt-4 flex flex-col gap-3">
             <Button
-              variant="destructive"
+              variant="outline"
               size="sm"
               className="w-full md:w-auto"
+              onClick={() => {
+                onEdit(rule.id);
+              }}
             >
-              {translate("alert.actions.delete", "Delete")}
+              {translate("alert.actions.edit", "Edit")}
             </Button>
-          }
-        />
+
+            <ConfirmDialog
+              title={translate(
+                "alert.actions.confirm_delete_title",
+                "Delete alert rule",
+              )}
+              description={translate(
+                "alert.actions.confirm_delete_message",
+                "Are you sure you want to delete this alert rule?",
+              )}
+              confirmLabel={translate("alert.actions.delete", "Delete")}
+              cancelLabel={translate("buttons.cancel", "Cancel")}
+              onConfirm={() => onDelete(rule.id)}
+              trigger={
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  className="w-full md:w-auto"
+                >
+                  {translate("alert.actions.delete", "Delete")}
+                </Button>
+              }
+            />
+          </div>
+        </div>
       </div>
+
     </Card>
   );
 };

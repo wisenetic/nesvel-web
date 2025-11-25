@@ -3,13 +3,13 @@ import type { ReactNode } from "react";
 import { Card } from "@/core/components/ui/card";
 import { cn } from "@/core/lib/utils";
 
-interface SettingsSectionCardProps {
+type SettingsSectionCardProps = {
   title: ReactNode;
   description?: ReactNode;
   icon?: ReactNode;
   children: ReactNode;
   className?: string;
-}
+};
 
 export function SettingsSectionCard({
   title,
@@ -29,9 +29,7 @@ export function SettingsSectionCard({
     >
       <div className="flex flex-col gap-4 px-6">
         <div className="flex items-start gap-3">
-          {icon && (
-            <div className="mt-[2px] text-muted-foreground">{icon}</div>
-          )}
+          {icon && <div className="mt-0.5 text-muted-foreground">{icon}</div>}
           <div className="space-y-1">
             <h2 className="text-sm font-semibold md:text-base">{title}</h2>
             {description && (

@@ -1,6 +1,18 @@
+import {
+  useDeleteMany,
+  useList,
+  useTranslation,
+  useUpdate,
+} from "@refinedev/core";
+import {
+  Camera,
+  CheckCircle2,
+  CircleDot,
+  Layers3,
+  Plus,
+  Workflow,
+} from "lucide-react";
 import { useMemo } from "react";
-
-import { useDeleteMany, useList, useTranslation, useUpdate } from "@refinedev/core";
 import { useLocation, useNavigate } from "react-router";
 
 import { ConfirmDialog } from "@/core/components/shared/confirm-dialog";
@@ -9,21 +21,8 @@ import { StatsOverview } from "@/core/components/shared/stats/StatsOverview";
 import { Badge } from "@/core/components/ui/badge";
 import { Button } from "@/core/components/ui/button";
 import { Card } from "@/core/components/ui/card";
-import { Input } from "@/core/components/ui/input";
 import { Switch } from "@/core/components/ui/switch";
 import type { Rule } from "@/modules/rule/types";
-import {
-  Activity,
-  AlertTriangle,
-  ArrowDownUp,
-  Camera,
-  CheckCircle2,
-  CircleDot,
-  Flame,
-  Layers3,
-  Plus,
-  Workflow,
-} from "lucide-react";
 
 const severityStyles: Record<
   Rule["severity"],
@@ -79,13 +78,13 @@ export default function RuleListPage() {
   }, [rules]);
 
   const handleCreate = () => {
-    navigate("/rules/create", {
+    void navigate("/rules/create", {
       state: { background: location },
     });
   };
 
   const handleEdit = (id: string) => {
-    navigate(`/rules/edit/${id}`, {
+    void navigate(`/rules/edit/${id}`, {
       state: { background: location },
     });
   };
@@ -224,7 +223,8 @@ export default function RuleListPage() {
                         {translate("rule.fields.conditions", "Conditions")}
                       </span>
                       <span className="text-xs font-medium md:text-sm">
-                        {(rule.conditionsCount ?? 0) + " " +
+                        {(rule.conditionsCount ?? 0) +
+                          " " +
                           translate("rule.conditions.active", "active")}
                       </span>
                     </div>
@@ -252,7 +252,9 @@ export default function RuleListPage() {
                       variant="outline"
                       size="sm"
                       className="w-full md:w-auto"
-                      onClick={() => handleEdit(rule.id)}
+                      onClick={() => {
+                        handleEdit(rule.id);
+                      }}
                     >
                       {translate("rule.actions.edit", "Edit Rule")}
                     </Button>

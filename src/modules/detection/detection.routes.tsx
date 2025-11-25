@@ -1,12 +1,18 @@
+import React, { Suspense } from "react";
 import { Route, Routes } from "react-router";
 
+const DetectionListPage = React.lazy(() => import("./pages/list"));
+const DetectionShowPage = React.lazy(() => import("./pages/show"));
+
 export const DetectionRoutes = () => (
-  <Routes>
-    <Route index element={<div>Detection Routes</div>} />
-    <Route path="create" element={<div>Detection - create</div>} />
-    <Route path="edit/:id" element={<div>Detection - edit</div>} />
-    <Route path="show/:id" element={<div>Detection - show</div>} />
-  </Routes>
+  <Suspense fallback={<div>Loading…</div>}>
+    <Routes>
+      <Route index element={<DetectionListPage />} />
+      <Route path="show/:id" element={<DetectionShowPage />} />
+      {/* Prevent background 404 for drawer routes */}
+      <Route path="*" element={<div />} />
+    </Routes>
+  </Suspense>
 );
 
 export default DetectionRoutes;

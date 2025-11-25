@@ -1,0 +1,116 @@
+[
+  {
+    "id": "det-1",
+    "cameraName": "Camera 04",
+    "cameraId": "CAM-04",
+    "time": "2025-09-23 13:40:03",
+    "type": "person",
+    "classLabel": "person",
+    "confidence": 89,
+    "status": "acknowledged",
+    "severity": "info",
+    "acknowledgedBy": "operator1",
+    "acknowledgedAt": "2025-09-23 13:45:10"
+  },
+  {
+    "id": "det-2",
+    "cameraName": "Camera 02",
+    "cameraId": "CAM-02",
+    "time": "2025-09-23 10:15:12",
+    "type": "smoke",
+    "classLabel": "smoke",
+    "confidence": 84,
+    "status": "acknowledged",
+    "severity": "warning",
+    "acknowledgedBy": "operator2",
+    "acknowledgedAt": "2025-09-23 10:17:55"
+  },
+  {
+    "id": "det-3",
+    "cameraName": "Camera 05",
+    "cameraId": "CAM-05",
+    "time": "2025-09-22 09:05:41",
+    "type": "vehicle",
+    "classLabel": "vehicle",
+    "confidence": 88,
+    "status": "acknowledged",
+    "severity": "info"
+  },
+  {
+    "id": "det-4",
+    "cameraName": "Camera 05",
+    "cameraId": "CAM-05",
+    "time": "2025-09-22 09:20:18",
+    "type": "vehicle",
+    "classLabel": "vehicle",
+    "confidence": 71,
+    "status": "acknowledged",
+    "severity": "info"
+  },
+  {
+    "id": "det-5",
+    "cameraName": "Camera 01",
+    "cameraId": "CAM-01",
+    "time": "2025-09-21 21:37:20",
+    "type": "fire",
+    "classLabel": "fire",
+    "confidence": 95,
+    "status": "new",
+    "severity": "critical"
+  },
+  {
+    "id": "det-6",
+    "cameraName": "Camera 03",
+    "cameraId": "CAM-03",
+    "time": "2025-09-21 21:31:40",
+    "type": "smoke",
+    "classLabel": "smoke",
+    "confidence": 81,
+    "status": "new",
+    "severity": "warning"
+  },
+  {
+    "id": "det-7",
+    "cameraName": "Camera 04",
+    "cameraId": "CAM-04",
+    "time": "2025-09-21 21:31:07",
+    "type": "person",
+    "classLabel": "person",
+    "confidence": 74,
+    "status": "new",
+    "severity": "info"
+  },
+  {
+    "id": "det-8",
+    "cameraName": "Camera 04",
+    "cameraId": "CAM-04",
+    "time": "2025-09-21 20:33:48",
+    "type": "person",
+    "classLabel": "person",
+    "confidence": 87,
+    "status": "new",
+    "severity": "info"
+  },
+  {
+    "id": "det-9",
+    "cameraName": "Camera 02",
+    "cameraId": "CAM-02",
+    "time": "2025-09-21 20:25:37",
+    "type": "smoke",
+    "classLabel": "smoke",
+    "confidence": 79,
+    "status": "new",
+    "severity": "warning"
+  },
+  {
+    "id": "det-10",
+    "cameraName": "Camera 06",
+    "cameraId": "CAM-06",
+    "time": "2025-09-21 22:57:59",
+    "type": "vehicle",
+    "classLabel": "vehicle",
+    "confidence": 85,
+    "status": "new",
+    "severity": "info"
+  }
+]
