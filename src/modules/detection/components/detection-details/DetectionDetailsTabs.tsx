@@ -24,7 +24,12 @@ import {
   CardTitle,
 } from "@/core/components/ui/card";
 import { ScrollArea } from "@/core/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/core/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/core/components/ui/tabs";
 import { Textarea } from "@/core/components/ui/textarea";
 
 import type { Detection } from "@/modules/detection/types";
@@ -33,7 +38,9 @@ export type DetectionDetailsTabsProps = {
   detection: Detection;
 };
 
-export const DetectionDetailsTabs = ({ detection }: DetectionDetailsTabsProps) => {
+export const DetectionDetailsTabs = ({
+  detection,
+}: DetectionDetailsTabsProps) => {
   const { translate } = useTranslation();
 
   return (
@@ -112,10 +119,7 @@ const AiSummaryTab = () => {
       <CardContent className="flex flex-col items-center gap-4">
         <Button size="lg" className="mt-2">
           <Sparkles className="size-4" />
-          {translate(
-            "detection.details.ai_summary.cta",
-            "Generate AI Summary",
-          )}
+          {translate("detection.details.ai_summary.cta", "Generate AI Summary")}
         </Button>
         <p className="max-w-md text-center text-xs text-muted-foreground md:text-sm">
           {translate(
@@ -138,7 +142,10 @@ const EvidenceTab = () => {
         <CardHeader className="flex flex-row items-center justify-between gap-2 border-b bg-muted/40">
           <div>
             <CardTitle className="text-sm">
-              {translate("detection.details.evidence.video_title", "Video Evidence")}
+              {translate(
+                "detection.details.evidence.video_title",
+                "Video Evidence",
+              )}
             </CardTitle>
             <CardDescription className="text-xs">
               {translate(
@@ -150,7 +157,10 @@ const EvidenceTab = () => {
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" size="sm">
               <Download className="size-3.5" />
-              {translate("detection.details.evidence.download", "Download Video")}
+              {translate(
+                "detection.details.evidence.download",
+                "Download Video",
+              )}
             </Button>
             <Button variant="outline" size="sm">
               <Activity className="size-3.5" />
@@ -181,7 +191,10 @@ const EvidenceTab = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-sm">
             <Camera className="size-4" />
-            {translate("detection.details.evidence.snapshots_title", "Image Snapshots")}
+            {translate(
+              "detection.details.evidence.snapshots_title",
+              "Image Snapshots",
+            )}
           </CardTitle>
           <CardDescription>
             {translate(
@@ -192,13 +205,32 @@ const EvidenceTab = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-            <SnapshotPlaceholder label={translate("detection.details.evidence.snapshot_before", "Before")} />
-            <SnapshotPlaceholder label={translate("detection.details.evidence.snapshot_detection", "Detection")} isHighlighted />
-            <SnapshotPlaceholder label={translate("detection.details.evidence.snapshot_after", "After")} />
+            <SnapshotPlaceholder
+              label={translate(
+                "detection.details.evidence.snapshot_before",
+                "Before",
+              )}
+            />
+            <SnapshotPlaceholder
+              label={translate(
+                "detection.details.evidence.snapshot_detection",
+                "Detection",
+              )}
+              isHighlighted
+            />
+            <SnapshotPlaceholder
+              label={translate(
+                "detection.details.evidence.snapshot_after",
+                "After",
+              )}
+            />
           </div>
           <Button variant="outline" size="sm" className="mt-1">
             <Download className="size-3.5" />
-            {translate("detection.details.evidence.download_all", "Download All Images")}
+            {translate(
+              "detection.details.evidence.download_all",
+              "Download All Images",
+            )}
           </Button>
         </CardContent>
       </Card>
@@ -231,7 +263,10 @@ const AnalysisTab = ({ detection }: { detection: Detection }) => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-sm">
               <LineChart className="size-4" />
-              {translate("detection.details.analysis.title", "Detection Analysis")}
+              {translate(
+                "detection.details.analysis.title",
+                "Detection Analysis",
+              )}
             </CardTitle>
             <CardDescription>
               {translate(
@@ -242,28 +277,58 @@ const AnalysisTab = ({ detection }: { detection: Detection }) => {
           </CardHeader>
           <CardContent className="grid grid-cols-1 gap-3 text-sm md:grid-cols-2">
             <AnalysisField
-              label={translate("detection.details.analysis.object_class", "Object class")}
+              label={translate(
+                "detection.details.analysis.object_class",
+                "Object class",
+              )}
               value={detection.classLabel}
             />
             <AnalysisField
-              label={translate("detection.details.analysis.subclass", "Sub-class")}
-              value={translate("detection.details.analysis.subclass_value", "Adult")}
+              label={translate(
+                "detection.details.analysis.subclass",
+                "Sub-class",
+              )}
+              value={translate(
+                "detection.details.analysis.subclass_value",
+                "Adult",
+              )}
             />
             <AnalysisField
-              label={translate("detection.details.analysis.motion_status", "Motion status")}
-              value={translate("detection.details.analysis.motion_status_value", "Moving")}
+              label={translate(
+                "detection.details.analysis.motion_status",
+                "Motion status",
+              )}
+              value={translate(
+                "detection.details.analysis.motion_status_value",
+                "Moving",
+              )}
             />
             <AnalysisField
               label={translate("detection.details.analysis.posture", "Posture")}
-              value={translate("detection.details.analysis.posture_value", "Standing")}
+              value={translate(
+                "detection.details.analysis.posture_value",
+                "Standing",
+              )}
             />
             <AnalysisField
-              label={translate("detection.details.analysis.event_duration", "Event duration")}
-              value={translate("detection.details.analysis.event_duration_value", "12 seconds")}
+              label={translate(
+                "detection.details.analysis.event_duration",
+                "Event duration",
+              )}
+              value={translate(
+                "detection.details.analysis.event_duration_value",
+                "12 seconds",
+              )}
             />
             <AnalysisField
-              label={translate("detection.details.analysis.velocity", "Estimated velocity")}
-              value={translate("detection.details.analysis.velocity_value", "2.8 m/s")}
+              label={translate(
+                "detection.details.analysis.velocity",
+                "Estimated velocity",
+              )}
+              value={translate(
+                "detection.details.analysis.velocity_value",
+                "2.8 m/s",
+              )}
             />
           </CardContent>
         </Card>
@@ -280,16 +345,31 @@ const AnalysisTab = ({ detection }: { detection: Detection }) => {
           </CardHeader>
           <CardContent className="grid grid-cols-1 gap-3 text-sm md:grid-cols-3">
             <AnalysisField
-              label={translate("detection.details.analysis.lighting", "Lighting")}
-              value={translate("detection.details.analysis.lighting_value", "Indoor")}
+              label={translate(
+                "detection.details.analysis.lighting",
+                "Lighting",
+              )}
+              value={translate(
+                "detection.details.analysis.lighting_value",
+                "Indoor",
+              )}
             />
             <AnalysisField
-              label={translate("detection.details.analysis.temperature", "Temperature")}
-              value={translate("detection.details.analysis.temperature_value", "22°C")}
+              label={translate(
+                "detection.details.analysis.temperature",
+                "Temperature",
+              )}
+              value={translate(
+                "detection.details.analysis.temperature_value",
+                "22°C",
+              )}
             />
             <AnalysisField
               label={translate("detection.details.analysis.weather", "Weather")}
-              value={translate("detection.details.analysis.weather_value", "Clear")}
+              value={translate(
+                "detection.details.analysis.weather_value",
+                "Clear",
+              )}
             />
           </CardContent>
         </Card>
@@ -300,15 +380,150 @@ const AnalysisTab = ({ detection }: { detection: Detection }) => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-sm">
               <AlertTriangle className="size-4 text-destructive" />
-              {translate("detection.details.analysis.rules_title", "Triggered Rules")}
+              {translate(
+                "detection.details.analysis.rules_title",
+                "Triggered Rules",
+              )}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
             <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
               <span className="font-medium">
-                {translate("detection.details.analysis.rule_name", "Fire Detection Alert")}
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
               </span>
-              <Badge variant="destructive" className="text-[11px] uppercase tracking-wide">
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
+                {translate("detection.details.analysis.rule_active", "Active")}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
+              <span className="font-medium">
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
+              </span>
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
+                {translate("detection.details.analysis.rule_active", "Active")}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
+              <span className="font-medium">
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
+              </span>
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
+                {translate("detection.details.analysis.rule_active", "Active")}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
+              <span className="font-medium">
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
+              </span>
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
+                {translate("detection.details.analysis.rule_active", "Active")}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
+              <span className="font-medium">
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
+              </span>
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
+                {translate("detection.details.analysis.rule_active", "Active")}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
+              <span className="font-medium">
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
+              </span>
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
+                {translate("detection.details.analysis.rule_active", "Active")}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
+              <span className="font-medium">
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
+              </span>
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
+                {translate("detection.details.analysis.rule_active", "Active")}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
+              <span className="font-medium">
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
+              </span>
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
+                {translate("detection.details.analysis.rule_active", "Active")}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
+              <span className="font-medium">
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
+              </span>
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
+                {translate("detection.details.analysis.rule_active", "Active")}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
+              <span className="font-medium">
+                {translate(
+                  "detection.details.analysis.rule_name",
+                  "Fire Detection Alert",
+                )}
+              </span>
+              <Badge
+                variant="destructive"
+                className="text-[11px] uppercase tracking-wide"
+              >
                 {translate("detection.details.analysis.rule_active", "Active")}
               </Badge>
             </div>
@@ -343,7 +558,10 @@ const AnalysisTab = ({ detection }: { detection: Detection }) => {
                 "detection.details.analysis.similar_same_camera",
                 "Same camera",
               )}
-              time={translate("detection.details.analysis.similar_minutes_ago", "2 minutes ago")}
+              time={translate(
+                "detection.details.analysis.similar_minutes_ago",
+                "2 minutes ago",
+              )}
               confidence="89%"
             />
             <SimilarRow
@@ -351,7 +569,10 @@ const AnalysisTab = ({ detection }: { detection: Detection }) => {
                 "detection.details.analysis.similar_nearby_camera",
                 "2 cameras nearby",
               )}
-              time={translate("detection.details.analysis.similar_hours_ago", "1 hour ago")}
+              time={translate(
+                "detection.details.analysis.similar_hours_ago",
+                "1 hour ago",
+              )}
               confidence="82%"
             />
             <SimilarRow
@@ -359,7 +580,10 @@ const AnalysisTab = ({ detection }: { detection: Detection }) => {
                 "detection.details.analysis.similar_today",
                 "Same camera",
               )}
-              time={translate("detection.details.analysis.similar_today_time", "Earlier today")}
+              time={translate(
+                "detection.details.analysis.similar_today_time",
+                "Earlier today",
+              )}
               confidence="73%"
             />
           </CardContent>
@@ -490,7 +714,12 @@ const NotesTab = () => {
     <Card className="flex min-h-[260px] flex-col">
       <CardHeader>
         <CardTitle className="flex items-center justify-between text-sm">
-          <span>{translate("detection.details.notes.title", "Shared Notes & Timeline")}</span>
+          <span>
+            {translate(
+              "detection.details.notes.title",
+              "Shared Notes & Timeline",
+            )}
+          </span>
           <Badge variant="outline" className="text-[11px]">
             {translate("detection.details.notes.empty", "No notes yet")}
           </Badge>

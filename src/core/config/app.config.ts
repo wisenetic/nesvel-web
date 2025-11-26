@@ -20,7 +20,7 @@ export type AppConfig = {
 
 export const appConfig: AppConfig = {
   brand: {
-    name: "AI Vision Dashboard",
+    name: "AI Vision Camera",
     logoLight: "/assets/logo-light.svg",
     logoDark: "/assets/logo-dark.svg",
     slogan: "Smarter Insights. Safer Decisions.",

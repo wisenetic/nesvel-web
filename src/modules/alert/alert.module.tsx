@@ -21,12 +21,14 @@ const AlertModule: AppModule = {
   presentation: {
     list: "page",
     create: {
-      view: "modal",
-      className: "max-w-2xl p-0 bg-white rounded-xl",
+      view: "drawer",
+      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6",
+      side: "right",
     },
     edit: {
-      view: "modal",
-      className: "max-w-2xl p-0 bg-white rounded-xl",
+      view: "drawer",
+      className: "w-[100%]! max-w-[100%]! md:w-[50%]! md:max-w-[50%]! p-6",
+      side: "right",
     },
   },
 };

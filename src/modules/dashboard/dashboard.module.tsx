@@ -4,9 +4,10 @@ import { DashboardRoutes } from "./dashboard.routes";
 
 const DashboardResource = {
   name: "dashboard",
-  list: "/",
+  // The main landing page of the app
+  list: "/dashboard",
   meta: {
-    label: "Dashboard",
+    labelKey: "dashboard.title",
     icon: "layout-dashboard",
   },
 };
@@ -14,6 +15,7 @@ const DashboardResource = {
 const DashboardModule: AppModule = {
   resource: DashboardResource,
   routes: <DashboardRoutes />,
+  // Keep dashboard at the very top of the sidebar
   priority: 10,
 };
 

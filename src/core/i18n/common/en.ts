@@ -1,6 +1,6 @@
 export default {
   common: {
-    app_name: "AI Vision Dashboard",
+    app_name: "AI Vision Camera",
     welcome: "Welcome back!",
     logout: "Logout",
     save: "Save",
