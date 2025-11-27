@@ -103,7 +103,7 @@ export default function SettingListPage() {
                   )}
                 </p>
                 {/* Language select inlined, no extra border wrapper so it matches header */}
-                <LanguageSwitcher />
+                <LanguageSwitcher className="w-[120px] md:w-[150px]" />
               </div>
             </div>
           </SettingsSectionCard>

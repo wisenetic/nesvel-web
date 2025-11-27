@@ -7,21 +7,27 @@ import {
 } from "@/core/components/ui/sidebar";
 import { cn } from "@/core/lib/utils";
 
-export const SidebarHeader = () => {
+type SidebarHeaderProps = {
+  /**
+   * Additional classes for the sidebar header container.
+   * Use this for borders, padding, background, etc.
+   */
+  className?: string;
+};
+
+export const SidebarHeader = ({ className }: SidebarHeaderProps) => {
   const { title } = useRefineOptions();
   const { open, isMobile } = useSidebar();
 
   return (
     <ShadcnSidebarHeader
       className={cn(
-        "p-0",
         "h-16",
-        "border-b",
-        "border-border",
         "flex-row",
         "items-center",
         "justify-between",
         "overflow-hidden",
+        className
       )}
     >
       <div
@@ -38,7 +44,7 @@ export const SidebarHeader = () => {
           {
             "pl-3": !open,
             "pl-5": open,
-          },
+          }
         )}
       >
         <div>{title.icon}</div>
@@ -51,7 +57,7 @@ export const SidebarHeader = () => {
             {
               "opacity-0": !open,
               "opacity-100": open,
-            },
+            }
           )}
         >
           {title.text}

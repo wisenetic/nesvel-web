@@ -11,16 +11,15 @@ type ModuleMap = Record<string, TranslationMap>;
 type ResourcesMap = Record<string, { translation: TranslationMap }>;
 
 // Build common translations (typed)
-const commonTranslations: CommonMap = Object.entries(commonFiles).reduce(
-  (acc, [path, mod]) => {
-    const lang = path.split("/").pop()?.replace(".ts", "") ?? "";
-    const content = (mod as { default: TranslationMap }).default;
+const commonTranslations: CommonMap = Object.entries(
+  commonFiles
+).reduce<CommonMap>((acc, [path, mod]) => {
+  const lang = path.split("/").pop()?.replace(".ts", "") ?? "";
+  const content = (mod as { default: TranslationMap }).default;
 
-    if (lang) acc[lang] = content;
-    return acc;
-  },
-  {} as CommonMap,
-);
+  if (lang) acc[lang] = content;
+  return acc;
+}, {});
 
 /**
  * 2) Auto-import module translations:
@@ -29,20 +28,19 @@ const commonTranslations: CommonMap = Object.entries(commonFiles).reduce(
 const moduleFiles = import.meta.glob("@/modules/*/i18n/*.ts", { eager: true });
 
 // Build module translations (typed)
-const moduleTranslations: ModuleMap = Object.entries(moduleFiles).reduce(
-  (acc, [path, mod]) => {
-    const lang = path.split("/").pop()?.replace(".ts", "") ?? "";
-    const content = (mod as { default: TranslationMap }).default;
+const moduleTranslations: ModuleMap = Object.entries(
+  moduleFiles
+).reduce<ModuleMap>((acc, [path, mod]) => {
+  const lang = path.split("/").pop()?.replace(".ts", "") ?? "";
+  const content = (mod as { default: TranslationMap }).default;
 
-    if (!lang) return acc;
+  if (!lang) return acc;
 
-    if (!acc[lang]) acc[lang] = {};
-    acc[lang] = { ...acc[lang], ...content };
+  if (!acc[lang]) acc[lang] = {};
+  acc[lang] = { ...acc[lang], ...content };
 
-    return acc;
-  },
-  {} as ModuleMap,
-);
+  return acc;
+}, {});
 
 /**
  * 3) Union of all languages in common + modules
@@ -51,18 +49,21 @@ const allLanguages = Array.from(
   new Set([
     ...Object.keys(commonTranslations),
     ...Object.keys(moduleTranslations),
-  ]),
+  ])
 );
 
 /**
  * 4) Build final resources map (ESLint-clean reduce)
  */
-export const resources: ResourcesMap = allLanguages.reduce((acc, lang) => {
-  acc[lang] = {
-    translation: {
-      ...(commonTranslations[lang] ?? {}),
-      ...(moduleTranslations[lang] ?? {}),
-    },
-  };
-  return acc;
-}, {} as ResourcesMap);
+export const resources: ResourcesMap = allLanguages.reduce<ResourcesMap>(
+  (acc, lang) => {
+    acc[lang] = {
+      translation: {
+        ...(commonTranslations[lang] ?? {}),
+        ...(moduleTranslations[lang] ?? {}),
+      },
+    };
+    return acc;
+  },
+  {}
+);

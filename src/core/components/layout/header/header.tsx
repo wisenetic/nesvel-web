@@ -1,43 +1,74 @@
-import { ThemeToggle } from "@/core/components/shared/theme/theme-toggle";
-
-import { LanguageSwitcher } from "@/core/components/shared/language-switcher/language-switcher";
+import { useRefineOptions } from "@refinedev/core";
+import type { ReactNode } from "react";
 
 import { SidebarTrigger, useSidebar } from "@/core/components/ui/sidebar";
 import { cn } from "@/core/lib/utils";
-import { useRefineOptions } from "@refinedev/core";
 
-export const Header = () => {
-  const { isMobile } = useSidebar();
-
-  return <>{isMobile ? <MobileHeader /> : <DesktopHeader />}</>;
+export type HeaderProps = {
+  /**
+   * Additional classes for the desktop header container.
+   * Only layout-related defaults are kept in the component.
+   */
+  desktopClassName?: string;
+  /**
+   * Additional classes for the mobile header container.
+   * Only layout-related defaults are kept in the component.
+   */
+  mobileClassName?: string;
+  /**
+   * Right-side content for the desktop header (e.g. language switcher, theme toggle).
+   */
+  desktopRightSlot?: ReactNode;
+  /**
+   * Right-side content for the mobile header (e.g. compact theme toggle).
+   */
+  mobileRightSlot?: ReactNode;
 };
 
-function DesktopHeader() {
-  return (
-    <header
-      className={cn(
-        "sticky",
-        "top-0",
-        "flex",
-        "h-16",
-        "shrink-0",
-        "items-center",
-        "gap-4",
-        "border-b",
-        "border-border",
-        "bg-sidebar",
-        "p-3",
-        "justify-end",
-        "z-40",
-      )}
-    >
-      <LanguageSwitcher />
-      <ThemeToggle />
-    </header>
-  );
-}
+export const Header = ({
+  desktopClassName,
+  mobileClassName,
+  desktopRightSlot,
+  mobileRightSlot,
+}: HeaderProps) => {
+  const { isMobile } = useSidebar();
 
-function MobileHeader() {
+  return isMobile ? (
+    <MobileHeader className={mobileClassName} rightSlot={mobileRightSlot} />
+  ) : (
+    <DesktopHeader className={desktopClassName} rightSlot={desktopRightSlot} />
+  );
+};
+
+type DesktopHeaderProps = {
+  className?: string;
+  rightSlot?: ReactNode;
+};
+
+const DesktopHeader = ({ className, rightSlot }: DesktopHeaderProps) => (
+  <header
+    className={cn(
+      "sticky",
+      "top-0",
+      "flex",
+      "h-16",
+      "shrink-0",
+      "items-center",
+      "gap-4",
+      "z-40",
+      className
+    )}
+  >
+    {rightSlot}
+  </header>
+);
+
+type MobileHeaderProps = {
+  className?: string;
+  rightSlot?: ReactNode;
+};
+
+const MobileHeader = ({ className, rightSlot }: MobileHeaderProps) => {
   const { open, isMobile } = useSidebar();
 
   const { title } = useRefineOptions();
@@ -52,12 +83,8 @@ function MobileHeader() {
         "shrink-0",
         "items-center",
         "gap-2",
-        "border-b",
-        "border-border",
-        "bg-sidebar",
-        "pr-3",
-        "justify-between",
         "z-40",
+        className
       )}
     >
       <SidebarTrigger
@@ -83,7 +110,7 @@ function MobileHeader() {
           {
             "pl-3": !open,
             "pl-5": open,
-          },
+          }
         )}
       >
         <div>{title.icon}</div>
@@ -96,18 +123,14 @@ function MobileHeader() {
             {
               "opacity-0": !open,
               "opacity-100": open,
-            },
+            }
           )}
         >
           {title.text}
         </h2>
       </div>
 
-      <ThemeToggle className={cn("h-8", "w-8")} />
+      {rightSlot}
     </header>
   );
-}
-
-Header.displayName = "Header";
-MobileHeader.displayName = "MobileHeader";
-DesktopHeader.displayName = "DesktopHeader";
+};

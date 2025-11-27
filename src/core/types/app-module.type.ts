@@ -1,3 +1,4 @@
+import { type IconName } from "lucide-react/dynamic";
 export type RoutePresentation = "page" | "drawer" | "modal";
 export type PresentationConfig =
   | "page"
@@ -8,7 +9,16 @@ export type PresentationConfig =
     };
 
 export type AppModule = {
-  resource: { name: string; [key: string]: unknown };
+  resource: {
+    name: string;
+    list?: string;
+    create?: string;
+    edit?: string;
+    meta: {
+      labelKey: string;
+      icon?: IconName;
+    };
+  };
   routes: React.ReactNode;
   presentation?: Record<string, PresentationConfig>;
   priority?: number;

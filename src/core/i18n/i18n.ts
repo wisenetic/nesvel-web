@@ -16,12 +16,11 @@ void i18n
     resources,
     lng: savedLang,
     fallbackLng: "en",
-    interpolation: { escapeValue: false },
-    react: { useSuspense: false },
+    //interpolation: { escapeValue: false }, //TODO: Check this
+    //react: { useSuspense: false }, //TODO: Check this
   });
 
-i18n.on("languageChanged", (lang) => {
-  console.log(">>>>>>>lang>>>>>>>", lang);
+i18n.on("languageChanged", lang => {
   localStorage.setItem("lang", lang);
   document.documentElement.lang = lang;
   document.documentElement.dir = ["ar", "he", "fa", "ur"].includes(lang)

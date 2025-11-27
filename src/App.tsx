@@ -5,29 +5,28 @@ import routerProvider, {
   DocumentTitleHandler,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router";
-//import { BrowserRouter } from "react-router";
+import { useTranslation } from "react-i18next";
 import { BrowserRouter } from "react-router-dom"; // <--- FIXED
 
 import "./App.css";
 import { Toaster } from "@/core/components/shared/notification/toaster";
 import { useNotificationProvider } from "@/core/components/shared/notification/use-notification-provider";
-import { i18nProvider } from "@/core/i18n/i18nProvider";
 import { getDataProvider } from "@/core/providers/data-provider";
 import { ThemeProvider } from "@/core/providers/theme-provider";
 import { appResources } from "@/core/resources";
 import { AppRoutes } from "@/core/router/app-routes";
 
 import { authProvider } from "./core/providers/auth-provider";
-
 function App() {
   const dataProvider = getDataProvider();
 
-  //const { t, i18n } = useTranslation();
-  // const i18nProvider = {
-  //   translate: (key: string, params: object) => t(key, params),
-  //   changeLocale: (lang: string) => i18n.changeLanguage(lang),
-  //   getLocale: () => i18n.language,
-  // };
+  const { i18n } = useTranslation();
+  const i18nProvider = {
+    translate: (key: string, params?: Record<string, string | number>) =>
+      i18n.t(key, params),
+    changeLocale: (lang: string) => i18n.changeLanguage(lang),
+    getLocale: () => i18n.language,
+  };
 
   return (
     <BrowserRouter>

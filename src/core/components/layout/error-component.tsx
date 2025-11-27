@@ -1,3 +1,7 @@
+import { useGo, useResourceParams, useTranslate } from "@refinedev/core";
+import { ChevronLeft, InfoIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+
 import { Button } from "@/core/components/ui/button";
 import {
   Tooltip,
@@ -6,9 +10,6 @@ import {
   TooltipTrigger,
 } from "@/core/components/ui/tooltip";
 import { cn } from "@/core/lib/utils";
-import { useGo, useResourceParams, useTranslate } from "@refinedev/core";
-import { ChevronLeft, InfoIcon } from "lucide-react";
-import { useEffect, useState } from "react";
 
 /**
  * When the app is navigated to a non-existent route, refine shows a default error page.
@@ -30,11 +31,11 @@ export function ErrorComponent() {
         translate(
           "pages.error.info",
           {
-            action: action,
+            action,
             resource: resource?.name,
           },
-          `You may have forgotten to add the "${action}" component to "${resource?.name}" resource.`,
-        ),
+          `You may have forgotten to add the "${action}" component to "${resource?.name}" resource.`
+        )
       );
     }
   }, [resource, action, translate]);
@@ -46,7 +47,7 @@ export function ErrorComponent() {
         "items-center",
         "justify-center",
         "bg-background",
-        "my-auto",
+        "my-auto"
       )}
     >
       <div className={cn("text-center", "space-y-8")}>
@@ -91,7 +92,7 @@ export function ErrorComponent() {
             <p className={cn("text-muted-foreground")}>
               {translate(
                 "pages.error.description",
-                "The page you're looking for does not exist.",
+                "The page you're looking for does not exist."
               )}
             </p>
             {errorMessage && (
@@ -103,7 +104,7 @@ export function ErrorComponent() {
                         "h-4",
                         "w-4",
                         "text-muted-foreground",
-                        "cursor-help",
+                        "cursor-help"
                       )}
                       data-testid="error-component-tooltip"
                     />
