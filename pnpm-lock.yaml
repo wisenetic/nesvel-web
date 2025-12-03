@@ -188,6 +188,9 @@ importers:
       react-router-dom:
         specifier: ^7.9.5
         version: 7.9.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react-skeletonify:
+        specifier: ^1.1.1
+        version: 1.1.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       recharts:
         specifier: ^2.15.3
         version: 2.15.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -4559,6 +4562,12 @@ packages:
     peerDependenciesMeta:
       react-dom:
         optional: true
+
+  react-skeletonify@1.1.1:
+    resolution: {integrity: sha512-OksA7O62dizHGdZJsdsTqQnQkDndqseGbL0NGIWXJYvPPPB2hQ5e3Xacs/GpF8qNc+vR1WaMXASrHHDGBl/sbQ==}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
 
   react-smooth@4.0.4:
     resolution: {integrity: sha512-gnGKTpYwqL0Iii09gHobNolvX4Kiq4PKx6eWBCYYix+8cdw+cGo3do906l1NBPKkSWx1DghC1dlWG9L2uGd61Q==}
@@ -9873,6 +9882,11 @@ snapshots:
       react: 19.1.0
       set-cookie-parser: 2.7.2
     optionalDependencies:
+      react-dom: 19.1.0(react@19.1.0)
+
+  react-skeletonify@1.1.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
   react-smooth@4.0.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0):

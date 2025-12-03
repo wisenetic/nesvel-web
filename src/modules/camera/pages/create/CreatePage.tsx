@@ -52,7 +52,7 @@ export default function CameraCreatePage() {
         <p className="text-sm text-muted-foreground">
           {translate(
             "camera.create.subtitle",
-            "Configure camera details and RTSP stream URL",
+            "Configure camera details and RTSP stream URL"
           )}
         </p>
       </div>
@@ -65,7 +65,7 @@ export default function CameraCreatePage() {
             rules={{
               required: translate(
                 "camera.create.validation.name_required",
-                "Camera name is required",
+                "Camera name is required"
               ),
             }}
             render={({ field }) => (
@@ -79,7 +79,7 @@ export default function CameraCreatePage() {
                     value={field.value ?? ""}
                     placeholder={translate(
                       "camera.create.placeholders.name",
-                      "Front Entrance",
+                      "Front Entrance"
                     )}
                   />
                 </FormControl>
@@ -102,7 +102,7 @@ export default function CameraCreatePage() {
                     value={field.value ?? ""}
                     placeholder={translate(
                       "camera.create.placeholders.location",
-                      "Building A, Floor 1",
+                      "Building A, Floor 1"
                     )}
                   />
                 </FormControl>
@@ -117,7 +117,7 @@ export default function CameraCreatePage() {
             rules={{
               required: translate(
                 "camera.create.validation.stream_required",
-                "RTSP URL is required",
+                "RTSP URL is required"
               ),
             }}
             render={({ field }) => (
@@ -131,7 +131,7 @@ export default function CameraCreatePage() {
                     value={field.value ?? ""}
                     placeholder={translate(
                       "camera.create.placeholders.streamUrl",
-                      "rtsp://admin:password@192.168.1.100:554/stream1",
+                      "rtsp://admin:password@192.168.1.100:554/stream1"
                     )}
                   />
                 </FormControl>

@@ -13,15 +13,21 @@ import type {
   DeleteOneParams,
 } from "@refinedev/core";
 
+const MOCK_LATENCY_MS = 600;
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 /**
  * Mock DataProvider with explicit param types to avoid implicit any issues.
  * Supports filtering, sorting, pagination.
+ * Adds a small artificial delay so skeletons are visible in mock mode.
  */
 export const mockDataProvider: DataProvider = {
   // --- LIST ---
   async getList<TData extends BaseRecord = BaseRecord>(
     params: GetListParams,
   ): Promise<GetListResponse<TData>> {
+    await sleep(MOCK_LATENCY_MS);
     const { resource, pagination, sorters, filters } = params;
     const response = await fetch(`/mocks/${resource}/${resource}.json`);
     const data: TData[] = await response.json();
@@ -89,6 +95,7 @@ export const mockDataProvider: DataProvider = {
   async getOne<TData extends BaseRecord = BaseRecord>(
     params: GetOneParams,
   ): Promise<GetOneResponse<TData>> {
+    await sleep(MOCK_LATENCY_MS);
     const { resource, id } = params;
     const response = await fetch(`/mocks/${resource}/${resource}.json`);
     const data: TData[] = await response.json();
@@ -100,6 +107,7 @@ export const mockDataProvider: DataProvider = {
   async create<TData extends BaseRecord = BaseRecord, TVariables = {}>(
     params: CreateParams<TVariables>,
   ): Promise<CreateResponse<TData>> {
+    await sleep(MOCK_LATENCY_MS);
     const { resource, variables } = params;
     const id = crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2, 9);
     const newRecord = { id, ...(variables as object) } as unknown as TData;
@@ -111,6 +119,7 @@ export const mockDataProvider: DataProvider = {
   async update<TData extends BaseRecord = BaseRecord, TVariables = {}>(
     params: UpdateParams<TVariables>,
   ): Promise<UpdateResponse<TData>> {
+    await sleep(MOCK_LATENCY_MS);
     const { resource, id, variables } = params;
     const updated = { id, ...(variables as object) } as unknown as TData;
     return { data: updated };
@@ -120,6 +129,7 @@ export const mockDataProvider: DataProvider = {
   async deleteOne<TData extends BaseRecord = BaseRecord>(
     params: DeleteOneParams,
   ): Promise<DeleteOneResponse<TData>> {
+    await sleep(MOCK_LATENCY_MS);
     const { resource, id } = params;
     // return deleted id
     return { data: { id } as unknown as TData };

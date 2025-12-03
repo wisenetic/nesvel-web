@@ -24,7 +24,7 @@ const cameraModule: AppModule = {
       side: "right",
     },
     create: {
-      view: "drawer",
+      view: "modal",
       className: "w-[100%]! max-w-[100%]! md:w-[40%]! md:max-w-[40%]! p-6",
       side: "right",
     },

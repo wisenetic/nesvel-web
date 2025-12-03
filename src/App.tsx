@@ -15,6 +15,7 @@ import { getDataProvider } from "@/core/providers/data-provider";
 import { ThemeProvider } from "@/core/providers/theme-provider";
 import { appResources } from "@/core/resources";
 import { AppRoutes } from "@/core/router/app-routes";
+import { SkeletonProvider } from "react-skeletonify";
 
 import { authProvider } from "./core/providers/auth-provider";
 function App() {
@@ -32,28 +33,39 @@ function App() {
     <BrowserRouter>
       <RefineKbarProvider>
         <ThemeProvider>
-          <DevtoolsProvider>
-            <Refine
-              dataProvider={dataProvider}
-              notificationProvider={useNotificationProvider()}
-              routerProvider={routerProvider}
-              authProvider={authProvider}
-              i18nProvider={i18nProvider} // vvv this already binds i18next!
-              resources={appResources}
-              options={{
-                syncWithLocation: true,
-                warnWhenUnsavedChanges: true,
-                projectId: "j35ggW-mPJX5C-cuBY6x",
-              }}
-            >
-              <AppRoutes />
-              <Toaster />
-              <RefineKbar />
-              <UnsavedChangesNotifier />
-              <DocumentTitleHandler />
-            </Refine>
-            <DevtoolsPanel />
-          </DevtoolsProvider>
+          <SkeletonProvider
+            config={{
+              animation: "animation-1",
+              borderRadius: "8px",
+              animationSpeed: 2,
+              background: "#e0e0e0",
+              exceptTags: ["button", "input"],
+            }}
+          >
+            <DevtoolsProvider>
+              <Refine
+                dataProvider={dataProvider}
+                notificationProvider={useNotificationProvider()}
+                routerProvider={routerProvider}
+                authProvider={authProvider}
+                i18nProvider={i18nProvider} // vvv this already binds i18next!
+                resources={appResources}
+                options={{
+                  syncWithLocation: true,
+                  warnWhenUnsavedChanges: true,
+                  projectId: "j35ggW-mPJX5C-cuBY6x",
+                }}
+              >
+                <AppRoutes />
+
+                <Toaster />
+                <RefineKbar />
+                <UnsavedChangesNotifier />
+                <DocumentTitleHandler />
+              </Refine>
+              <DevtoolsPanel />
+            </DevtoolsProvider>
+          </SkeletonProvider>
         </ThemeProvider>
       </RefineKbarProvider>
     </BrowserRouter>

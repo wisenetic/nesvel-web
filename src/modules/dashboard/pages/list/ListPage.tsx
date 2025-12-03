@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-
 import { useList, useTranslation } from "@refinedev/core";
 import {
   AlertTriangle,
@@ -11,6 +9,7 @@ import {
   Flame,
   Video,
 } from "lucide-react";
+import { useMemo } from "react";
 import {
   Area,
   AreaChart,
@@ -28,6 +27,9 @@ import {
 
 import { PageHeader } from "@/core/components/shared/page-header";
 import { StatsOverview } from "@/core/components/shared/stats/StatsOverview";
+import { SmartSkeleton } from "@/core/components/shared/smart-skeleton/smart-skeleton";
+import { Badge } from "@/core/components/ui/badge";
+import { Button } from "@/core/components/ui/button";
 import {
   Card,
   CardContent,
@@ -35,8 +37,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/core/components/ui/card";
-import { Badge } from "@/core/components/ui/badge";
-import { Button } from "@/core/components/ui/button";
 import {
   ChartContainer,
   ChartLegendContent,
@@ -53,6 +53,8 @@ import {
   TableRow,
 } from "@/core/components/ui/table";
 import type { Detection } from "@/modules/detection/types";
+
+import { DashboardListSkeleton } from "./DashboardListSkeleton";
 
 const TOTAL_CAMERAS = 10;
 const ACTIVE_CAMERAS = 9;
@@ -141,14 +143,14 @@ export default function DashboardListPage() {
 
   const detections = useMemo(
     () => detectionsResult?.data ?? [],
-    [detectionsResult],
+    [detectionsResult]
   );
 
   const summaryStats = useMemo(() => {
     const totalDetections = detections.length;
-    const fireDetections = detections.filter((d) => d.type === "fire").length;
-    const smokeDetections = detections.filter((d) => d.type === "smoke").length;
-    const unacknowledged = detections.filter((d) => d.status === "new").length;
+    const fireDetections = detections.filter(d => d.type === "fire").length;
+    const smokeDetections = detections.filter(d => d.type === "smoke").length;
+    const unacknowledged = detections.filter(d => d.status === "new").length;
 
     return {
       totalDetections,
@@ -161,7 +163,7 @@ export default function DashboardListPage() {
   const topDetectionTypes = useMemo(() => {
     const counts: Record<string, number> = {};
 
-    detections.forEach((detection) => {
+    detections.forEach(detection => {
       counts[detection.type] = (counts[detection.type] ?? 0) + 1;
     });
 
@@ -173,20 +175,19 @@ export default function DashboardListPage() {
   const severityBreakdown = useMemo(() => {
     const counts: Record<string, number> = {};
 
-    detections.forEach((detection) => {
+    detections.forEach(detection => {
       counts[detection.severity] = (counts[detection.severity] ?? 0) + 1;
     });
 
-    return ["critical", "warning", "info"].map((severity) => ({
+    return ["critical", "warning", "info"].map(severity => ({
       severity,
       value: counts[severity] ?? 0,
     }));
   }, [detections]);
 
-  const recentDetections = useMemo(
-    () => detections.slice(0, 5),
-    [detections],
-  );
+  const recentDetections = useMemo(() => detections.slice(0, 5), [detections]);
+
+  const isLoading = detectionsQuery.isLoading || detectionsQuery.isFetching;
 
   const statsItems = [
     {
@@ -202,7 +203,10 @@ export default function DashboardListPage() {
       tone: "danger" as const,
     },
     {
-      label: translate("dashboard.metrics.smoke_detections", "Smoke Detections"),
+      label: translate(
+        "dashboard.metrics.smoke_detections",
+        "Smoke Detections"
+      ),
       value: summaryStats.smokeDetections,
       icon: <CloudFog className="size-5 text-amber-500" />,
       tone: "warning" as const,
@@ -210,7 +214,7 @@ export default function DashboardListPage() {
     {
       label: translate(
         "dashboard.metrics.unacknowledged_alerts",
-        "Unacknowledged Alerts",
+        "Unacknowledged Alerts"
       ),
       value: summaryStats.unacknowledged,
       icon: <Bell className="size-5 text-rose-500" />,
@@ -218,357 +222,462 @@ export default function DashboardListPage() {
     },
   ];
 
-  if (detectionsQuery.isLoading) {
-    return (
-      <div className="p-6 text-sm text-muted-foreground">
-        {translate("dashboard.loading", "Loading dashboard data...")}
-      </div>
-    );
-  }
-
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title={translate("dashboard.list_title", "Dashboard")}
-        description={translate(
-          "dashboard.list_description",
-          "AI vision system overview, detections, and camera health.",
-        )}
-        rightSlot={
-          <Button size="sm" variant="outline">
-            <Camera className="mr-2 size-4" />
-            {translate("dashboard.actions.live_view", "Live View")}
-          </Button>
-        }
-      />
+    <SmartSkeleton
+      loading={isLoading}
+      ariaLabel={translate("dashboard.loading", "Loading dashboard data...")}
+      skeleton={<DashboardListSkeleton />}
+    >
+      <div className="space-y-6">
+        <PageHeader
+          title={translate("dashboard.list_title", "Dashboard")}
+          description={translate(
+            "dashboard.list_description",
+            "AI vision system overview, detections, and camera health."
+          )}
+        />
 
-      <StatsOverview items={statsItems} />
+        <StatsOverview items={statsItems} />
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>
-              {translate("dashboard.charts.detections_24h", "Detection Trends (24h)")}
-            </CardTitle>
-            <CardDescription>
-              {translate(
-                "dashboard.charts.detections_24h_desc",
-                "Real-time detection events by type.",
-              )}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-2">
-            <ChartContainer config={detectionTrendConfig} className="h-64">
-              <AreaChart data={detectionTrendData} margin={{ left: 0, right: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="time" tickLine={false} axisLine={false} />
-                <YAxis tickLine={false} axisLine={false} />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent indicator="line" />}
-                />
-                <Legend content={<ChartLegendContent />} />
-                <Area
-                  type="monotone"
-                  dataKey="fire"
-                  stroke="var(--color-fire)"
-                  fill="var(--color-fire)"
-                  fillOpacity={0.3}
-                  name="fire"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="smoke"
-                  stroke="var(--color-smoke)"
-                  fill="var(--color-smoke)"
-                  fillOpacity={0.3}
-                  name="smoke"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="person"
-                  stroke="var(--color-person)"
-                  fill="var(--color-person)"
-                  fillOpacity={0.3}
-                  name="person"
-                />
-              </AreaChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              {translate(
-                "dashboard.charts.camera_status_distribution",
-                "Camera Status Distribution",
-              )}
-            </CardTitle>
-            <CardDescription>
-              {translate(
-                "dashboard.charts.camera_status_distribution_desc",
-                "Current status of all cameras.",
-              )}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4 pt-2">
-            <ChartContainer
-              config={cameraStatusChartConfig}
-              className="mx-auto h-48 w-full max-w-xs"
-            >
-              <PieChart>
-                <Pie
-                  data={cameraStatusData}
-                  dataKey="value"
-                  nameKey="status"
-                  innerRadius={40}
-                  outerRadius={70}
-                  paddingAngle={4}
+        <div className="grid gap-4 lg:grid-cols-3">
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <CardTitle>
+                {translate(
+                  "dashboard.charts.detections_24h",
+                  "Detection Trends (24h)"
+                )}
+              </CardTitle>
+              <CardDescription>
+                {translate(
+                  "dashboard.charts.detections_24h_desc",
+                  "Real-time detection events by type."
+                )}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-2">
+              <ChartContainer config={detectionTrendConfig} className="h-64">
+                <AreaChart
+                  data={detectionTrendData}
+                  margin={{ left: 0, right: 0 }}
                 >
-                  {cameraStatusData.map((entry) => (
-                    <Cell
-                      key={entry.status}
-                      fill={
-                        entry.status === "online"
-                          ? "rgb(22 163 74)" // emerald-600
-                          : "rgb(220 38 38)" // red-600
-                      }
-                    />
-                  ))}
-                </Pie>
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent hideIndicator />}
-                />
-              </PieChart>
-            </ChartContainer>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="time" tickLine={false} axisLine={false} />
+                  <YAxis tickLine={false} axisLine={false} />
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent indicator="line" />}
+                  />
+                  <Legend content={<ChartLegendContent />} />
+                  <Area
+                    type="monotone"
+                    dataKey="fire"
+                    stroke="var(--color-fire)"
+                    fill="var(--color-fire)"
+                    fillOpacity={0.3}
+                    name="fire"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="smoke"
+                    stroke="var(--color-smoke)"
+                    fill="var(--color-smoke)"
+                    fillOpacity={0.3}
+                    name="smoke"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="person"
+                    stroke="var(--color-person)"
+                    fill="var(--color-person)"
+                    fillOpacity={0.3}
+                    name="person"
+                  />
+                </AreaChart>
+              </ChartContainer>
+            </CardContent>
+          </Card>
 
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="flex items-center justify-between rounded-lg bg-muted px-3 py-2">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  <span>
-                    {translate("dashboard.status.online", "Online")}
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {translate(
+                  "dashboard.charts.camera_status_distribution",
+                  "Camera Status Distribution"
+                )}
+              </CardTitle>
+              <CardDescription>
+                {translate(
+                  "dashboard.charts.camera_status_distribution_desc",
+                  "Current status of all cameras."
+                )}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-4 pt-2">
+              <ChartContainer
+                config={cameraStatusChartConfig}
+                className="mx-auto h-48 w-full max-w-xs"
+              >
+                <PieChart>
+                  <Pie
+                    data={cameraStatusData}
+                    dataKey="value"
+                    nameKey="status"
+                    innerRadius={40}
+                    outerRadius={70}
+                    paddingAngle={4}
+                  >
+                    {cameraStatusData.map(entry => (
+                      <Cell
+                        key={entry.status}
+                        fill={
+                          entry.status === "online"
+                            ? "rgb(22 163 74)" // emerald-600
+                            : "rgb(220 38 38)" // red-600
+                        }
+                      />
+                    ))}
+                  </Pie>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideIndicator />}
+                  />
+                </PieChart>
+              </ChartContainer>
+
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="flex items-center justify-between rounded-lg bg-muted px-3 py-2">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    <span>
+                      {translate("dashboard.status.online", "Online")}
+                    </span>
+                  </div>
+                  <span className="font-semibold">{ACTIVE_CAMERAS}</span>
+                </div>
+                <div className="flex items-center justify-between rounded-lg bg-muted px-3 py-2">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-rose-500" />
+                    <span>{translate("dashboard.status.error", "Error")}</span>
+                  </div>
+                  <span className="font-semibold">
+                    {TOTAL_CAMERAS - ACTIVE_CAMERAS}
                   </span>
                 </div>
-                <span className="font-semibold">{ACTIVE_CAMERAS}</span>
               </div>
-              <div className="flex items-center justify-between rounded-lg bg-muted px-3 py-2">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-rose-500" />
-                  <span>{translate("dashboard.status.error", "Error")}</span>
-                </div>
-                <span className="font-semibold">
-                  {TOTAL_CAMERAS - ACTIVE_CAMERAS}
-                </span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            </CardContent>
+          </Card>
+        </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              {translate(
-                "dashboard.charts.top_detection_types",
-                "Top Detection Types",
-              )}
-            </CardTitle>
-            <CardDescription>
-              {translate(
-                "dashboard.charts.top_detection_types_desc",
-                "Most frequent detection types across the system.",
-              )}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-2">
-            <ChartContainer config={{}} className="h-64">
-              <BarChart
-                data={topDetectionTypes}
-                layout="vertical"
-                margin={{ top: 4, left: 8, right: 16 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                <XAxis
-                  type="number"
-                  tickLine={false}
-                  axisLine={false}
-                  allowDecimals={false}
-                />
-                <YAxis
-                  type="category"
-                  dataKey="type"
-                  tickLine={false}
-                  axisLine={false}
-                  tickFormatter={(value: string) =>
-                    translate(
-                      `detection.types.${value}`,
-                      value.charAt(0).toUpperCase() + value.slice(1),
-                    )
-                  }
-                />
-                <RechartsTooltip
-                  formatter={(val: number, name: string) => [
-                    val,
-                    translate(
-                      `detection.types.${name}`,
-                      name.charAt(0).toUpperCase() + name.slice(1),
-                    ),
-                  ]}
-                />
-                <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-                  {topDetectionTypes.map((item) => (
-                    <Cell
-                      key={item.type}
-                      fill={
-                        DETECTION_TYPE_COLORS[item.type] ?? "var(--primary)"
-                      }
-                    />
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {translate(
+                  "dashboard.charts.top_detection_types",
+                  "Top Detection Types"
+                )}
+              </CardTitle>
+              <CardDescription>
+                {translate(
+                  "dashboard.charts.top_detection_types_desc",
+                  "Most frequent detection types across the system."
+                )}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-2">
+              <ChartContainer config={{}} className="h-64">
+                <BarChart
+                  data={topDetectionTypes}
+                  layout="vertical"
+                  margin={{ top: 4, left: 8, right: 16 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                  <XAxis
+                    type="number"
+                    tickLine={false}
+                    axisLine={false}
+                    allowDecimals={false}
+                  />
+                  <YAxis
+                    type="category"
+                    dataKey="type"
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(value: string) =>
+                      translate(
+                        `detection.types.${value}`,
+                        value.charAt(0).toUpperCase() + value.slice(1)
+                      )
+                    }
+                  />
+                  <RechartsTooltip
+                    formatter={(val: number, name: string) => [
+                      val,
+                      translate(
+                        `detection.types.${name}`,
+                        name.charAt(0).toUpperCase() + name.slice(1)
+                      ),
+                    ]}
+                  />
+                  <Bar dataKey="value" radius={[0, 4, 4, 0]}>
+                    {topDetectionTypes.map(item => (
+                      <Cell
+                        key={item.type}
+                        fill={
+                          DETECTION_TYPE_COLORS[item.type] ?? "var(--primary)"
+                        }
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {translate(
+                  "dashboard.charts.alert_severity_breakdown",
+                  "Alert Severity Breakdown"
+                )}
+              </CardTitle>
+              <CardDescription>
+                {translate(
+                  "dashboard.charts.alert_severity_breakdown_desc",
+                  "Distribution of alerts by severity."
+                )}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-2">
+              <ChartContainer config={{}} className="h-64">
+                <BarChart
+                  data={severityBreakdown}
+                  margin={{ top: 4, left: 0, right: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis
+                    dataKey="severity"
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(value: string) =>
+                      translate(
+                        `dashboard.severity.${value}`,
+                        value.charAt(0).toUpperCase() + value.slice(1)
+                      )
+                    }
+                  />
+                  <YAxis
+                    tickLine={false}
+                    axisLine={false}
+                    allowDecimals={false}
+                  />
+                  <RechartsTooltip
+                    formatter={(val: number, name: string) => [
+                      val,
+                      translate(
+                        `dashboard.severity.${name}`,
+                        name.charAt(0).toUpperCase() + name.slice(1)
+                      ),
+                    ]}
+                  />
+                  <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                    {severityBreakdown.map(item => (
+                      <Cell
+                        key={item.severity}
+                        fill={
+                          SEVERITY_COLORS[item.severity] ?? "var(--primary)"
+                        }
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {translate(
+                  "dashboard.charts.weekly_detection_heatmap",
+                  "Weekly Detection Heatmap"
+                )}
+              </CardTitle>
+              <CardDescription>
+                {translate(
+                  "dashboard.charts.weekly_detection_heatmap_desc",
+                  "Detections by day and time of day."
+                )}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-2">
+              <ChartContainer config={{}} className="h-64">
+                <BarChart
+                  data={weeklyHeatmapData}
+                  margin={{ top: 4, left: 0, right: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="day" tickLine={false} axisLine={false} />
+                  <YAxis
+                    tickLine={false}
+                    axisLine={false}
+                    allowDecimals={false}
+                  />
+                  <Legend />
+                  <RechartsTooltip
+                    formatter={(val: number, name: string) => [
+                      val,
+                      translate(
+                        `dashboard.time_of_day.${name}`,
+                        name.charAt(0).toUpperCase() + name.slice(1)
+                      ),
+                    ]}
+                  />
+                  <Bar
+                    dataKey="night"
+                    stackId="time"
+                    fill="rgb(147 51 234)" // purple-600
+                    name={translate("dashboard.time_of_day.night", "Night")}
+                  />
+                  <Bar
+                    dataKey="morning"
+                    stackId="time"
+                    fill="rgb(56 189 248)" // sky-400
+                    name={translate("dashboard.time_of_day.morning", "Morning")}
+                  />
+                  <Bar
+                    dataKey="afternoon"
+                    stackId="time"
+                    fill="rgb(234 179 8)" // yellow-400
+                    name={translate(
+                      "dashboard.time_of_day.afternoon",
+                      "Afternoon"
+                    )}
+                  />
+                  <Bar
+                    dataKey="evening"
+                    stackId="time"
+                    fill="rgb(249 115 22)" // orange-500
+                    name={translate("dashboard.time_of_day.evening", "Evening")}
+                  />
+                </BarChart>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {translate(
+                  "dashboard.recent_detections.title",
+                  "Recent Detections"
+                )}
+              </CardTitle>
+              <CardDescription>
+                {translate(
+                  "dashboard.recent_detections.description",
+                  "Latest fire, smoke, and object detection events."
+                )}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-2">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>
+                      {translate(
+                        "dashboard.recent_detections.columns.type",
+                        "Type"
+                      )}
+                    </TableHead>
+                    <TableHead>
+                      {translate(
+                        "dashboard.recent_detections.columns.camera",
+                        "Camera"
+                      )}
+                    </TableHead>
+                    <TableHead>
+                      {translate(
+                        "dashboard.recent_detections.columns.time",
+                        "Time"
+                      )}
+                    </TableHead>
+                    <TableHead className="text-right">
+                      {translate(
+                        "dashboard.recent_detections.columns.status",
+                        "Status"
+                      )}
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {recentDetections.map(detection => (
+                    <TableRow key={detection.id}>
+                      <TableCell className="flex items-center gap-2">
+                        <DetectionTypeIcon type={detection.type} />
+                        <span className="capitalize">{detection.type}</span>
+                      </TableCell>
+                      <TableCell>{detection.cameraName}</TableCell>
+                      <TableCell>{detection.time}</TableCell>
+                      <TableCell className="text-right">
+                        <Badge
+                          variant={
+                            detection.status === "new"
+                              ? "destructive"
+                              : "secondary"
+                          }
+                        >
+                          {detection.status === "new" ? (
+                            <CircleDot className="mr-1 size-3" />
+                          ) : (
+                            <CheckCircle2 className="mr-1 size-3" />
+                          )}
+                          {detection.status === "new"
+                            ? translate(
+                                "dashboard.recent_detections.status.new",
+                                "New"
+                              )
+                            : translate(
+                                "dashboard.recent_detections.status.acknowledged",
+                                "Acknowledged"
+                              )}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                </Bar>
-              </BarChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
+
+                  {!recentDetections.length && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={4}
+                        className="py-6 text-center text-sm text-muted-foreground"
+                      >
+                        {translate(
+                          "dashboard.recent_detections.empty",
+                          "No detections yet. They will appear here once events are captured."
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </div>
 
         <Card>
           <CardHeader>
             <CardTitle>
-              {translate(
-                "dashboard.charts.alert_severity_breakdown",
-                "Alert Severity Breakdown",
-              )}
+              {translate("dashboard.camera_status.title", "Camera Status")}
             </CardTitle>
             <CardDescription>
               {translate(
-                "dashboard.charts.alert_severity_breakdown_desc",
-                "Distribution of alerts by severity.",
-              )}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-2">
-            <ChartContainer config={{}} className="h-64">
-              <BarChart
-                data={severityBreakdown}
-                margin={{ top: 4, left: 0, right: 0 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis
-                  dataKey="severity"
-                  tickLine={false}
-                  axisLine={false}
-                  tickFormatter={(value: string) =>
-                    translate(
-                      `dashboard.severity.${value}`,
-                      value.charAt(0).toUpperCase() + value.slice(1),
-                    )
-                  }
-                />
-                <YAxis tickLine={false} axisLine={false} allowDecimals={false} />
-                <RechartsTooltip
-                  formatter={(val: number, name: string) => [
-                    val,
-                    translate(
-                      `dashboard.severity.${name}`,
-                      name.charAt(0).toUpperCase() + name.slice(1),
-                    ),
-                  ]}
-                />
-                <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                  {severityBreakdown.map((item) => (
-                    <Cell
-                      key={item.severity}
-                      fill={
-                        SEVERITY_COLORS[item.severity] ?? "var(--primary)"
-                      }
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              {translate(
-                "dashboard.charts.weekly_detection_heatmap",
-                "Weekly Detection Heatmap",
-              )}
-            </CardTitle>
-            <CardDescription>
-              {translate(
-                "dashboard.charts.weekly_detection_heatmap_desc",
-                "Detections by day and time of day.",
-              )}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-2">
-            <ChartContainer config={{}} className="h-64">
-              <BarChart
-                data={weeklyHeatmapData}
-                margin={{ top: 4, left: 0, right: 0 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="day" tickLine={false} axisLine={false} />
-                <YAxis tickLine={false} axisLine={false} allowDecimals={false} />
-                <Legend />
-                <RechartsTooltip
-                  formatter={(val: number, name: string) => [
-                    val,
-                    translate(
-                      `dashboard.time_of_day.${name}`,
-                      name.charAt(0).toUpperCase() + name.slice(1),
-                    ),
-                  ]}
-                />
-                <Bar
-                  dataKey="night"
-                  stackId="time"
-                  fill="rgb(147 51 234)" // purple-600
-                  name={translate("dashboard.time_of_day.night", "Night")}
-                />
-                <Bar
-                  dataKey="morning"
-                  stackId="time"
-                  fill="rgb(56 189 248)" // sky-400
-                  name={translate("dashboard.time_of_day.morning", "Morning")}
-                />
-                <Bar
-                  dataKey="afternoon"
-                  stackId="time"
-                  fill="rgb(234 179 8)" // yellow-400
-                  name={translate("dashboard.time_of_day.afternoon", "Afternoon")}
-                />
-                <Bar
-                  dataKey="evening"
-                  stackId="time"
-                  fill="rgb(249 115 22)" // orange-500
-                  name={translate("dashboard.time_of_day.evening", "Evening")}
-                />
-              </BarChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              {translate(
-                "dashboard.recent_detections.title",
-                "Recent Detections",
-              )}
-            </CardTitle>
-            <CardDescription>
-              {translate(
-                "dashboard.recent_detections.description",
-                "Latest fire, smoke, and object detection events.",
+                "dashboard.camera_status.description",
+                "Overview of all connected cameras."
               )}
             </CardDescription>
           </CardHeader>
@@ -578,154 +687,68 @@ export default function DashboardListPage() {
                 <TableRow>
                   <TableHead>
                     {translate(
-                      "dashboard.recent_detections.columns.type",
-                      "Type",
+                      "dashboard.camera_status.columns.camera",
+                      "Camera"
                     )}
                   </TableHead>
                   <TableHead>
                     {translate(
-                      "dashboard.recent_detections.columns.camera",
-                      "Camera",
+                      "dashboard.camera_status.columns.location",
+                      "Location"
                     )}
                   </TableHead>
                   <TableHead>
                     {translate(
-                      "dashboard.recent_detections.columns.time",
-                      "Time",
+                      "dashboard.camera_status.columns.status",
+                      "Status"
                     )}
                   </TableHead>
                   <TableHead className="text-right">
                     {translate(
-                      "dashboard.recent_detections.columns.status",
-                      "Status",
+                      "dashboard.camera_status.columns.action",
+                      "Action"
                     )}
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {recentDetections.map((detection) => (
-                  <TableRow key={detection.id}>
+                {cameraRows.map(camera => (
+                  <TableRow key={camera.id}>
                     <TableCell className="flex items-center gap-2">
-                      <DetectionTypeIcon type={detection.type} />
-                      <span className="capitalize">{detection.type}</span>
+                      <Video className="size-4 text-muted-foreground" />
+                      <span>{camera.name}</span>
                     </TableCell>
-                    <TableCell>{detection.cameraName}</TableCell>
-                    <TableCell>{detection.time}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell>{camera.location}</TableCell>
+                    <TableCell>
                       <Badge
                         variant={
-                          detection.status === "new" ? "destructive" : "secondary"
+                          camera.status === "online"
+                            ? "secondary"
+                            : "destructive"
                         }
                       >
-                        {detection.status === "new" ? (
-                          <CircleDot className="mr-1 size-3" />
-                        ) : (
-                          <CheckCircle2 className="mr-1 size-3" />
-                        )}
-                        {detection.status === "new"
-                          ? translate(
-                              "dashboard.recent_detections.status.new",
-                              "New",
-                            )
-                          : translate(
-                              "dashboard.recent_detections.status.acknowledged",
-                              "Acknowledged",
-                            )}
+                        <CircleDot className="mr-1 size-3" />
+                        {camera.status === "online"
+                          ? translate("dashboard.status.online", "Online")
+                          : translate("dashboard.status.error", "Error")}
                       </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button size="sm" variant="outline">
+                        {translate(
+                          "dashboard.camera_status.actions.view_stream",
+                          "View Stream"
+                        )}
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
-
-                {!recentDetections.length && (
-                  <TableRow>
-                    <TableCell
-                      colSpan={4}
-                      className="py-6 text-center text-sm text-muted-foreground"
-                    >
-                      {translate(
-                        "dashboard.recent_detections.empty",
-                        "No detections yet. They will appear here once events are captured.",
-                      )}
-                    </TableCell>
-                  </TableRow>
-                )}
               </TableBody>
             </Table>
           </CardContent>
         </Card>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            {translate("dashboard.camera_status.title", "Camera Status")}
-          </CardTitle>
-          <CardDescription>
-            {translate(
-              "dashboard.camera_status.description",
-              "Overview of all connected cameras.",
-            )}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-2">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>
-                  {translate("dashboard.camera_status.columns.camera", "Camera")}
-                </TableHead>
-                <TableHead>
-                  {translate(
-                    "dashboard.camera_status.columns.location",
-                    "Location",
-                  )}
-                </TableHead>
-                <TableHead>
-                  {translate("dashboard.camera_status.columns.status", "Status")}
-                </TableHead>
-                <TableHead className="text-right">
-                  {translate(
-                    "dashboard.camera_status.columns.action",
-                    "Action",
-                  )}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {cameraRows.map((camera) => (
-                <TableRow key={camera.id}>
-                  <TableCell className="flex items-center gap-2">
-                    <Video className="size-4 text-muted-foreground" />
-                    <span>{camera.name}</span>
-                  </TableCell>
-                  <TableCell>{camera.location}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={
-                        camera.status === "online" ? "secondary" : "destructive"
-                      }
-                    >
-                      <CircleDot className="mr-1 size-3" />
-                      {camera.status === "online"
-                        ? translate("dashboard.status.online", "Online")
-                        : translate("dashboard.status.error", "Error")}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button size="sm" variant="outline">
-                      {translate(
-                        "dashboard.camera_status.actions.view_stream",
-                        "View Stream",
-                      )}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-    </div>
+    </SmartSkeleton>
   );
 }
 

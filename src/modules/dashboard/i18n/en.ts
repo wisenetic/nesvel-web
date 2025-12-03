@@ -10,9 +10,6 @@ export default {
       smoke_detections: "Smoke Detections",
       unacknowledged_alerts: "Unacknowledged Alerts",
     },
-    actions: {
-      live_view: "Live View",
-    },
     charts: {
       detections_24h: "Detection Trends (24h)",
       detections_24h_desc: "Real-time detection events by type.",

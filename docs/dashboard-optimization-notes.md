@@ -3,7 +3,8 @@
 ## Checklist
 
 ### Core Fixes & Consistency
-- [ ] Investigate and fix translation issues where i18n is not working properly (missing keys, wrong language, or fallback text).
+
+- [x] Investigate and fix translation issues where i18n is not working properly (missing keys, wrong language, or fallback text).
 - [ ] Unify drawer presentation config across modules using shared presets.
 - [ ] Introduce a shared `EmptyState` component and replace per-page implementations.
 - [ ] Centralize detection type and severity color mappings so charts, cards, and filters share a single palette.
@@ -12,6 +13,7 @@
 - [ ] Fix remaining TypeScript errors in `api-provider`, `mock-provider`, route controller, and form pages until `pnpm exec tsc` passes cleanly.
 
 ### Refactors & Shared Components
+
 - [ ] Implement `ResourceListLayout` and apply to all list pages.
 - [ ] Implement `DrawerFormLayout` and use it for all create/edit/show drawers.
 - [ ] Refactor Rule and Employee list cards (and similar pages) to use `ResourceSummaryCard` + `MetaGrid`.
@@ -21,20 +23,23 @@
 - [ ] Add helper hooks/utilities: `useResourceList`, `useDrawerNavigation`, and centralized color/icon mappers.
 
 ### i18n & UX
+
 - [ ] Audit i18n coverage for all modules (including dashboard) to ensure both `en` and `ar` are complete.
 - [ ] Consider a shared status/severity vocabulary namespace instead of per-module duplicates.
 - [ ] Align button variants, sizes, and icon usage for primary actions and destructive actions across all modules.
 - [ ] Improve accessibility for icon-only buttons with consistent `aria-label` or tooltip behavior.
 
 ### Performance, DX & Testing
+
 - [ ] Review client-side vs server-side pagination strategies, especially for detections, and standardize approach.
 - [ ] Add basic tests (unit/integration) for dashboard charts, Rule/Employee calculations, empty states, and Settings toggles.
 - [ ] Document component patterns and module conventions (when to use drawers, how to add a new module, shared color and status schemes).
 
 ### Custom Enhancements
+
 - [ ] Create a dynamic layout system so resource cards auto-arrange responsively (based on viewport and density preferences).
 - [ ] Ensure "Save" / "Save & Create" buttons are only enabled when all required fields are valid and dirty, across forms.
-- [ ] Remove the "Live View" button from the dashboard header (keep live view in the Cameras module).
+- [x] Remove the "Live View" button from the dashboard header (keep live view in the Cameras module).
 - [ ] Define and enforce a consistent icon set and color tokens across the entire application.
 - [ ] Create a **Location** module to manage a dynamic hierarchical location structure (Site → Building → Floor → Zone).
 - [ ] Create a reusable **LocationSelection** component that integrates with forms.
@@ -42,7 +47,7 @@
 - [ ] Implement a shared **dynamic search** pattern for all modules (debounced queries, filter chips).
 - [ ] Standardize and fix the **drawer close button** behavior.
 - [ ] Build a dedicated **RTSP player** abstraction in React and integrate it into camera views.
-- [ ] Extend the `presentation` config to include **mobile** and **desktop** options per route.
+- [x] Extend the `presentation` config to include **mobile** and **desktop** options per route.
 - [ ] Integrate **Supabase messaging** (or similar) for notifications / realtime streams.
 - [ ] Implement **PWA** support using Vite PWA (service worker, offline caching, manifest, icons).
 - [ ] Implement **push notifications** with default/custom sounds and a global sound/mute control.
@@ -53,6 +58,7 @@
 ## 1. Issues and Inconsistencies
 
 ### Layout & Structure
+
 - List pages (Dashboard, Rule, Employee, Detection, Model, Camera) all hand-roll:
   - `PageHeader`
   - Optional `StatsOverview`
@@ -62,6 +68,7 @@
 - "Show" pages (e.g., Rule show, detection details, some Settings sections) each define their own label/value grids instead of a shared abstraction.
 
 ### Styling & Cards
+
 - Similar "resource card" layouts are duplicated in:
   - `RuleListPage`
   - `EmployeeListPage`
@@ -72,16 +79,19 @@
 - Semantic colors for detection types (person/smoke/vehicle/fire) and severities are defined in multiple places instead of a single source of truth.
 
 ### Data / Types / API Layer
+
 - `useList` patterns repeat the same boilerplate: `{ result, query } = useList<T>()` plus `useMemo(() => result?.data ?? [], [result])`.
 - Detection list implements custom, client-side pagination, while other lists either do not paginate or use server-side pagination semantics.
 - The mock data provider and API provider still have TypeScript typing issues (filters, pagination, generic signatures, and implicit `any` parameters).
 
 ### Internationalization (i18n)
+
 - Some modules still rely on English-only default strings or have fewer keys in `ar` than in `en`.
 - Status and severity vocabularies are duplicated across different namespaces (`rule.severity.*`, `dashboard.severity.*`, `detection.status.*`) instead of a shared vocabulary.
 - A few fallback strings (e.g., some `"-"` or `"--"` values, placeholders) are not yet part of the translation files.
 
 ### UX / Consistency
+
 - Create/edit/show flows:
   - `alert`, `camera`, `rule`, `employee`, `detection` all use drawers or modals, but button labels, sizes, and header treatments are not fully aligned.
 - Confirm delete behavior is implemented slightly differently in Rule, Alert, Camera list, etc.
@@ -91,10 +101,12 @@
   - There is no shared "page loading" pattern.
 
 ### Accessibility & Semantics
+
 - Icon-only buttons do not share a common pattern for accessible labels or tooltips.
 - Label/value grids are visually consistent but not implemented via a common `InfoItem` / `MetaGrid` component that could encapsulate better semantics and ARIA attributes.
 
 ### Tooling / Quality
+
 - Global TypeScript build still fails due to:
   - Provider generics (`api-provider`, `mock-provider`).
   - JSX namespace issues in some components.
@@ -106,6 +118,7 @@
 ## 2. Components to Create / Move into `core`
 
 ### A. Layout / Page-Level Components
+
 - **`ResourceListLayout`**
   - Encapsulate:
     - `PageHeader` (title, description, actions)
@@ -126,6 +139,7 @@
   - Shared skeleton for initial page loads instead of free-form "Loading" placeholders.
 
 ### B. Card / Content Primitives
+
 - **`ResourceSummaryCard`**
   - Card pattern combining:
     - Icon + title
@@ -161,6 +175,7 @@
     - Camera status.
 
 ### C. Chart-Related Components
+
 - **`DetectionTypeBarChart`**
   - Horizontal bar chart specifically for detection type distributions:
     - Uses shared detection type color mapping.
@@ -179,6 +194,7 @@
   - Preconfigured variants for typical KPIs (total, active, critical, errors, etc.).
 
 ### D. Actions / Dialogs
+
 - **`DeleteResourceDialog`**
   - Generic confirm-delete dialog that wraps `ConfirmDialog`:
     - Accepts resource name, message, and `onConfirm`.
@@ -189,6 +205,7 @@
   - Reusable right-side header action cluster (primary + secondary/destructive button) to keep spacing and sizes aligned across modules.
 
 ### E. Hooks / Utilities
+
 - **`useResourceList`**
   - Helper around `useList` that returns data, query object, and optionally computed stats.
 
@@ -203,6 +220,7 @@
 ## 3. Pending Improvements / Backlog (No-Code Checklist)
 
 ### P1 – Consistency & Correctness
+
 1. Unify drawer presentation config across modules using shared presets.
 2. Introduce a shared `EmptyState` component and replace per-page implementations.
 3. Refactor Rule and Employee list cards to use `ResourceSummaryCard` + `MetaGrid`.
@@ -211,18 +229,21 @@
 6. Fix remaining TypeScript errors in `api-provider`, `mock-provider`, route controller, and form pages until `pnpm exec tsc` passes cleanly.
 
 ### P2 – Reuse & Maintainability
+
 7. Implement `ResourceListLayout` and apply to all list pages.
 8. Implement `DrawerFormLayout` and use it for all create/edit/show drawers.
 9. Normalize loading states using a shared `PageLoadingSkeleton`.
 10. Extract label/value patterns into `MetaGrid` / `InfoItem` and reuse throughout the app.
 
 ### P3 – i18n / UX Polish
+
 11. Audit i18n coverage to ensure all user-facing strings (including dashboard) have both `en` and `ar` entries.
 12. Consider a shared vocabulary namespace for common statuses and severities instead of per-module duplicates.
 13. Align button variants, sizes, and icon usage for primary actions across all modules.
 14. Improve accessibility for icon-only buttons with consistent `aria-label` or tooltip behavior.
 
 ### P4 – Performance & Developer Experience
+
 15. Review client-side vs server-side pagination strategies, especially for detections, and standardize approach.
 16. Add basic tests (unit/integration) for:
     - Dashboard charts

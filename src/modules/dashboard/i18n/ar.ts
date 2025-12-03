@@ -11,9 +11,6 @@ export default {
       smoke_detections: "اكتشافات الدخان",
       unacknowledged_alerts: "التنبيهات غير المعتمدة",
     },
-    actions: {
-      live_view: "عرض مباشر",
-    },
     charts: {
       detections_24h: "اتجاهات الاكتشاف (آخر 24 ساعة)",
       detections_24h_desc: "أحداث الاكتشاف في الوقت الفعلي حسب النوع.",

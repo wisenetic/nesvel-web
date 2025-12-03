@@ -1,0 +1,82 @@
+[
+  {
+    "id": "site_hq",
+    "name": "Headquarters",
+    "type": "site",
+    "parentId": null,
+    "depth": 0,
+    "orderIndex": 0
+  },
+  {
+    "id": "bld_hq_a",
+    "name": "Building A",
+    "type": "building",
+    "parentId": "site_hq",
+    "depth": 1,
+    "orderIndex": 0
+  },
+  {
+    "id": "bld_hq_b",
+    "name": "Building B",
+    "type": "building",
+    "parentId": "site_hq",
+    "depth": 1,
+    "orderIndex": 1
+  },
+  {
+    "id": "flr_a_1",
+    "name": "Floor 1",
+    "type": "floor",
+    "parentId": "bld_hq_a",
+    "depth": 2,
+    "orderIndex": 0
+  },
+  {
+    "id": "flr_a_2",
+    "name": "Floor 2",
+    "type": "floor",
+    "parentId": "bld_hq_a",
+    "depth": 2,
+    "orderIndex": 1
+  },
+  {
+    "id": "zone_a_1_north",
+    "name": "North Zone",
+    "type": "zone",
+    "parentId": "flr_a_1",
+    "depth": 3,
+    "orderIndex": 0
+  },
+  {
+    "id": "zone_a_1_south",
+    "name": "South Zone",
+    "type": "zone",
+    "parentId": "flr_a_1",
+    "depth": 3,
+    "orderIndex": 1
+  },
+  {
+    "id": "site_dc",
+    "name": "Data Center",
+    "type": "site",
+    "parentId": null,
+    "depth": 0,
+    "orderIndex": 1
+  },
+  {
+    "id": "bld_dc_main",
+    "name": "DC Main Hall",
+    "type": "building",
+    "parentId": "site_dc",
+    "depth": 1,
+    "orderIndex": 0
+  },
+  {
+    "id": "zone_dc_rack1",
+    "name": "Rack Row 1",
+    "type": "zone",
+    "parentId": "bld_dc_main",
+    "depth": 2,
+    "orderIndex": 0
+  }
+]
