@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/core/components/ui/radio-group';
+import { Label } from '@/core/components/ui/label';
 import { FieldWrapper } from './field-wrapper';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
+import { Checkbox } from '@/core/components/ui/checkbox';
+import { Label } from '@/core/components/ui/label';
+import { cn } from '@/core/lib/utils';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 
 /**

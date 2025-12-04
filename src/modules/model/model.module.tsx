@@ -23,7 +23,6 @@ const ModelModule: AppModule = {
     list: "page",
     show: {
       view: "drawer",
-      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6",
       side: "right",
     },
   },

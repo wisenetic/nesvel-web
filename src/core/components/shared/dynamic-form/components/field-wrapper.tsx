@@ -1,8 +1,8 @@
 import React from 'react';
-import { Label } from '@/components/ui/label';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Label } from '@/core/components/ui/label';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/core/components/ui/tooltip';
 import { HelpCircle } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/core/lib/utils';
 import { AsyncIndicator } from './async-indicator';
 
 /**

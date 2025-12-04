@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 import { FieldWrapper } from './field-wrapper';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/core/components/ui/button';
 import { Mic, Square, Pause, Play, Trash2, FileAudio } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/core/lib/utils';
 
 /**
  * Configuration options for the VoiceField.

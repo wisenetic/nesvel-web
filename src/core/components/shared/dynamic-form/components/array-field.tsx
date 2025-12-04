@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/core/components/ui/button';
 import { Plus, Trash2, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 import { FieldRenderer } from './field-renderer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Card, CardContent, CardHeader, CardTitle } from '@/core/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/core/components/ui/collapsible';
 
 /**
  * Props for the ArrayField component.

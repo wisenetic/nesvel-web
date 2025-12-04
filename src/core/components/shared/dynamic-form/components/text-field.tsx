@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-import { IMaskInput } from 'react-imask';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { useFormContext } from 'react-hook-form';
+import { Input } from '@/core/components/ui/input';
+import { Textarea } from '@/core/components/ui/textarea';
 import { FieldWrapper } from './field-wrapper';
 import { IFieldConfig } from '../interfaces/field-config.interface';
-import { Progress } from '@/components/ui/progress';
+import { Progress } from '@/core/components/ui/progress';
 
 /**
  * Props for the TextField component.
@@ -17,19 +16,6 @@ interface TextFieldProps {
   config: IFieldConfig;
 }
 
-/**
- * Predefined mask patterns for common input types.
- */
-const MASK_PATTERNS: Record<string, string> = {
-  phone: '(000) 000-0000',
-  phoneIntl: '+0 (000) 000-0000',
-  creditCard: '0000 0000 0000 0000',
-  date: '00/00/0000',
-  time: '00:00',
-  ssn: '000-00-0000',
-  zipCode: '00000',
-  zipCodeExtended: '00000-0000',
-};
 
 /**
  * A component for rendering text-based input fields (text, email, password, etc.).
@@ -47,7 +33,6 @@ export const TextField: React.FC<TextFieldProps> = ({ config }) => {
 
   // Extract component props
   const {
-    mask,
     readOnly,
     autocomplete,
     ariaLabel,
@@ -81,11 +66,6 @@ export const TextField: React.FC<TextFieldProps> = ({ config }) => {
     return 'bg-green-500';
   };
 
-  // Get mask pattern
-  const maskPattern = mask 
-    ? (typeof mask === 'string' && MASK_PATTERNS[mask]) || mask
-    : undefined;
-
   // Determine if textarea
   const isTextarea = config.type === 'textarea';
 
@@ -109,20 +89,7 @@ export const TextField: React.FC<TextFieldProps> = ({ config }) => {
 
     let inputElement;
 
-    if (maskPattern) {
-      // Masked input using IMask
-      inputElement = (
-        <IMaskInput
-          mask={maskPattern}
-          value={field.value || ''}
-          unmask={false}
-          onAccept={(value: any) => {
-            field.onChange(value);
-          }}
-          {...inputProps}
-        />
-      );
-    } else if (isTextarea) {
+    if (isTextarea) {
       // Textarea
       inputElement = <Textarea {...inputProps} />;
     } else {
@@ -163,15 +130,7 @@ export const TextField: React.FC<TextFieldProps> = ({ config }) => {
       tooltip={config.componentProps?.tooltip}
     >
       <div className="space-y-2">
-        {maskPattern ? (
-          <Controller
-            name={config.name}
-            control={control}
-            render={({ field }) => renderInput(field)}
-          />
-        ) : (
-          renderInput(register(config.name))
-        )}
+        {renderInput(register(config.name))}
         
         {/* Password Strength Meter */}
         {config.type === 'password' && config.strengthMeter && value && (

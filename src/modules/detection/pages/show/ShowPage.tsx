@@ -50,8 +50,12 @@ export default function DetectionShowPage() {
         <DetectionDetailsHeader detection={detection} />
         <DetectionDetailsTabs detection={detection} />
 
-        <div className="pt-2">
-          <Button variant="outline" className="w-full" onClick={handleClose}>
+        <div className="flex justify-end pt-4">
+          <Button
+            variant="outline"
+            className="inline-flex items-center justify-center rounded-md px-3 py-1 text-sm font-medium"
+            onClick={handleClose}
+          >
             {translate("detection.details.close", "Close")}
           </Button>
         </div>

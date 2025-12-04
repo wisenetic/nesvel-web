@@ -4,7 +4,7 @@ import { useDropzone, FileRejection } from 'react-dropzone';
 import { Upload, X, File as FileIcon, AlertCircle } from 'lucide-react';
 import { FieldWrapper } from './field-wrapper';
 import { IFieldConfig } from '../interfaces/field-config.interface';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/core/components/ui/button';
 import { toast } from 'sonner';
 
 /**

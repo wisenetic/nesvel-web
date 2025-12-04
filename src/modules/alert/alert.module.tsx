@@ -22,12 +22,10 @@ const AlertModule: AppModule = {
     list: "page",
     create: {
       view: "drawer",
-      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6",
       side: "right",
     },
     edit: {
       view: "drawer",
-      className: "w-[100%]! max-w-[100%]! md:w-[50%]! md:max-w-[50%]! p-6",
       side: "right",
     },
   },

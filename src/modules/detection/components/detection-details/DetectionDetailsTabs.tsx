@@ -106,13 +106,13 @@ const AiSummaryTab = () => {
         <CardTitle className="text-lg font-semibold">
           {translate(
             "detection.details.ai_summary.title",
-            "AI-Powered Analysis",
+            "AI-Powered Analysis"
           )}
         </CardTitle>
         <CardDescription>
           {translate(
             "detection.details.ai_summary.description",
-            "Generate an intelligent summary and recommended response steps for this detection event.",
+            "Generate an intelligent summary and recommended response steps for this detection event."
           )}
         </CardDescription>
       </CardHeader>
@@ -124,7 +124,7 @@ const AiSummaryTab = () => {
         <p className="max-w-md text-center text-xs text-muted-foreground md:text-sm">
           {translate(
             "detection.details.ai_summary.hint",
-            "The AI assistant will review evidence, analysis, and recent context to propose a concise incident report.",
+            "The AI assistant will review evidence, analysis, and recent context to propose a concise incident report."
           )}
         </p>
       </CardContent>
@@ -144,13 +144,13 @@ const EvidenceTab = () => {
             <CardTitle className="text-sm">
               {translate(
                 "detection.details.evidence.video_title",
-                "Video Evidence",
+                "Video Evidence"
               )}
             </CardTitle>
             <CardDescription className="text-xs">
               {translate(
                 "detection.details.evidence.video_hint",
-                "Detection event video clip",
+                "Detection event video clip"
               )}
             </CardDescription>
           </div>
@@ -159,7 +159,7 @@ const EvidenceTab = () => {
               <Download className="size-3.5" />
               {translate(
                 "detection.details.evidence.download",
-                "Download Video",
+                "Download Video"
               )}
             </Button>
             <Button variant="outline" size="sm">
@@ -178,7 +178,7 @@ const EvidenceTab = () => {
               <p className="text-[11px] text-zinc-300">
                 {translate(
                   "detection.details.evidence.video_placeholder",
-                  "Embed your actual player component here.",
+                  "Embed your actual player component here."
                 )}
               </p>
             </div>
@@ -193,13 +193,13 @@ const EvidenceTab = () => {
             <Camera className="size-4" />
             {translate(
               "detection.details.evidence.snapshots_title",
-              "Image Snapshots",
+              "Image Snapshots"
             )}
           </CardTitle>
           <CardDescription>
             {translate(
               "detection.details.evidence.snapshots_hint",
-              "Key frames before, during, and after the detection event.",
+              "Key frames before, during, and after the detection event."
             )}
           </CardDescription>
         </CardHeader>
@@ -208,20 +208,20 @@ const EvidenceTab = () => {
             <SnapshotPlaceholder
               label={translate(
                 "detection.details.evidence.snapshot_before",
-                "Before",
+                "Before"
               )}
             />
             <SnapshotPlaceholder
               label={translate(
                 "detection.details.evidence.snapshot_detection",
-                "Detection",
+                "Detection"
               )}
               isHighlighted
             />
             <SnapshotPlaceholder
               label={translate(
                 "detection.details.evidence.snapshot_after",
-                "After",
+                "After"
               )}
             />
           </div>
@@ -229,7 +229,7 @@ const EvidenceTab = () => {
             <Download className="size-3.5" />
             {translate(
               "detection.details.evidence.download_all",
-              "Download All Images",
+              "Download All Images"
             )}
           </Button>
         </CardContent>
@@ -513,20 +513,6 @@ const AnalysisTab = ({ detection }: { detection: Detection }) => {
                 {translate("detection.details.analysis.rule_active", "Active")}
               </Badge>
             </div>
-            <div className="flex items-center justify-between rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 text-xs md:text-sm">
-              <span className="font-medium">
-                {translate(
-                  "detection.details.analysis.rule_name",
-                  "Fire Detection Alert",
-                )}
-              </span>
-              <Badge
-                variant="destructive"
-                className="text-[11px] uppercase tracking-wide"
-              >
-                {translate("detection.details.analysis.rule_active", "Active")}
-              </Badge>
-            </div>
             <p className="text-xs text-muted-foreground">
               {translate(
                 "detection.details.analysis.rule_hint",
@@ -592,9 +578,6 @@ const AnalysisTab = ({ detection }: { detection: Detection }) => {
     </div>
   );
 };
-
-const AnalysisField = ({ label, value }: { label: string; value: string }) => (
-  <div className="space-y-0.5">
     <p className="text-[11px] text-muted-foreground md:text-xs">{label}</p>
     <p className="text-sm font-medium">{value}</p>
   </div>
@@ -628,7 +611,7 @@ const TimelineTab = () => {
       key: "object_entered",
       label: translate(
         "detection.details.timeline.object_entered",
-        "Object entered frame",
+        "Object entered frame"
       ),
       confidence: "72%",
     },
@@ -636,7 +619,7 @@ const TimelineTab = () => {
       key: "confidence_increase",
       label: translate(
         "detection.details.timeline.confidence_increase",
-        "Detection confidence increased",
+        "Detection confidence increased"
       ),
       confidence: "88%",
     },
@@ -644,7 +627,7 @@ const TimelineTab = () => {
       key: "rule_triggered",
       label: translate(
         "detection.details.timeline.rule_triggered",
-        "Rule triggered",
+        "Rule triggered"
       ),
       confidence: "89%",
     },
@@ -652,7 +635,7 @@ const TimelineTab = () => {
       key: "alert_generated",
       label: translate(
         "detection.details.timeline.alert_generated",
-        "Alert generated",
+        "Alert generated"
       ),
       confidence: "89%",
     },
@@ -660,7 +643,7 @@ const TimelineTab = () => {
       key: "current_state",
       label: translate(
         "detection.details.timeline.current_state",
-        "Current state",
+        "Current state"
       ),
       confidence: "89%",
     },
@@ -676,7 +659,7 @@ const TimelineTab = () => {
         <CardDescription>
           {translate(
             "detection.details.timeline.description",
-            "Event progression and confidence changes over time.",
+            "Event progression and confidence changes over time."
           )}
         </CardDescription>
       </CardHeader>
@@ -717,7 +700,7 @@ const NotesTab = () => {
           <span>
             {translate(
               "detection.details.notes.title",
-              "Shared Notes & Timeline",
+              "Shared Notes & Timeline"
             )}
           </span>
           <Badge variant="outline" className="text-[11px]">
@@ -727,7 +710,7 @@ const NotesTab = () => {
         <CardDescription>
           {translate(
             "detection.details.notes.description",
-            "Collaborate with your team using structured notes and attachments.",
+            "Collaborate with your team using structured notes and attachments."
           )}
         </CardDescription>
       </CardHeader>
@@ -736,7 +719,7 @@ const NotesTab = () => {
           <Textarea
             placeholder={translate(
               "detection.details.notes.placeholder",
-              "Add a note about this detection...",
+              "Add a note about this detection..."
             )}
           />
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
@@ -760,7 +743,7 @@ const NotesTab = () => {
           <div className="p-3 text-xs text-muted-foreground">
             {translate(
               "detection.details.notes.history_placeholder",
-              "Notes history will appear here once your team starts collaborating.",
+              "Notes history will appear here once your team starts collaborating."
             )}
           </div>
         </ScrollArea>
@@ -782,7 +765,7 @@ const ActionsTab = () => {
         <CardDescription>
           {translate(
             "detection.details.actions.description",
-            "Design for this tab is pending. Use this placeholder to wire your workflows (escalations, tickets, automations).",
+            "Design for this tab is pending. Use this placeholder to wire your workflows (escalations, tickets, automations)."
           )}
         </CardDescription>
       </CardHeader>
@@ -790,13 +773,13 @@ const ActionsTab = () => {
         <p>
           {translate(
             "detection.details.actions.body_1",
-            "Once the final UI is available, replace this section with your action cards (e.g., create incident, dispatch security, mute alert).",
+            "Once the final UI is available, replace this section with your action cards (e.g., create incident, dispatch security, mute alert)."
           )}
         </p>
         <p>
           {translate(
             "detection.details.actions.body_2",
-            "The rest of the detection details drawer is fully functional and can be extended without changing this contract.",
+            "The rest of the detection details drawer is fully functional and can be extended without changing this contract."
           )}
         </p>
         <div className="mt-2 grid grid-cols-1 gap-2 md:grid-cols-2">
@@ -804,14 +787,14 @@ const ActionsTab = () => {
             <FileText className="size-3.5" />
             {translate(
               "detection.details.actions.sample_create_incident",
-              "Sample: Create incident ticket",
+              "Sample: Create incident ticket"
             )}
           </Button>
           <Button variant="outline" size="sm" className="justify-start">
             <AlertTriangle className="size-3.5" />
             {translate(
               "detection.details.actions.sample_escalate",
-              "Sample: Escalate to security",
+              "Sample: Escalate to security"
             )}
           </Button>
         </div>

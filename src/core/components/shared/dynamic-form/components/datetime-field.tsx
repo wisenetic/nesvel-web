@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/core/components/ui/input';
 import { FieldWrapper } from './field-wrapper';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 

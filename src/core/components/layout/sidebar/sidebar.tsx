@@ -1,134 +1,72 @@
-import { useTranslation } from "@refinedev/core";
-import { useLink, useMenu, type TreeMenuItem } from "@refinedev/core";
+import { useMenu, useTranslation, type TreeMenuItem } from "@refinedev/core";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 
-import {
-  Sidebar as ShadcnSidebar,
-  SidebarContent as ShadcnSidebarContent,
-  SidebarGroup as ShadcnSidebarGroup,
-  SidebarGroupContent as ShadcnSidebarGroupContent,
-  SidebarMenu as ShadcnSidebarMenu,
-  SidebarMenuButton as ShadcnSidebarMenuButton,
-  SidebarMenuItem as ShadcnSidebarMenuItem,
-  SidebarRail as ShadcnSidebarRail,
-  useSidebar as useShadcnSidebar,
-} from "@/core/components/ui/sidebar";
+import { DynamicSidebar } from "@/core/components/shared/dynamic-sidebar";
 import i18n from "@/core/i18n/i18n";
-import { cn } from "@/core/lib/utils";
 
 import { SidebarFooter } from "./sidebar-footer";
 import { SidebarHeader } from "./sidebar-header";
+import { mapMenuItemsToSidebarConfig } from "./sidebar-config-mapper";
 
-type IconProps = {
-  // We accept arbitrary icon keys from resources and narrow to IconName internally.
-  icon?: string | null;
-  isSelected?: boolean;
-};
-
-type SidebarProps = {
-  /**
-   * Optional classes for the root sidebar shell (ShadcnSidebar).
-   */
+export type SidebarProps = {
   className?: string;
-  /**
-   * Base classes applied to every menu link.
-   * Use this to control padding, typography, hover behavior, etc.
-   */
-  menuItemClassName?: string;
-  /**
-   * Classes applied only to the selected menu item.
-   * If omitted, a sensible default highlight style is used.
-   */
-  selectedMenuItemClassName?: string;
 };
 
-const ItemIcon = ({ icon, isSelected }: IconProps) => {
-  const resolvedIcon = (icon ?? "list") as IconName;
-
-  return (
-    <div
-      className={cn("w-4", {
-        "text-muted-foreground": !isSelected,
-        "text-sidebar-primary-foreground": isSelected,
-      })}
-    >
-      <DynamicIcon name={resolvedIcon} size={18} />
-    </div>
-  );
+const resolveIconName = (item: TreeMenuItem): IconName => {
+  const iconKey = (item.meta?.icon ?? item.icon ?? "list") as string;
+  return iconKey as IconName;
 };
 
-// Helper function for display name fallback
-const getDisplayName = (item: TreeMenuItem): string =>
-  String(item.meta?.labelKey ?? item.label ?? item.name ?? "");
-
-const baseMenuItemClasses =
-  "flex items-center gap-3 px-2 py-2 rounded-md text-sm font-medium transition-colors";
-const selectedMenuItemDefaultClasses =
-  "font-semibold bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary/90 hover:text-sidebar-primary-foreground";
-
-export const Sidebar = ({
-  className,
-  menuItemClassName,
-  selectedMenuItemClassName,
-}: SidebarProps) => {
-  const { open } = useShadcnSidebar();
-  const Link = useLink();
+export const Sidebar = ({ className }: SidebarProps) => {
   const { menuItems, selectedKey } = useMenu();
   const { translate } = useTranslation();
 
   const sidebarSide: "left" | "right" = i18n.dir() === "rtl" ? "right" : "left";
 
+  const baseConfig = mapMenuItemsToSidebarConfig(menuItems);
+
+  const items = baseConfig.items.map((item, index) => {
+    const src = menuItems[index];
+    const labelKeyOrText = String(
+      src.meta?.labelKey ?? src.label ?? src.name ?? ""
+    );
+    const translatedTitle = translate(labelKeyOrText);
+
+    const IconComponent: React.FC<React.SVGProps<SVGSVGElement>> = props => (
+      <DynamicIcon name={resolveIconName(src)} {...props} />
+    );
+
+    return {
+      ...item,
+      title: translatedTitle,
+      icon: IconComponent,
+      current: src.key === selectedKey,
+    };
+  });
+
   return (
-    <ShadcnSidebar collapsible="icon" side={sidebarSide} className={className}>
-      {/* --- Header --- */}
-      <SidebarHeader className="p-0 border-b border-border" />
-
-      {/* --- Main Sidebar Content --- */}
-      <ShadcnSidebarContent>
-        <ShadcnSidebarGroup>
-          <ShadcnSidebarGroupContent>
-            <ShadcnSidebarMenu>
-              {menuItems.map((item: TreeMenuItem) => {
-                const isSelected = item.key === selectedKey;
-
-                return (
-                  <ShadcnSidebarMenuItem key={item.key || item.name}>
-                    <ShadcnSidebarMenuButton asChild>
-                      <Link
-                        to={item.route ?? ""}
-                        className={cn(
-                          baseMenuItemClasses,
-                          "hover:bg-accent hover:text-accent-foreground",
-                          menuItemClassName,
-                          isSelected &&
-                            (selectedMenuItemClassName ??
-                              selectedMenuItemDefaultClasses)
-                        )}
-                      >
-                        <ItemIcon
-                          icon={item.meta?.icon ?? item.icon} //TODO: FIX TYPE ISSUE
-                          isSelected={isSelected}
-                        />
-                        {open && (
-                          <span className="truncate">
-                            {translate(getDisplayName(item))}
-                          </span>
-                        )}
-                      </Link>
-                    </ShadcnSidebarMenuButton>
-                  </ShadcnSidebarMenuItem>
-                );
-              })}
-            </ShadcnSidebarMenu>
-          </ShadcnSidebarGroupContent>
-        </ShadcnSidebarGroup>
-      </ShadcnSidebarContent>
-
-      {/* --- Footer --- */}
-      <SidebarFooter />
-
-      {/* --- Sidebar Rail (for icon-only mode) --- */}
-      <ShadcnSidebarRail />
-    </ShadcnSidebar>
+    <DynamicSidebar
+      config={{ items }}
+      side={sidebarSide}
+      variant="sidebar"
+      collapsible="icon"
+      className={className}
+      styles={{
+        // Let the shadcn sidebar button control layout/padding so icons stay centered.
+        // We only tweak typography and active state.
+        item: "h-12 text-sm font-medium",
+        itemActive:
+          "font-semibold bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary/90 hover:text-sidebar-primary-foreground",
+        icon: "!h-6 !w-6",
+      }}
+      headerSlot={<SidebarHeader className="p-0 border-b border-border" />}
+      footerSlot={<SidebarFooter />}
+      renderItemContent={({ title, defaultIcon }) => (
+        <>
+          {defaultIcon}
+          {title && <span className="truncate">{title}</span>}
+        </>
+      )}
+    />
   );
 };

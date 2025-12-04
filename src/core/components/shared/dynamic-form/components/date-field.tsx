@@ -2,14 +2,14 @@ import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
+import { cn } from '@/core/lib/utils';
+import { Button } from '@/core/components/ui/button';
+import { Calendar } from '@/core/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from '@/core/components/ui/popover';
 import { FieldWrapper } from './field-wrapper';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 

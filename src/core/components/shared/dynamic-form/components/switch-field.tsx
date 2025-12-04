@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
-import { Switch } from '@/components/ui/switch';
+import { Switch } from '@/core/components/ui/switch';
 import { FieldWrapper } from './field-wrapper';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 

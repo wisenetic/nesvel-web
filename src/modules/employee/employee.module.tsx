@@ -22,17 +22,14 @@ const EmployeeModule: AppModule = {
     list: "page",
     show: {
       view: "drawer",
-      className: "w-[100%]! max-w-[100%]! md:w-[50%]! md:max-w-[50%]! p-6",
       side: "right",
     },
     create: {
       view: "drawer",
-      className: "w-[100%]! max-w-[100%]! md:w-[40%]! md:max-w-[40%]! p-6",
       side: "right",
     },
     edit: {
       view: "drawer",
-      className: "w-[100%]! max-w-[100%]! md:w-[40%]! md:max-w-[40%]! p-6",
       side: "right",
     },
   },

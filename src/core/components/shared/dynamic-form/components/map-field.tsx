@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 import { FieldWrapper } from './field-wrapper';
-import { MapView } from '@/components/Map';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+// MapView integration is project-specific; keep it disabled for now to avoid missing import.
+// import { MapView } from '@/components/Map';
+import { Button } from '@/core/components/ui/button';
+import { Input } from '@/core/components/ui/input';
 import { MapPin, Navigation, Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

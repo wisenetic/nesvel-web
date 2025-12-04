@@ -20,17 +20,14 @@ const cameraModule: AppModule = {
     list: "page",
     show: {
       view: "drawer",
-      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6", // full control
       side: "right",
     },
     create: {
       view: "modal",
-      className: "w-[100%]! max-w-[100%]! md:w-[40%]! md:max-w-[40%]! p-6",
       side: "right",
     },
     edit: {
       view: "drawer",
-      className: "w-[100%]! max-w-[100%]! md:w-[60%]! md:max-w-[60%]! p-6",
       side: "right",
     },
   },

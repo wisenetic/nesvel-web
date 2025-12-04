@@ -2,20 +2,20 @@ import React from 'react';
 import { IFieldGroup } from '../interfaces/field-group.interface';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 import { FieldRenderer } from './field-renderer';
-import { cn } from '@/lib/utils';
+import { cn } from '@/core/lib/utils';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/core/components/ui/card';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+} from '@/core/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/core/components/ui/button';
 
 /**
  * Props for the FieldGroup component.

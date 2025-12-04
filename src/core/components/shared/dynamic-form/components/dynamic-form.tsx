@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { IFormSchema } from '../interfaces/form-schema.interface';
 import { FieldRenderer } from './field-renderer';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/core/components/ui/button';
 import { Loader2, Save, RotateCcw, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useFormPersistence } from '../hooks/useFormPersistence';
 import { WizardStepper } from './wizard-stepper';
@@ -50,6 +50,18 @@ interface DynamicFormProps {
    * Mode of the form: 'standard' or 'wizard'.
    */
   mode?: 'standard' | 'wizard';
+
+  /**
+   * Optional extra actions to render next to the primary submit/next button.
+   * Useful for adding a Cancel/Close button aligned with the submit button.
+   */
+  extraActions?: ReactNode;
+
+  /**
+   * Whether to show the horizontal divider above the footer actions.
+   * Defaults to true.
+   */
+  showFooterBorder?: boolean;
 }
 
 /**
@@ -67,6 +79,8 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
   className,
   persistence,
   mode = 'standard',
+  extraActions,
+  showFooterBorder = true,
 }) => {
   const methods = useForm({
     resolver: zodResolver(schema.validationSchema),
@@ -117,6 +131,8 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
     ? Object.values(schema.fields).filter(field => (field.step || 1) === currentStep)
     : Object.values(schema.fields);
 
+  const footerClassName = `flex justify-between pt-4 mt-6${showFooterBorder ? ' border-t' : ''}`;
+ 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(handleFormSubmit)} className={className}>
@@ -175,7 +191,7 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
             ))}
           </div>
 
-          <div className="flex justify-between pt-4 border-t mt-6">
+          <div className={footerClassName}>
             {mode === 'wizard' && currentStep > 1 ? (
               <Button type="button" variant="outline" onClick={prevStep}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
@@ -185,17 +201,20 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
               <div></div> // Spacer
             )}
 
-            {mode === 'wizard' && !isLastStep ? (
-              <Button type="button" onClick={nextStep}>
-                Next
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            ) : (
-              <Button type="submit" disabled={isSubmitting || (schema.meta?.disableOnInvalid && !isValid)}>
-                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {submitLabel || schema.meta?.submitButton?.text || 'Submit'}
-              </Button>
-            )}
+            <div className="flex items-center gap-2">
+              {extraActions}
+              {mode === 'wizard' && !isLastStep ? (
+                <Button type="button" onClick={nextStep}>
+                  Next
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              ) : (
+                <Button type="submit" disabled={isSubmitting || (schema.meta?.disableOnInvalid && !isValid)}>
+                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {submitLabel || schema.meta?.submitButton?.text || 'Submit'}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </form>
